@@ -8,6 +8,7 @@ export default {
         secondary: "#ffffff",
         accent: "#FF414D",
         tertiary: "#47597E",
+        icon: "#9AC8CD",
       },
     },
   },
