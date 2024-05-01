@@ -2,7 +2,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 
 const Main = () => {
     return (
-      <div className="py-6 max-w-screen-xl m-auto grid h-[100dvh] grid-rows-[auto_1fr]">
+      <div className=" max-w-screen-xl m-auto h-[100dvh] grid items-center">
         <Sidebar />
       </div>
     );
