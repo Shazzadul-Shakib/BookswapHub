@@ -9,7 +9,7 @@ const Searchbar = () => {
       <input
         className=" w-full rounded-sm p-2 bg-primary focus:outline-none text-secondary"
         type="text"
-        placeholder="Search for books"
+        placeholder="Search for books or notes"
       />
     </section>
   );
