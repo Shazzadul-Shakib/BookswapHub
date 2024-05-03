@@ -1,5 +1,6 @@
 import Searchbar from "../components/Sidebar/Searchbar/Searchbar";
 import Sidebar from "../components/Sidebar/Sidebar";
+import Trending from "../components/Homepage/Trending/Trending";
 
 const Main = () => {
   return (
@@ -7,8 +8,11 @@ const Main = () => {
       <div className="grid items-center">
         <Sidebar />
       </div>
+
+      {/* Main section to display */}
       <div className="mt-10">
         <Searchbar />
+        <Trending />
       </div>
     </div>
   );
