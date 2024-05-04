@@ -4,13 +4,12 @@ import Trending from "../components/Homepage/Trending/Trending";
 
 const Main = () => {
   return (
-    <div className=" max-w-screen-xl m-auto h-[100dvh] grid grid-cols-[auto_1fr] gap-7">
-      <div className="grid items-center">
+    <div className="h-full max-w-[1400px] mx-auto  flex gap-6 overflow-hidden">
+      <div className=" h-full flex justify-center items-center">
         <Sidebar />
       </div>
 
-      {/* Main section to display */}
-      <div className="mt-10">
+      <div className=" p-4">
         <Searchbar />
         <Trending />
       </div>
