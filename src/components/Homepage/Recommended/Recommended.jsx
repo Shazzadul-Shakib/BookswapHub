@@ -7,7 +7,7 @@ const Recommended = () => {
         <h1 className="text-secondary text-2xl pb-4">Recommended for you</h1>
         <div>
           <div
-            className=" grid grid-cols-4 cursor-pointer"
+            className=" grid grid-cols-4"
             style={{
               maxWidth: "calc(100vw - 180px)",
             }}
