@@ -4,11 +4,11 @@ import book2 from "../../../assets/b2.jpg";
 
 const Trending = () => {
   return (
-    <div className="my-3 px-2">
+    <div className="my-3">
       <h1 className="text-secondary text-2xl pb-4">Trending</h1>
       <div
         className="custom-scrollbar scroll-smooth overflow-x-auto flex gap-6 cursor-pointer"
-        style={{ maxWidth: "calc(100vw - 140px)" }}
+        style={{ maxWidth: "calc(100vw - 180px)" }}
       >
         <TrendingCard bookImage={book1} />
         <TrendingCard bookImage={book2} />

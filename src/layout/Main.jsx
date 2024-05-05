@@ -1,6 +1,7 @@
-import Searchbar from "../components/Sidebar/Searchbar/Searchbar";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Searchbar from "../components/Shared/Searchbar/Searchbar";
+import Sidebar from "../components/Shared/Sidebar/Sidebar";
 import Trending from "../components/Homepage/Trending/Trending";
+import Recommended from "../components/Homepage/Recommended/Recommended";
 
 const Main = () => {
   return (
@@ -9,9 +10,14 @@ const Main = () => {
         <Sidebar />
       </div>
 
-      <div className=" p-4">
-        <Searchbar />
-        <Trending />
+      <div className=" p-4 ">
+        <div>
+          <Searchbar />
+        </div>
+        <div className="h-full overflow-y-auto custom-scrollbar">
+          <Trending />
+          <Recommended />
+        </div>
       </div>
     </div>
   );
