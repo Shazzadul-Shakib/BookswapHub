@@ -11,7 +11,7 @@ const TrendingCard = ({ bookImage }) => {
           src={bookImage}
           alt="Book Image"
         />
-        <div className="absolute top-3 right-3 text-secondary text-lg">
+        <div className="absolute top-3 right-4 h-7 w-7 bg-tertiary flex justify-center rounded-full items-center text-secondary">
           {bookmarkOutline}
         </div>
         {/* name and info section */}

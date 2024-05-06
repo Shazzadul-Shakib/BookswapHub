@@ -5,8 +5,8 @@ import Recommended from "../components/Homepage/Recommended/Recommended";
 
 const Main = () => {
   return (
-    <div className="h-full max-w-[1400px] mx-auto  flex gap-6 overflow-hidden">
-      <div className=" h-full flex justify-center items-center">
+    <div className="h-full flex justify-center md:gap-6 overflow-hidden">
+      <div className="hidden h-full lg:flex justify-center items-center ">
         <Sidebar />
       </div>
 
