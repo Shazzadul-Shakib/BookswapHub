@@ -2,7 +2,7 @@ import Divider from "../components/Shared/Divider/Divider";
 import { allIconsData } from "../data/all-icons-data";
 import logo from "../assets/logo.ico";
 
-const Login = () => {
+const Signup = () => {
   const { google, facebook } = allIconsData;
   return (
     <div className=" lg:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
@@ -18,34 +18,36 @@ const Login = () => {
       </section>
       <section className=" border border-accent rounded-2xl flex justify-center items-center p-10 ">
         <div className=" w-[90%] mx-auto">
-          <h1 className=" text-secondary text-2xl font-bold my-8">Login</h1>
+          <h1 className=" text-secondary text-2xl font-bold my-8">Create account</h1>
           {/* Input fileds */}
           <form>
+            <input
+              className="p-2 w-full mb-6 rounded"
+              type="Text"
+              placeholder="Username"
+            />
             <input
               className="p-2 w-full mb-6 rounded"
               type="email"
               placeholder="Email"
             />
             <input
-              className="p-2 w-full mb-1 rounded"
+              className="p-2 w-full mb-6 rounded"
               type="password"
               placeholder="Password"
             />
-            <div className=" flex justify-end">
-              <a className=" text-secondary text-xs" href="#">
-                Forgot password?
-              </a>
-            </div>
             <button
               type="submit"
-              className="p-2 w-full my-2 rounded bg-accent text-secondary font-bold"
+              className="p-2 w-full mb-2 rounded bg-accent text-secondary font-bold"
             >
-              Login
+              Signup
             </button>
           </form>
 
-          <div className="text-center">
-            <p className=" text-secondary text-sm">New here? create account</p>
+          <div className="text-center my-2">
+            <p className=" text-secondary text-sm" href="#">
+              Already have an account? Login here
+            </p>
           </div>
           {/* Divider */}
           <Divider />
@@ -60,4 +62,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
