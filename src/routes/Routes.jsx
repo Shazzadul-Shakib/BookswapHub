@@ -6,6 +6,14 @@ import Signup from "../pages/Signup";
 export const router= createBrowserRouter([
     {
         path:'/',
+        element: <Signup/>, //Main route
+    },
+    {
+        path:'/login',
         element: <Login/>, //Main route
-    }
+    },
+    // {
+    //     path:'/',
+    //     element: <Main/>, //Main route
+    // },
 ])
