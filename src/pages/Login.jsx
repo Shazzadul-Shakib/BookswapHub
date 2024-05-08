@@ -1,19 +1,31 @@
 import Divider from "../components/Shared/Divider/Divider";
 import { allIconsData } from "../data/all-icons-data";
 import logo from "../assets/logo.ico";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../provider/authProviders";
 
 const Login = () => {
   const { google, facebook } = allIconsData;
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+const {loginUserWithEmailPassword}=useContext(AuthContext);
+  const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    const result = await loginUserWithEmailPassword(data.email, data.password);
+    try {
+      if (result.user) {
+        reset();
+        navigate("/");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
   return (
     <div className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
@@ -68,14 +80,14 @@ const Login = () => {
               <input
                 type="submit"
                 value="Login"
-                className="p-2 w-full my-2 rounded bg-accent text-secondary font-bold"
+                className="p-2 cursor-pointer w-full my-2 rounded bg-accent text-secondary font-bold"
               />
             </form>
           </div>
 
           <div className="text-center">
             <p className=" text-secondary text-sm">
-              New here? <Link to="/">create account</Link>
+              New here? <Link to="/signup">create account</Link>
             </p>
           </div>
           {/* Divider */}
