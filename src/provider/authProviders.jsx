@@ -6,7 +6,9 @@ import {
   signInWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
+  signInWithPopup,
   updateProfile,
+  GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
@@ -15,6 +17,8 @@ export const auth = getAuth(app);
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
+  const googleProvider = new GoogleAuthProvider();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,9 +45,14 @@ const AuthProvider = ({ children }) => {
   };
 
   // Send reset password email
-  const resetPassword=(email)=>{
-    return sendPasswordResetEmail(auth,email)
-  }
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
+  // login with google
+  const googlelogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
 
   // Logout user
   const logout = () => {
@@ -74,6 +83,7 @@ const AuthProvider = ({ children }) => {
     verifyUserEmail,
     updateUserName,
     resetPassword,
+    googlelogin,
     logout,
   };
 
