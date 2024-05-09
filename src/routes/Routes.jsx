@@ -3,6 +3,7 @@ import Main from "../layout/Main";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PrivateRoute from "./PrivateRoute";
+import ForgetPassword from "../pages/ForgetPassword";
 
 export const router= createBrowserRouter([
     {
@@ -12,6 +13,10 @@ export const router= createBrowserRouter([
     {
         path:'/login',
         element: <Login/>, //Main route
+    },
+    {
+        path:'/forgetpassword',
+        element: <ForgetPassword/>, //Main route
     },
     {
         path:'/',

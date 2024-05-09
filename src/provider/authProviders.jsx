@@ -4,6 +4,9 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  updateProfile,
   signOut,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
@@ -25,6 +28,23 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  // Email verification
+  const verifyUserEmail = () => {
+    return sendEmailVerification(auth.currentUser);
+  };
+
+  // Update user name
+  const updateUserName = (userName) => {
+    return updateProfile(auth.currentUser, {
+      displayName: userName,
+    });
+  };
+
+  // Send reset password email
+  const resetPassword=(email)=>{
+    return sendPasswordResetEmail(auth,email)
+  }
+
   // Logout user
   const logout = () => {
     setLoading(true);
@@ -33,7 +53,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
+      if (currentUser && currentUser.emailVerified) {
         setUser(currentUser);
       } else {
         setUser(null);
@@ -51,6 +71,9 @@ const AuthProvider = ({ children }) => {
     loading,
     createUser,
     loginUserWithEmailPassword,
+    verifyUserEmail,
+    updateUserName,
+    resetPassword,
     logout,
   };
 

@@ -1,36 +1,23 @@
-import Divider from "../components/Shared/Divider/Divider";
-import { allIconsData } from "../data/all-icons-data";
 import logo from "../assets/logo.ico";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
-import SocialLogin from "../components/SocialLogin/socialLogin";
 
-const Login = () => {
-  const { google, facebook } = allIconsData;
+const ForgetPassword = () => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const { loginUserWithEmailPassword } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { resetPassword } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
-    const result = await loginUserWithEmailPassword(data.email, data.password);
-
-    try {
-      if (result.user.emailVerified) {
-        reset();
-        navigate("/");
-      } else {
-        alert("Verify your email first");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
+    await resetPassword(data.email).then(() => {
+      reset();
+      alert("Password reset email sent to your email");
+    });
   };
   return (
     <div className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
@@ -46,7 +33,9 @@ const Login = () => {
       </section>
       <section className="w-full md:w-1/2 border border-accent rounded-2xl flex justify-center items-center p-10 ">
         <div className=" w-full  md:w-[90%] mx-auto">
-          <h1 className=" text-secondary text-2xl font-bold my-8">Login</h1>
+          <h1 className=" text-secondary text-2xl font-bold my-8">
+            Forgot Password?
+          </h1>
           {/* Input fileds */}
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,26 +54,8 @@ const Login = () => {
               )}
 
               <input
-                className="p-2 w-full my-3 rounded"
-                type="password"
-                placeholder="Password"
-                {...register("password", {
-                  required: true,
-                })}
-              />
-              {errors?.password?.type === "required" && (
-                <div className="w-full text-xs text-accent">
-                  <span>This field is required*</span>
-                </div>
-              )}
-              <div className=" flex justify-end">
-                <Link className=" text-secondary text-xs" to="/forgetpassword">
-                  Forgot password?
-                </Link>
-              </div>
-              <input
                 type="submit"
-                value="Login"
+                value="Reset Password"
                 className="p-2 cursor-pointer w-full my-2 rounded bg-accent text-secondary font-bold"
               />
             </form>
@@ -92,15 +63,13 @@ const Login = () => {
 
           <div className="text-center">
             <p className=" text-secondary text-sm">
-              New here? <Link to="/signup">create account</Link>
+              <Link to="/login">Return to login page</Link>
             </p>
           </div>
-          {/* Divider */}
-          <SocialLogin/>
         </div>
       </section>
     </div>
   );
 };
 
-export default Login;
+export default ForgetPassword;

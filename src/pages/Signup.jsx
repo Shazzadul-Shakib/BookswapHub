@@ -1,20 +1,19 @@
-import Divider from "../components/Shared/Divider/Divider";
-import { allIconsData } from "../data/all-icons-data";
 import logo from "../assets/logo.ico";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
+import SocialLogin from "../components/SocialLogin/socialLogin";
 
 const Signup = () => {
-  const { google, facebook } = allIconsData;
+  
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const { createUser } = useContext(AuthContext);
+  const { createUser,updateUserName, verifyUserEmail } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -22,7 +21,10 @@ const Signup = () => {
     try {
       if (result.user) {
         reset();
-        navigate("/");
+        updateUserName(data.userName);
+        verifyUserEmail();
+        navigate("/login");
+        alert("Verify your email");
       }
     } catch (error) {
       alert(error.message);
@@ -52,7 +54,7 @@ const Signup = () => {
                 className="p-2 w-full my-3 rounded"
                 type="text"
                 placeholder="Username"
-                {...register("name", {
+                {...register("userName", {
                   required: true,
                 })}
               />
@@ -101,12 +103,7 @@ const Signup = () => {
             </p>
           </div>
           {/* Divider */}
-          <Divider />
-          {/* Social Icons */}
-          <div className=" flex justify-center items-center gap-5">
-            <div className="text-2xl text-secondary">{google}</div>
-            <div className="text-2xl text-secondary">{facebook}</div>
-          </div>
+         <SocialLogin/>
         </div>
       </section>
     </div>

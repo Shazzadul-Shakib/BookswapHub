@@ -7,8 +7,8 @@ const PrivateRoute = ({children}) => {
     if(loading){
         return <h1>Loading...</h1>
     }
-    if(user){
-        return children;
+    if (user && user.emailVerified) {
+      return children;
     }
     return (
         <div>
