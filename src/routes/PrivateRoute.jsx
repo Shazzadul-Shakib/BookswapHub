@@ -1,20 +1,25 @@
 import { useContext } from "react";
-import { AuthContext } from "../provider/authProviders";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../provider/authProviders";
+import Loader from "../components/Shared/Loader/Loader";
+import ModalBody from "../components/Shared/ModalBody/ModalBody";
 
-const PrivateRoute = ({children}) => {
-    const {user,loading}=useContext(AuthContext);
-    if(loading){
-        return <h1>Loading...</h1>
-    }
-    if (user && user.emailVerified) {
-      return children;
-    }
-    return (
-        <div>
-            <Navigate to='/login'/>
-        </div>
-    );
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <ModalBody modal={<Loader />} />;
+  }
+
+  if (user && user.emailVerified) {
+    return children;
+  }
+
+  return (
+    <div>
+      <Navigate to="/login" />
+    </div>
+  );
 };
 
 export default PrivateRoute;
