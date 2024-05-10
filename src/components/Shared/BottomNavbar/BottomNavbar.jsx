@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { allIconsData } from "../../../data/all-icons-data";
 
 const BottomNavbar = () => {
@@ -5,9 +6,9 @@ const BottomNavbar = () => {
     return (
       <div>
         <div className="flex justify-around items-center p-3 text-3xl text-icon bg-tertiary w-[100vw] ">
-          <div className="text-secondary">{home}</div>
-          <div>{add}</div>
-          <div>{bookmark}</div>
+          <Link to='/'  className="text-secondary">{home}</Link>
+          <Link to='/addbook' >{add}</Link>
+          <Link to='/' >{bookmark}</Link>
         </div>
       </div>
     );

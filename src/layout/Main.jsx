@@ -18,12 +18,14 @@ const Main = () => {
         <BottomNavbar />
       </div>
       {/* Main content section */}
-      <div className=" p-4 ">
+      <div className=" p-4 w-[90vw] md:w-[calc(100vw-180px)]">
         <div className=" grid grid-cols-[1fr_auto]">
           <Searchbar />
-          <div className=" text-secondary text-3xl md:text-4xl lg:hidden">{profile}</div>
+          <div className=" text-secondary text-3xl md:text-4xl lg:hidden">
+            {profile}
+          </div>
         </div>
-        <Outlet/>
+        <Outlet />
       </div>
     </div>
   );

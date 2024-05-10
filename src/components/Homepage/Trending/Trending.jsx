@@ -6,7 +6,7 @@ const Trending = () => {
   return (
     <div className="my-3">
       <h1 className="text-secondary text-2xl pb-4">Trending</h1>
-      <div className=" max-w-[90vw] md:max-w-[calc(100vw-180px)] custom-scrollbar scroll-smooth overflow-x-auto flex gap-6">
+      <div className="custom-scrollbar scroll-smooth overflow-x-auto flex gap-6">
         <TrendingCard bookImage={book1} />
         <TrendingCard bookImage={book2} />
         <TrendingCard bookImage={book2} />
