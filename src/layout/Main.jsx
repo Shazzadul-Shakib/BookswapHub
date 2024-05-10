@@ -1,7 +1,6 @@
+import { Outlet } from "react-router-dom";
 import Searchbar from "../components/Shared/Searchbar/Searchbar";
 import Sidebar from "../components/Shared/Sidebar/Sidebar";
-import Trending from "../components/Homepage/Trending/Trending";
-import Recommended from "../components/Homepage/Recommended/Recommended";
 import BottomNavbar from "../components/Shared/BottomNavbar/BottomNavbar";
 import { allIconsData } from "../data/all-icons-data";
 
@@ -24,10 +23,7 @@ const Main = () => {
           <Searchbar />
           <div className=" text-secondary text-3xl md:text-4xl lg:hidden">{profile}</div>
         </div>
-        <div className="h-full overflow-y-auto custom-scrollbar">
-          <Trending />
-          <Recommended />
-        </div>
+        <Outlet/>
       </div>
     </div>
   );

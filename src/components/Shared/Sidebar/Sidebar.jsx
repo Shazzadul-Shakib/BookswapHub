@@ -2,6 +2,7 @@ import { useContext } from "react";
 import logo from "../../../assets/logo.ico";
 import { allIconsData } from "../../../data/all-icons-data";
 import { AuthContext } from "../../../provider/authProviders";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const { home, add, bookmark, profile } = allIconsData;
@@ -17,8 +18,8 @@ const Sidebar = () => {
           </div>
           {/* Icons */}
           <ul className=" my-10 flex flex-col items-center gap-6">
-            <li className=" text-xl text-secondary">{home}</li>
-            <li className=" text-xl text-icon">{add}</li>
+            <Link to='/' className=" text-xl text-secondary">{home}</Link>
+            <Link to='/addbook' className=" text-xl text-icon">{add}</Link>
             <li className=" text-xl text-icon">{bookmark}</li>
           </ul>
         </section>

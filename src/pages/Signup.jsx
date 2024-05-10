@@ -24,7 +24,6 @@ const Signup = () => {
         updateUserName(data.userName);
         verifyUserEmail();
         navigate("/login");
-        alert("Verify your email");
       }
     } catch (error) {
       alert(error.message);
