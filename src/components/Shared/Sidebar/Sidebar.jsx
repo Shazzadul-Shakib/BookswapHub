@@ -38,7 +38,7 @@ const Sidebar = () => {
         <div ref={ref}>
           <div
             onClick={toggle}
-            className="flex justify-center text-accent text-3xl"
+            className="flex cursor-pointer justify-center text-accent text-3xl"
           >
             {profile}
           </div>
