@@ -1,8 +1,10 @@
+import YourCollection from "../components/Addbookpage/YourCollection/YourCollection";
 
 const AddBook = () => {
     return (
-        <div>
-        </div>
+        <>
+            <YourCollection/>
+        </>
     );
 };
 
