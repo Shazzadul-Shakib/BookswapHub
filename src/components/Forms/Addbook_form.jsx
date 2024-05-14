@@ -1,21 +1,32 @@
-import { allIconsData } from "../../data/all-icons-data";
 import { useForm } from "react-hook-form";
+import { allIconsData } from "../../data/all-icons-data";
+import useGetImageUrl from "../../hooks/useGetImageUrl";
 
-const AddbookForm = ({close}) => {
+const AddbookForm = ({ close }) => {
   const { image, cancel } = allIconsData;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { getImageUrl } = useGetImageUrl();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
+      data.bookImage = uploadedImageUrl;
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="relative bg-primary md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
-      <header onClick={close} className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer">
+      <header
+        onClick={close}
+        className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer"
+      >
         {cancel}
       </header>
       <main className="my-5 mx-2">
