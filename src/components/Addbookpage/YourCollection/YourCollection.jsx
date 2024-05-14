@@ -1,10 +1,13 @@
 import { allIconsData } from "../../../data/all-icons-data";
 import RecommendedCard from "../../Cards/RecommendedCard";
+import AddbookForm from "../../Forms/Addbook_form";
+import ModalBody from "../../Shared/ModalBody/ModalBody";
 
 const YourCollection = () => {
   const { add_btn } = allIconsData;
   return (
     <div>
+      <ModalBody modal={<AddbookForm/>}/>
       {/* Headers section */}
       <header className=" flex justify-between items- mt-6 mb-6">
         <div>

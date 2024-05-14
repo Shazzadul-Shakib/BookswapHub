@@ -1,11 +1,11 @@
 import YourCollection from "../components/Addbookpage/YourCollection/YourCollection";
 
 const AddBook = () => {
-    return (
-        <>
-            <YourCollection/>
-        </>
-    );
+  return (
+    <>
+      <YourCollection />
+    </>
+  );
 };
 
 export default AddBook;
