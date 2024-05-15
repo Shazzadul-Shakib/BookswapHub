@@ -7,6 +7,7 @@ const AddbookForm = ({ close }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const { getImageUrl } = useGetImageUrl();
@@ -15,6 +16,8 @@ const AddbookForm = ({ close }) => {
     try {
       const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
       data.bookImage = uploadedImageUrl;
+      reset();
+      close();
       console.log(data);
     } catch (error) {
       console.error(error);
