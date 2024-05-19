@@ -1,9 +1,10 @@
+import { useAddBookMutation } from "../../redux/api/books-api";
 import { useForm } from "react-hook-form";
-import { allIconsData } from "../../data/all-icons-data";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
-import axios from "axios";
+import { allIconsData } from "../../data/all-icons-data";
 
 const AddbookForm = ({ close }) => {
+  const [addBook] = useAddBookMutation();
   const { image, cancel } = allIconsData;
   const {
     register,
@@ -17,10 +18,8 @@ const AddbookForm = ({ close }) => {
     try {
       const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
       data.bookImage = uploadedImageUrl;
-      const result = await axios.post(
-        "http://localhost:5000/api/v1/book",
-        data
-      );
+      const result = await addBook(data);
+      console.log(result);
       reset();
       close();
     } catch (error) {

@@ -9,3 +9,6 @@ VITE_appId= ""
 # Cloudinary assets
 VITE_cloudName=""
 VITE_cloudPreset=""
+
+# Base url
+VITE_baseUrl=""
