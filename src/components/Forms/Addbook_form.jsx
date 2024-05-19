@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { allIconsData } from "../../data/all-icons-data";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
+import axios from "axios";
 
 const AddbookForm = ({ close }) => {
   const { image, cancel } = allIconsData;
@@ -16,9 +17,12 @@ const AddbookForm = ({ close }) => {
     try {
       const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
       data.bookImage = uploadedImageUrl;
+      const result = await axios.post(
+        "http://localhost:5000/api/v1/book",
+        data
+      );
       reset();
       close();
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
