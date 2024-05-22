@@ -15,7 +15,13 @@ export const booksApi = createApi({
       }),
       invalidatesTags: ["book"],
     }),
+    getBook: builder.query({
+      query: () => ({
+        url: "book",
+      }),
+      providesTags: ["book"],
+    }),
   }),
 });
 
-export const { useAddBookMutation } = booksApi;
+export const { useAddBookMutation,useGetBookQuery } = booksApi;

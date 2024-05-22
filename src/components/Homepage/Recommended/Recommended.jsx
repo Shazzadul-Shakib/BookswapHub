@@ -1,6 +1,11 @@
+import { useGetBookQuery } from "../../../redux/api/books-api";
 import RecommendedCard from "../../Cards/RecommendedCard";
+import Loader from "../../Shared/Loader/Loader"
 
 const Recommended = () => {
+  const {data , isLoading }=useGetBookQuery();
+  isLoading? <Loader/>:console.log(data.data);
+
   return (
     <>
       <div className="my-5 px-2 ">
