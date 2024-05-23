@@ -1,22 +1,21 @@
-import Divider from "../components/Shared/Divider/Divider";
-import { allIconsData } from "../data/all-icons-data";
 import logo from "../assets/logo.ico";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
+import { useAddUserMutation } from "../redux/api/users-api";
 
 const Login = () => {
-  const { google, facebook } = allIconsData;
+  const { loginUserWithEmailPassword } = useContext(AuthContext);
+  const [addUser] = useAddUserMutation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const { loginUserWithEmailPassword } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const result = await loginUserWithEmailPassword(data.email, data.password);
@@ -25,6 +24,13 @@ const Login = () => {
       if (result.user.emailVerified) {
         reset();
         navigate("/");
+
+        // send user to server form here to store in DB
+        const userName = result.user.displayName;
+        const userEmail = result.user.email;
+        const userImage = result.user.photoURL || "";
+        const User = { userName, userEmail, userImage };
+        await addUser(User);
       } else {
         alert("Verify your email first");
       }
@@ -96,7 +102,7 @@ const Login = () => {
             </p>
           </div>
           {/* Divider */}
-          <SocialLogin/>
+          <SocialLogin />
         </div>
       </section>
     </div>

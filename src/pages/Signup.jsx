@@ -6,15 +6,15 @@ import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
 
 const Signup = () => {
-  
+  const { createUser, updateUserName, verifyUserEmail } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const { createUser,updateUserName, verifyUserEmail } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const result = await createUser(data.email, data.password);
@@ -102,7 +102,7 @@ const Signup = () => {
             </p>
           </div>
           {/* Divider */}
-         <SocialLogin/>
+          <SocialLogin />
         </div>
       </section>
     </div>
