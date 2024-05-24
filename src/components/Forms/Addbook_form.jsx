@@ -2,24 +2,28 @@ import { useAddBookMutation } from "../../redux/api/books-api";
 import { useForm } from "react-hook-form";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
 import { allIconsData } from "../../data/all-icons-data";
+import { useContext } from "react";
+import {AuthContext} from "../../provider/authProviders"
 
 const AddbookForm = ({ close }) => {
+  const {user}=useContext(AuthContext);
   const [addBook] = useAddBookMutation();
   const { image, cancel } = allIconsData;
+  const { getImageUrl } = useGetImageUrl();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const { getImageUrl } = useGetImageUrl();
 
   const onSubmit = async (data) => {
     try {
       const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
       data.bookImage = uploadedImageUrl;
+      data.userEmail=user.email;
       const result = await addBook(data);
-      console.log(result);
+      // console.log(result);
       reset();
       close();
     } catch (error) {
