@@ -36,7 +36,7 @@ const Main = () => {
           <div ref={profileCardRef}>
             <div
               onClick={toggleProfile}
-              className=" text-secondary text-4xl md:text-4xl lg:hidden"
+              className=" text-secondary text-4xl md:text-4xl lg:hidden cursor-pointer"
             >
               {profile}
             </div>
