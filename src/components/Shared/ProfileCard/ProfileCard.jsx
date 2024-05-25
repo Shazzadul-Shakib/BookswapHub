@@ -7,7 +7,7 @@ const ProfileCard = ({ handleLogout }) => {
   const { profile, setting, update, logout } = allIconsData;
 
   return (
-    <div className=" text-secondary bg-tertiary py-8 px-4  w-[400px] rounded-xl">
+    <div className=" text-secondary bg-tertiary py-8 px-4 w-[300px]  sm:w-[400px] rounded-xl">
       <div className="  flex items-center gap-4 mb-10 p-3 rounded bg-icon bg-opacity-15">
         <div className=" text-4xl">{profile}</div>
         <h1 className=" text-xl font-bold">{user.displayName}</h1>

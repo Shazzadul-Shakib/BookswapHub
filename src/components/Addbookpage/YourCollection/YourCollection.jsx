@@ -38,7 +38,7 @@ const YourCollection = () => {
       <main className=" h-[calc(100dvh-195px)] lg:h-[calc(100dvh-140px)]  overflow-y-auto custom-scrollbar">
         <div className=" w-full grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {books.map((book) => (
-            <RecommendedCard key={book._id} book={book} />
+            <RecommendedCard key={book._id} book={book}  />
           ))}
         </div>
       </main>

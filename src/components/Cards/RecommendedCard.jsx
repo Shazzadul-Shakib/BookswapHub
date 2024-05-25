@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { allIconsData } from "../../data/all-icons-data";
 
 const RecommendedCard = ({ book }) => {
@@ -5,7 +6,7 @@ const RecommendedCard = ({ book }) => {
 
   return (
     <>
-      <div className=" flex flex-col my-4">
+      <Link to={`/book/${book._id}`} className=" flex flex-col my-4">
         <div className="  h-[130px] w-[260px] rounded-xl my-1 flex justify-center relative overflow-hidden cursor-pointer">
           <img
             className=" max-h-full max-w-full"
@@ -28,7 +29,7 @@ const RecommendedCard = ({ book }) => {
           </div>
           <h2 className=" text-sm font-semibold py-1">{book?.user.userName}</h2>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
