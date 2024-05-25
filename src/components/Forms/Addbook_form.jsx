@@ -23,7 +23,7 @@ const AddbookForm = ({ close }) => {
       data.bookImage = uploadedImageUrl;
       data.userEmail=user.email;
       const result = await addBook(data);
-      // console.log(result);
+      console.log(data);
       reset();
       close();
     } catch (error) {
@@ -56,7 +56,7 @@ const AddbookForm = ({ close }) => {
               name="Image"
               id="Image"
               className="hidden"
-              {...register("bookImage", { required: true })}
+              {...register("bookImage", { required: false })}
             />
             {errors.bookImage && (
               <p className="text-accent text-xs">Image is required</p>
@@ -74,6 +74,51 @@ const AddbookForm = ({ close }) => {
             {errors.bookName && (
               <p className="text-accent text-xs">Book's name is required</p>
             )}
+          </div>
+
+          <div className="mb-4">
+            {/* Book author name input */}
+            <input
+              type="text"
+              placeholder="Author's name"
+              className="w-full px-3 py-2 rounded border border-secondary"
+              {...register("author", { required: true })}
+            />
+            {errors.authorName && (
+              <p className="text-accent text-xs">
+                Author'a name is required
+              </p>
+            )}
+          </div>
+          <div className=" flex gap-4">
+            <div className="mb-4 w-full">
+              {/* Book's Language' input */}
+              <input
+                type="text"
+                placeholder="Book's Language name"
+                className="w-full px-3 py-2 rounded border border-secondary"
+                {...register("language", { required: true })}
+              />
+              {errors.language && (
+                <p className="text-accent text-xs">
+                  Book's language is required
+                </p>
+              )}
+            </div>
+            <div className="mb-4 w-full">
+              {/* Bookpage number input */}
+              <input
+                type="number"
+                placeholder="Book's page number"
+                className="w-full px-3 py-2 rounded border border-secondary"
+                {...register("page", { required: true })}
+              />
+              {errors.page && (
+                <p className="text-accent text-xs">
+                  Book's page number is required
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="mb-3">

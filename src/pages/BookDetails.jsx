@@ -7,11 +7,11 @@ import Loader from "../components/Shared/Loader/Loader";
 const BookDetails = () => {
   const { book_id } = useParams();
   const { data, isLoading } = useGetSingleBookQuery(book_id);
-
   const { profile } = allIconsData;
-  let bookInfo;
 
-  isLoading ? <Loader /> : (bookInfo = data?.data || []);
+  isLoading && <Loader />;
+
+  let bookInfo = data?.data || [];
 
   return (
     <main className=" w-[90%] h-[80dvh] mx-auto flex flex-col justify-center lg:justify-start lg:flex-row items-center gap-14 py-4 lg:py-0">
@@ -43,15 +43,15 @@ const BookDetails = () => {
         <div className="space-y-2">
           <div className="flex justify-between w-full">
             <h3 className="w-1/4 text-sm font-semibold">Author</h3>
-            <h3 className="w-3/4 text-sm">Robert T. Kiyosaki</h3>
+            <h3 className="w-3/4 text-sm">{bookInfo?.author}</h3>
           </div>
           <div className="flex justify-between w-full">
             <h3 className="w-1/4 text-sm font-semibold">Language</h3>
-            <h3 className="w-3/4 text-sm">English</h3>
+            <h3 className="w-3/4 text-sm">{bookInfo?.language}</h3>
           </div>
           <div className="flex justify-between w-full">
             <h3 className="w-1/4 text-sm font-semibold">Page</h3>
-            <h3 className="w-3/4 text-sm">200</h3>
+            <h3 className="w-3/4 text-sm">{bookInfo?.page}</h3>
           </div>
         </div>
         {/* Borrow book button */}
