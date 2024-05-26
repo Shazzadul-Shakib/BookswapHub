@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
-import book from "../assets/book.jpg";
 import { allIconsData } from "../data/all-icons-data";
 import { useGetSingleBookQuery } from "../redux/api/books-api";
 import Loader from "../components/Shared/Loader/Loader";
+import ModalBody from "../components/Shared/ModalBody/ModalBody";
+import Borrowbook_form from "../components/Forms/Borrowbook_form";
+import useToggle from "../hooks/useToggle";
 
 const BookDetails = () => {
   const { book_id } = useParams();
   const { data, isLoading } = useGetSingleBookQuery(book_id);
   const { profile } = allIconsData;
-
-  isLoading && <Loader />;
+  const [isOpen,_, setIsOpen]=useToggle();
 
   let bookInfo = data?.data || [];
 
@@ -56,11 +57,17 @@ const BookDetails = () => {
         </div>
         {/* Borrow book button */}
         <div>
-          <button className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold">
+          <button
+            onClick={() => setIsOpen(true)}
+            className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold"
+          >
             Borrow Book
           </button>
         </div>
       </section>
+      
+      {isLoading && <ModalBody modal={<Loader />} />}
+      {isOpen && <ModalBody modal={<Borrowbook_form bookInfo={bookInfo} close={()=>setIsOpen(false)} />} />}
     </main>
   );
 };
