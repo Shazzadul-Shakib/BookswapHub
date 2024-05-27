@@ -5,7 +5,7 @@ const RecommendedCard = ({ book }) => {
   const { bookmarkOutline, profile } = allIconsData;
 
   return (
-    <>
+    <main>
       <Link to={`/book/${book._id}`} className=" flex flex-col my-4">
         <div className="  h-[130px] w-[260px] rounded-xl my-1 flex justify-center relative overflow-hidden cursor-pointer">
           <img
@@ -24,13 +24,21 @@ const RecommendedCard = ({ book }) => {
         </div>
 
         <div className=" text-secondary flex gap-2 items-center">
-          <div className=" text-2xl">
-            {book?.user?.userImage != "" ? book?.user?.userImage : profile}
+          <div>
+            {book?.user?.userImage != "" ? (
+              <div className=" h-[25px] w-[25px] mt-1 rounded-full overflow-hidden">
+                <img src={book?.user?.userImage} alt="User photo" />
+              </div>
+            ) : (
+              <div className=" text-[25px]">{profile}</div>
+            )}
           </div>
-          <h2 className=" text-sm font-semibold py-1">{book?.user.userName}</h2>
+          <h2 className=" text-sm font-semibold py-1">
+            {book?.user?.userName}
+          </h2>
         </div>
       </Link>
-    </>
+    </main>
   );
 };
 

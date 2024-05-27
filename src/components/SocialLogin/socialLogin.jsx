@@ -3,14 +3,22 @@ import { allIconsData } from "../../data/all-icons-data";
 import Divider from "../Shared/Divider/Divider";
 import { AuthContext } from "../../provider/authProviders";
 import { useNavigate } from "react-router-dom";
+import { useAddUserMutation } from "../../redux/api/users-api";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
   const { google } = allIconsData;
   const { googlelogin } = useContext(AuthContext);
+  const [addUser] = useAddUserMutation();
 
   const handleGoogleSignIn = async () => {
-    await googlelogin().then(() => {
+    await googlelogin().then(async (res) => {
+      const { displayName, email, photoURL } = res.user;
+      const userName = displayName;
+      const userEmail = email;
+      const userImage = photoURL;
+      const User = { userName, userEmail, userImage };
+      await addUser(User);
       navigate("/");
     });
   };
