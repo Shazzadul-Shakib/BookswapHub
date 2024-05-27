@@ -15,7 +15,14 @@ export const usersApi = createApi({
       }),
       invalidatesTags:["user"],
     }),
+    updateUserBorrowedBooks:builder.mutation({
+      query:({email,data})=>({
+        url:`user/${email}`,
+        method:"PATCH",
+        body:data,
+      })
+    })
   }),
 });
 
-export const {useAddUserMutation}=usersApi;
+export const {useAddUserMutation,useUpdateUserBorrowedBooksMutation}=usersApi;

@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
 import { allIconsData } from "../../data/all-icons-data";
 import { useContext } from "react";
-import {AuthContext} from "../../provider/authProviders"
+import { AuthContext } from "../../provider/authProviders";
 
 const AddbookForm = ({ close }) => {
-  const {user}=useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [addBook] = useAddBookMutation();
   const { image, cancel } = allIconsData;
   const { getImageUrl } = useGetImageUrl();
@@ -21,9 +21,8 @@ const AddbookForm = ({ close }) => {
     try {
       const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
       data.bookImage = uploadedImageUrl;
-      data.userEmail=user.email;
-      const result = await addBook(data);
-      console.log(data);
+      data.userEmail = user.email;
+      await addBook(data);
       reset();
       close();
     } catch (error) {
@@ -85,9 +84,7 @@ const AddbookForm = ({ close }) => {
               {...register("author", { required: true })}
             />
             {errors.authorName && (
-              <p className="text-accent text-xs">
-                Author'a name is required
-              </p>
+              <p className="text-accent text-xs">Author'a name is required</p>
             )}
           </div>
           <div className=" flex gap-4">
