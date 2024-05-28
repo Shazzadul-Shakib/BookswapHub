@@ -5,7 +5,6 @@ import Loader from "../../Shared/Loader/Loader";
 const Recommended = () => {
   const { data, isLoading } = useGetBookQuery();
   const books = data?.data || [];
-  console.log(books)
 
   isLoading && <Loader />;
 

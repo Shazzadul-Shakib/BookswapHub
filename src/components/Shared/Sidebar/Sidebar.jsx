@@ -13,7 +13,7 @@ const Sidebar = () => {
   const toggle = () => {
     setOpen(!open);
   };
-  const { home, add, bookmark, profile } = allIconsData;
+  const { home, add, bookmark, profile, borrowedbook } = allIconsData;
 
   return (
     <>
@@ -32,6 +32,7 @@ const Sidebar = () => {
               {add}
             </Link>
             <li className=" text-xl text-icon">{bookmark}</li>
+            <Link to="/borrowedbook" className=" text-xl text-icon">{borrowedbook}</Link>
           </ul>
         </section>
         {/* Profile section */}

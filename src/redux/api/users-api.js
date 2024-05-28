@@ -13,16 +13,23 @@ export const usersApi = createApi({
         method: "POST",
         body: User,
       }),
-      invalidatesTags:["user"],
+      invalidatesTags: ["user"],
     }),
-    updateUserBorrowedBooks:builder.mutation({
-      query:({email,data})=>({
-        url:`user/${email}`,
-        method:"PATCH",
-        body:data,
-      })
-    })
+    updateUserBorrowedBooks: builder.mutation({
+      query: ({ email, data }) => ({
+        url: `user/${email}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    getUserBorrowedBooks: builder.query({
+      query: (email) => ({
+        url: `user/${email}`,
+      }),
+      providesTags: ["user"],
+    }),
   }),
 });
 
-export const {useAddUserMutation,useUpdateUserBorrowedBooksMutation}=usersApi;
+export const {useAddUserMutation,useUpdateUserBorrowedBooksMutation,useGetUserBorrowedBooksQuery}=usersApi;

@@ -7,6 +7,7 @@ import ForgetPassword from "../pages/ForgetPassword";
 import Homepage from "../pages/Homepage";
 import AddBook from "../pages/AddBook";
 import BookDetails from "../pages/BookDetails";
+import BorrowedBook from "../pages/BorrowedBook";
 
 export const router= createBrowserRouter([
     {
@@ -36,6 +37,10 @@ export const router= createBrowserRouter([
             {
                 path:'/book/:book_id',
                 element:<BookDetails/>
+            },
+            {
+                path:'/borrowedbook',
+                element:<BorrowedBook/>
             }
         ]
     },
