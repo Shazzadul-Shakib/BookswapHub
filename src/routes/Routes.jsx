@@ -8,6 +8,7 @@ import Homepage from "../pages/Homepage";
 import AddBook from "../pages/AddBook";
 import BookDetails from "../pages/BookDetails";
 import BorrowedBook from "../pages/BorrowedBook";
+import Notification from "../pages/Notification";
 
 export const router= createBrowserRouter([
     {
@@ -41,7 +42,11 @@ export const router= createBrowserRouter([
             {
                 path:'/borrowedbook',
                 element:<BorrowedBook/>
-            }
+            },
+            {
+                path:'/notification',
+                element:<Notification/>
+            },
         ]
     },
 ])

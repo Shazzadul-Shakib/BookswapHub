@@ -1,4 +1,3 @@
-import book from "../../assets/book.jpg";
 
 const BorrowedBookCard = ({bookInfo}) => {
 const {bookName,bookImage}=bookInfo.bookId;
@@ -18,7 +17,7 @@ const { userName: owner } = bookInfo.bookOwnerUserId;
       </section>
       <section className=" mr-6">
         {bookInfo.pending && (
-          <div className=" px-4 py-2 rounded bg-yellow-400 text-xs font-semibold">
+          <div className=" px-4 py-2 rounded border border-yellow-400 text-xs font-semibold text-secondary">
             Pending
           </div>
         )}

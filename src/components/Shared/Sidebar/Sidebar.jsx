@@ -5,15 +5,24 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { allIconsData } from "../../../data/all-icons-data";
 import logo from "../../../assets/logo.ico";
 import ProfileCard from "../ProfileCard/ProfileCard";
+import { useGetUserBorrowedBooksQuery } from "../../../redux/api/users-api";
+import ModalBody from "../ModalBody/ModalBody";
+import Loader from "../Loader/Loader";
 
 const Sidebar = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const [open, setOpen, ref] = useOutsideClick(false);
+  const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
+  const { home, add, bookmark, profile, borrowedbook, notification } =
+    allIconsData;
+
+  if (isLoading) {
+    return <ModalBody modal={<Loader />} />;
+  }
 
   const toggle = () => {
     setOpen(!open);
   };
-  const { home, add, bookmark, profile, borrowedbook } = allIconsData;
 
   return (
     <>
@@ -32,7 +41,19 @@ const Sidebar = () => {
               {add}
             </Link>
             <li className=" text-xl text-icon">{bookmark}</li>
-            <Link to="/borrowedbook" className=" text-xl text-icon">{borrowedbook}</Link>
+            <Link to="/borrowedbook" className=" text-lg text-icon">
+              {borrowedbook}
+            </Link>
+            <Link to="/notification" className=" relative  text-2xl text-icon">
+              {notification}
+              <p
+                className={`absolute top-0 -mt-1 flex items-center justify-center text-[10px] text-secondary h-[13px] w-[13px] bg-accent rounded-full ${
+                  data.data[0].userNotification?.length === 0 ? "hidden" : ""
+                }`}
+              >
+                {data.data[0].userNotification?.length}
+              </p>
+            </Link>
           </ul>
         </section>
         {/* Profile section */}

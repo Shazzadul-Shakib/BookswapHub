@@ -4,7 +4,7 @@ import { FaBookOpen, FaFacebookSquare, FaGoogle, FaRegImage } from "react-icons/
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { HiSquares2X2 } from "react-icons/hi2";
 import { ImCancelCircle } from "react-icons/im";
-import { IoMdLogOut, IoMdSettings } from "react-icons/io";
+import { IoIosNotifications, IoMdLogOut, IoMdSettings } from "react-icons/io";
 import {
   IoBookmark,
   IoBookmarkOutline,
@@ -28,4 +28,5 @@ export const allIconsData = {
   image: <FaRegImage />,
   cancel: <ImCancelCircle />,
   borrowedbook: <FaBookOpen />,
+  notification: <IoIosNotifications />,
 };
