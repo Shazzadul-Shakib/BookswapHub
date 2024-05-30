@@ -28,7 +28,6 @@ const Borrowbook_form = ({ bookInfo, close }) => {
       console.error(error);
     }
   };
-
   // Watch the terms checkbox
   const isTermsChecked = watch("terms", false);
 
