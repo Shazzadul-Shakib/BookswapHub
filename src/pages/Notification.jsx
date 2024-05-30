@@ -14,7 +14,7 @@ const Notification = () => {
   const userNotification = data?.data[0]?.userNotification;
 
   return (
-    <main className=" w-[70%] mx-auto my-6">
+    <main className="w-full md:w-[90%] lg:w-[70%] h-[85dvh] mx-auto my-6 overflow-y-auto custom-scrollbar">
       {userNotification.map((notification) => (
         <NotificationCard key={notification._id} notification={notification} />
       ))}

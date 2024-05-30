@@ -5,7 +5,7 @@ const NotificationCard = ({ notification }) => {
   const { userName, userImage } = notification.borrowerUserId;
   const { bookName } = notification.bookId;
   return (
-    <main className=" flex items-center gap-4 bg-tertiary rounded p-4 my-4">
+    <main className=" flex items-center gap-4 bg-tertiary rounded p-4 my-4 cursor-pointer">
       <div className=" flex items-center h-[50px] w-[50px]">
         <img
           className="rounded-full"
@@ -13,10 +13,10 @@ const NotificationCard = ({ notification }) => {
           alt="User Photo"
         />
       </div>
-      <div className=" flex gap-1 text-secondary text-xl">
-        <h1 className=" font-semibold">{userName}</h1>
+      <div className=" flex gap-1 text-secondary  text-xs md:text-xl">
         <p>
-          wants to borrow your{" "}
+          <span className=" font-semibold">{userName}</span>
+          {" "}wants to borrow your{" "}
           <span className=" text-accent font-semibold"> "{bookName}"</span> book
         </p>
       </div>
