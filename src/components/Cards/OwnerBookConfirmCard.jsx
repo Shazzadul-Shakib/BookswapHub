@@ -1,7 +1,33 @@
 import { allIconsData } from "../../data/all-icons-data";
+import { useUpdateUserBorrowedBookStatusMutation } from "../../redux/api/users-api";
 
 const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
   const { cancel } = allIconsData;
+  const [updateUserBorrowedBookStatus] = useUpdateUserBorrowedBookStatusMutation();
+
+   const handleConfirmRequest = async () => {
+     const confirmation = true;
+     const result = await updateUserBorrowedBookStatus({
+       userId: notificationInfo.borrowerUserId._id,
+       bookId: notificationInfo.bookId._id,
+       confirmation,
+     }).unwrap();
+
+     if (result?.data?.confirmationCode) {
+       alert(`Confirmation code: ${result?.data?.confirmationCode}`);
+     }
+     close();
+   };
+
+  const handleRejectRequest = async () => {
+    const confirmation = false;
+    await updateUserBorrowedBookStatus({
+      userId: notificationInfo.borrowerUserId._id,
+      bookId: notificationInfo.bookId._id,
+      confirmation,
+    });
+    close();
+  };
 
   return (
     <main className="relative bg-primary w-[360px] md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
@@ -61,10 +87,16 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
         </div>
       </section>
       <section className="flex justify-around gap-4">
-        <button className="text-secondary px-4 py-2 bg-accent w-full text-sm font-semibold rounded">
+        <button
+          onClick={handleRejectRequest}
+          className="text-secondary px-4 py-2 bg-accent w-full text-sm font-semibold rounded"
+        >
           Reject
         </button>
-        <button className="text-secondary px-4 py-2 bg-tertiary w-full text-sm font-semibold rounded">
+        <button
+          onClick={handleConfirmRequest}
+          className="text-secondary px-4 py-2 bg-tertiary w-full text-sm font-semibold rounded"
+        >
           Confirm
         </button>
       </section>

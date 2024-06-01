@@ -23,6 +23,14 @@ export const usersApi = createApi({
       }),
       invalidatesTags: ["user"],
     }),
+    updateUserBorrowedBookStatus: builder.mutation({
+      query: ({ userId, bookId, confirmation }) => ({
+        url: `user/${userId}/${bookId}`,
+        method: "PATCH",
+        body: {confirmation},
+      }),
+      invalidatesTags: ["user"],
+    }),
     getUserBorrowedBooks: builder.query({
       query: (email) => ({
         url: `user/${email}`,
@@ -32,4 +40,9 @@ export const usersApi = createApi({
   }),
 });
 
-export const {useAddUserMutation,useUpdateUserBorrowedBooksMutation,useGetUserBorrowedBooksQuery}=usersApi;
+export const {
+  useAddUserMutation,
+  useUpdateUserBorrowedBooksMutation,
+  useGetUserBorrowedBooksQuery,
+  useUpdateUserBorrowedBookStatusMutation,
+} = usersApi;

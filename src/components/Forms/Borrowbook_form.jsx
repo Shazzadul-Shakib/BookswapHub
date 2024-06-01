@@ -19,7 +19,6 @@ const Borrowbook_form = ({ bookInfo, close }) => {
     try {
       data.bookId = bookInfo._id;
       data.bookOwnerUserId = bookInfo.user._id;
-      data.pending = true;
       data.borrowed = false;
       await updateUserBorrowedBooks({ email: user.email, data });
       reset();

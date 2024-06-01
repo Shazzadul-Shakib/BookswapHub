@@ -16,10 +16,6 @@ const Sidebar = () => {
   const { home, add, bookmark, profile, borrowedbook, notification } =
     allIconsData;
 
-  if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
-  }
-
   const toggle = () => {
     setOpen(!open);
   };
@@ -48,10 +44,10 @@ const Sidebar = () => {
               {notification}
               <p
                 className={`absolute top-0 -mt-1 flex items-center justify-center text-[10px] text-secondary h-[13px] w-[13px] bg-accent rounded-full ${
-                  data.data[0].userNotification?.length === 0 ? "hidden" : ""
+                  data?.data[0]?.userNotification?.length === 0 ? "hidden" : ""
                 }`}
               >
-                {data.data[0].userNotification?.length}
+                {data?.data[0]?.userNotification?.length}
               </p>
             </Link>
           </ul>
@@ -71,6 +67,7 @@ const Sidebar = () => {
           )}
         </div>
       </div>
+      {isLoading && <ModalBody modal={<Loader />} />}
     </>
   );
 };
