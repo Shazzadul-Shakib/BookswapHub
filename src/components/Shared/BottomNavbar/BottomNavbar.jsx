@@ -11,10 +11,6 @@ const BottomNavbar = () => {
   const { user } = useContext(AuthContext);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   
-
-  if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
-  }
   return (
     <div>
       <div className="flex justify-around items-center p-3 text-3xl text-icon bg-tertiary w-[100vw] ">
@@ -28,13 +24,14 @@ const BottomNavbar = () => {
           {notification}
           <p
             className={`absolute top-0 -mt-1  flex items-center justify-center text-[10px] text-secondary h-[13px] w-[13px] bg-accent rounded-full ${
-              data.data[0]?.userNotification?.length === 0 ? "hidden" : ""
+              data?.data[0]?.userNotification?.length === 0 ? "hidden" : ""
             }`}
           >
-            {data.data[0]?.userNotification?.length}
+            {data?.data[0]?.userNotification?.length}
           </p>
         </Link>
       </div>
+      {isLoading && <ModalBody modal={<Loader />} />}
     </div>
   );
 };

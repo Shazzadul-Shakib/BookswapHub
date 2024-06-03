@@ -1,9 +1,14 @@
 import React from "react";
 import { allIconsData } from "../../data/all-icons-data";
 import { useForm } from "react-hook-form";
+import { useUpdateUserBorrowedConfirmationMutation } from "../../redux/api/users-api";
 
-const BorrowerConfirmation_form = ({ confirmationCode, close }) => {
+const BorrowerConfirmationForm = ({ bookInfo, close }) => {
   const { cancel } = allIconsData;
+  const [updateUserBorrowedConfirmation] =
+    useUpdateUserBorrowedConfirmationMutation();
+  const borrowerUserId = bookInfo?.userId;
+  const borrowedBookId = bookInfo?.bookId._id;
 
   const {
     register,
@@ -11,9 +16,13 @@ const BorrowerConfirmation_form = ({ confirmationCode, close }) => {
     reset,
     formState: { errors },
   } = useForm();
+
   const onSubmit = async (data) => {
-    if (parseInt(data.code) === confirmationCode) {
+    if (parseInt(data.code) === bookInfo?.confirmationCode) {
       console.log("Matched");
+      await updateUserBorrowedConfirmation({ borrowerUserId, borrowedBookId });
+      reset();
+      close();
     }
   };
 
@@ -52,4 +61,4 @@ const BorrowerConfirmation_form = ({ confirmationCode, close }) => {
   );
 };
 
-export default BorrowerConfirmation_form;
+export default BorrowerConfirmationForm;

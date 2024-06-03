@@ -25,9 +25,16 @@ export const usersApi = createApi({
     }),
     updateUserBorrowedBookStatus: builder.mutation({
       query: ({ userId, bookId, confirmation }) => ({
-        url: `user/${userId}/${bookId}`,
+        url: `user/status/${userId}/${bookId}`,
         method: "PATCH",
-        body: {confirmation},
+        body: { confirmation },
+      }),
+      invalidatesTags: ["user"],
+    }),
+    updateUserBorrowedConfirmation: builder.mutation({
+      query: ({ borrowerUserId, borrowedBookId }) => ({
+        url: `user/confirm/${borrowerUserId}/${borrowedBookId}`,
+        method: "PATCH",
       }),
       invalidatesTags: ["user"],
     }),
@@ -45,4 +52,5 @@ export const {
   useUpdateUserBorrowedBooksMutation,
   useGetUserBorrowedBooksQuery,
   useUpdateUserBorrowedBookStatusMutation,
+  useUpdateUserBorrowedConfirmationMutation,
 } = usersApi;

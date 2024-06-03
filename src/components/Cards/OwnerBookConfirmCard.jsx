@@ -3,21 +3,22 @@ import { useUpdateUserBorrowedBookStatusMutation } from "../../redux/api/users-a
 
 const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
   const { cancel } = allIconsData;
-  const [updateUserBorrowedBookStatus] = useUpdateUserBorrowedBookStatusMutation();
+  const [updateUserBorrowedBookStatus] =
+    useUpdateUserBorrowedBookStatusMutation();
 
-   const handleConfirmRequest = async () => {
-     const confirmation = true;
-     const result = await updateUserBorrowedBookStatus({
-       userId: notificationInfo.borrowerUserId._id,
-       bookId: notificationInfo.bookId._id,
-       confirmation,
-     }).unwrap();
+  const handleConfirmRequest = async () => {
+    const confirmation = true;
+    const result = await updateUserBorrowedBookStatus({
+      userId: notificationInfo.borrowerUserId._id,
+      bookId: notificationInfo.bookId._id,
+      confirmation,
+    }).unwrap();
 
-     if (result?.data?.confirmationCode) {
-       alert(`Confirmation code: ${result?.data?.confirmationCode}`);
-     }
-     close();
-   };
+    if (result?.data?.confirmationCode) {
+      alert(`Confirmation code: ${result?.data?.confirmationCode}`);
+    }
+    close();
+  };
 
   const handleRejectRequest = async () => {
     const confirmation = false;
