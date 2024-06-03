@@ -13,6 +13,7 @@ const BookDetails = () => {
   const [isOpen,_, setIsOpen]=useToggle();
 
   let bookInfo = data?.data || [];
+  const { borrowed } = bookInfo;
 
   return (
     <main className=" w-[90%] h-[80dvh] mx-auto flex flex-col justify-center lg:justify-start lg:flex-row items-center gap-14 py-4 lg:py-0">
@@ -56,18 +57,32 @@ const BookDetails = () => {
           </div>
         </div>
         {/* Borrow book button */}
-        <div>
-          <button
-            onClick={() => setIsOpen(true)}
-            className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold"
-          >
-            Borrow Book
-          </button>
-        </div>
+        {borrowed ? (
+          <h1 className=" p-2 border border-accent rounded text-center font-semibold ">This book is unavailable right now!</h1>
+
+        ) : (
+          <div>
+            <button
+              onClick={() => setIsOpen(true)}
+              className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold"
+            >
+              Borrow Book
+            </button>
+          </div>
+        )}
       </section>
-      
+
       {isLoading && <ModalBody modal={<Loader />} />}
-      {isOpen && <ModalBody modal={<Borrowbook_form bookInfo={bookInfo} close={()=>setIsOpen(false)} />} />}
+      {isOpen && (
+        <ModalBody
+          modal={
+            <Borrowbook_form
+              bookInfo={bookInfo}
+              close={() => setIsOpen(false)}
+            />
+          }
+        />
+      )}
     </main>
   );
 };

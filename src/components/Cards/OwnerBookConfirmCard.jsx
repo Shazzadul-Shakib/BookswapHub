@@ -31,7 +31,7 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
   };
 
   return (
-    <main className="relative bg-primary w-[360px] md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
+    <main className="relative bg-primary w-[360px] md:w-[600px] lg:w-[800px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
       <header
         onClick={close}
         className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer"
@@ -87,20 +87,24 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
           </div>
         </div>
       </section>
-      <section className="flex justify-around gap-4">
-        <button
-          onClick={handleRejectRequest}
-          className="text-secondary px-4 py-2 bg-accent w-full text-sm font-semibold rounded"
-        >
-          Reject
-        </button>
-        <button
-          onClick={handleConfirmRequest}
-          className="text-secondary px-4 py-2 bg-tertiary w-full text-sm font-semibold rounded"
-        >
-          Confirm
-        </button>
-      </section>
+      {notificationInfo?.confirm ? (
+        ""
+      ) : (
+        <section className="flex justify-around gap-4">
+          <button
+            onClick={handleRejectRequest}
+            className="text-secondary px-4 py-2 bg-accent w-full text-sm font-semibold rounded"
+          >
+            Reject
+          </button>
+          <button
+            onClick={handleConfirmRequest}
+            className="text-secondary px-4 py-2 bg-tertiary w-full text-sm font-semibold rounded"
+          >
+            Confirm
+          </button>
+        </section>
+      )}
     </main>
   );
 };

@@ -3,6 +3,7 @@ import profile from "../../assets/pIcon.png";
 const NotificationCard = ({ notification, onClick }) => {
   const { userName, userImage } = notification.borrowerUserId;
   const { bookName } = notification.bookId;
+  const { confirm } = notification;
 
   return (
     <main
@@ -12,15 +13,31 @@ const NotificationCard = ({ notification, onClick }) => {
       <div className="flex items-center h-[50px] w-[50px]">
         <img
           className="rounded-full"
-          src={userImage || profile}
+          src={userImage ? userImage : profile}
           alt="User Photo"
         />
       </div>
       <div className="flex gap-1 text-secondary text-xs md:text-xl">
-        <p>
-          <span className="font-semibold">{userName}</span> wants to borrow your
-          <span className="text-accent font-semibold"> "{bookName}"</span> book
-        </p>
+        {confirm ? (
+          <p>
+            <span className="font-semibold">{userName}</span> borrowed your
+            <span className="text-accent font-semibold">
+              {" "}
+              "{bookName}"
+            </span>{" "}
+            book successfully
+          </p>
+        ) : (
+          <p>
+            <span className="font-semibold">{userName}</span> wants to borrow
+            your
+            <span className="text-accent font-semibold">
+              {" "}
+              "{bookName}"
+            </span>{" "}
+            book
+          </p>
+        )}
       </div>
     </main>
   );
