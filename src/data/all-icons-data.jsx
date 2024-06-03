@@ -11,6 +11,7 @@ import {
   IoCloudUpload,
   IoSearchOutline,
 } from "react-icons/io5";
+import { PiDotsThreeCircleLight } from "react-icons/pi";
 
 export const allIconsData = {
   home: <HiSquares2X2 />,
@@ -29,4 +30,5 @@ export const allIconsData = {
   cancel: <ImCancelCircle />,
   borrowedbook: <FaBookOpen />,
   notification: <IoIosNotifications />,
+  dots: <PiDotsThreeCircleLight />,
 };
