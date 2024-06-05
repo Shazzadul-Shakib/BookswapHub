@@ -23,7 +23,7 @@ const BorrowedBook = () => {
 
   return (
     <main className="w-full md:w-[90%] lg:w-[70%] h-[85dvh] mx-auto my-6 overflow-y-auto custom-scrollbar">
-      {newBorrowedBookInfo.map((data, index) => (
+      {newBorrowedBookInfo.slice().reverse().map((data, index) => (
         <BorrowedBookCard key={index} bookInfo={data} />
       ))}
 

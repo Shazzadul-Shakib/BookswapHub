@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { allIconsData } from "../../../data/all-icons-data";
 import useToggle from "../../../hooks/useToggle";
 import { useGetBookQuery } from "../../../redux/api/books-api";
@@ -5,14 +6,18 @@ import RecommendedCard from "../../Cards/RecommendedCard";
 import AddbookForm from "../../Forms/Addbook_form";
 import Loader from "../../Shared/Loader/Loader";
 import ModalBody from "../../Shared/ModalBody/ModalBody";
+import { AuthContext } from "../../../provider/authProviders";
 
 const YourCollection = () => {
   const { data, isLoading } = useGetBookQuery();
+  const {user}=useContext(AuthContext);
   const [isOpen, toggle] = useToggle();
 
   const books = data?.data || [];
+  console.log(books)
   const { add_btn } = allIconsData;
-
+const selfCollection=books.filter(book=>book?.user?.userEmail==user?.email);
+console.log(selfCollection)
   isLoading && <Loader />;
 
   return (
@@ -37,9 +42,12 @@ const YourCollection = () => {
       </header>
       <main className=" h-[calc(100dvh-195px)] lg:h-[calc(100dvh-140px)]  overflow-y-auto custom-scrollbar">
         <div className=" w-full grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {books.map((book) => (
-            <RecommendedCard key={book._id} book={book}  />
-          ))}
+          {selfCollection
+            .slice()
+            .reverse()
+            .map((book) => (
+              <RecommendedCard key={book._id} book={book} />
+            ))}
         </div>
       </main>
     </div>

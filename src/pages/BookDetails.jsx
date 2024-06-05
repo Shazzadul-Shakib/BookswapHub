@@ -5,14 +5,18 @@ import Loader from "../components/Shared/Loader/Loader";
 import ModalBody from "../components/Shared/ModalBody/ModalBody";
 import Borrowbook_form from "../components/Forms/Borrowbook_form";
 import useToggle from "../hooks/useToggle";
+import { useContext } from "react";
+import { AuthContext } from "../provider/authProviders";
 
 const BookDetails = () => {
   const { book_id } = useParams();
+  const {user}=useContext(AuthContext);
   const { data, isLoading } = useGetSingleBookQuery(book_id);
   const { profile } = allIconsData;
-  const [isOpen,_, setIsOpen]=useToggle();
+  const [isOpen, _, setIsOpen] = useToggle();
 
   let bookInfo = data?.data || [];
+  console.log(bookInfo);
   const { borrowed } = bookInfo;
 
   return (
@@ -56,22 +60,26 @@ const BookDetails = () => {
             <h3 className="w-3/4 text-sm">{bookInfo?.page}</h3>
           </div>
         </div>
-        {/* Borrow book button */}
-        {borrowed ? (
-          <h1 className=" p-2 border border-accent rounded text-center font-semibold ">This book is unavailable right now!</h1>
-
-        ) : (
-          <div>
-            <button
-              onClick={() => setIsOpen(true)}
-              className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold"
-            >
-              Borrow Book
-            </button>
-          </div>
+        {bookInfo?.user?.userEmail != user.email && (
+          <section>
+            {/* Borrow book button */}
+            {borrowed ? (
+              <h1 className=" p-2 border border-accent rounded text-center font-semibold ">
+                This book is unavailable right now!
+              </h1>
+            ) : (
+              <div>
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold"
+                >
+                  Borrow Book
+                </button>
+              </div>
+            )}
+          </section>
         )}
       </section>
-
       {isLoading && <ModalBody modal={<Loader />} />}
       {isOpen && (
         <ModalBody

@@ -15,7 +15,7 @@ const Notification = () => {
 
   return (
     <main className="w-full md:w-[90%] lg:w-[70%] h-[85dvh] mx-auto my-6 overflow-y-auto custom-scrollbar">
-      {userNotification?.map((notification) => (
+      {userNotification?.slice().reverse().map((notification) => (
         <NotificationCard
           key={notification._id}
           notification={notification}

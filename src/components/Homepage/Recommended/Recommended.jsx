@@ -14,7 +14,7 @@ const Recommended = () => {
         <h1 className="text-secondary text-2xl pb-4">Recommended for you</h1>
         <div>
           <div className="grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {books.map((book) => (
+            {books.slice().reverse().map((book) => (
               <RecommendedCard key={book._id} book={book} />
             ))}
           </div>
