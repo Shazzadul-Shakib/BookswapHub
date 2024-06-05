@@ -38,6 +38,13 @@ export const usersApi = createApi({
       }),
       invalidatesTags: ["user"],
     }),
+    deleteRejectedRequest: builder.mutation({
+      query: ({ borrowerUserId, borrowedrequestId }) => ({
+        url: `user/delete/${borrowerUserId}/${borrowedrequestId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["user"],
+    }),
     getUserBorrowedBooks: builder.query({
       query: (email) => ({
         url: `user/${email}`,
@@ -53,4 +60,5 @@ export const {
   useGetUserBorrowedBooksQuery,
   useUpdateUserBorrowedBookStatusMutation,
   useUpdateUserBorrowedConfirmationMutation,
+  useDeleteRejectedRequestMutation
 } = usersApi;

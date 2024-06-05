@@ -1,11 +1,13 @@
 import useToggle from "../../hooks/useToggle";
+import { useDeleteRejectedRequestMutation } from "../../redux/api/users-api";
 import BorrowerConfirmation_form from "../Forms/BorrowerConfirmation_form";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 
 const BorrowedBookCard = ({ bookInfo }) => {
   const { bookName, bookImage } = bookInfo?.bookId;
   const { userName: owner } = bookInfo.bookOwnerUserId;
-  const [isOpen,_,setIsOpen]=useToggle()
+  const [isOpen, _, setIsOpen] = useToggle();
+  const [deleteRejectedRequest] = useDeleteRejectedRequestMutation();
 
   return (
     <main className=" flex items-center bg-tertiary w-full rounded-lg my-4 py-1 ">
@@ -17,7 +19,10 @@ const BorrowedBookCard = ({ bookInfo }) => {
           <h1 className="text-xs md:text-base font-semibold">{bookName}</h1>
           <h2 className=" text-xs md:text-sm">Owner : {owner}</h2>
           {bookInfo.borrowed && (
-            <h2 className=" text-xs md:text-sm">Deadline : {bookInfo.deadline} {bookInfo.deadline>1?"Days":"Day"}</h2>
+            <h2 className=" text-xs md:text-sm">
+              Deadline : {bookInfo.deadline}{" "}
+              {bookInfo.deadline > 1 ? "Days" : "Day"}
+            </h2>
           )}
         </div>
       </section>
@@ -37,7 +42,16 @@ const BorrowedBookCard = ({ bookInfo }) => {
             </button>
           )}
           {bookInfo?.pending === false && (
-            <div className="px-2 py-1 md:px-4 md:py-2 rounded border border-red-400 text-xs font-semibold text-secondary">
+            <div
+              onClick={async () =>
+                await deleteRejectedRequest({
+                  borrowerUserId: bookInfo.userId,
+                  borrowedrequestId: bookInfo._id,
+                })
+              }
+              className="px-2 py-1 md:px-4 md:py-2 rounded border border-red-400 text-xs font-semibold text-secondary cursor-pointer"
+              title="Click here to delete"
+            >
               Rejected
             </div>
           )}
