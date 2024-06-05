@@ -10,14 +10,14 @@ import { AuthContext } from "../../../provider/authProviders";
 
 const YourCollection = () => {
   const { data, isLoading } = useGetBookQuery();
-  const {user}=useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isOpen, toggle] = useToggle();
 
   const books = data?.data || [];
-  console.log(books)
   const { add_btn } = allIconsData;
-const selfCollection=books.filter(book=>book?.user?.userEmail==user?.email);
-console.log(selfCollection)
+  const selfCollection = books.filter(
+    (book) => book?.user?.userEmail == user?.email
+  );
   isLoading && <Loader />;
 
   return (

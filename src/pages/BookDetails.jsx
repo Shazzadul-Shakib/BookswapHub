@@ -16,7 +16,6 @@ const BookDetails = () => {
   const [isOpen, _, setIsOpen] = useToggle();
 
   let bookInfo = data?.data || [];
-  console.log(bookInfo);
   const { borrowed } = bookInfo;
 
   return (

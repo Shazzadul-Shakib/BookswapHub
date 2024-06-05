@@ -9,6 +9,7 @@ import AddBook from "../pages/AddBook";
 import BookDetails from "../pages/BookDetails";
 import BorrowedBook from "../pages/BorrowedBook";
 import Notification from "../pages/Notification";
+import NotFound from "../pages/NotFound";
 
 export const router= createBrowserRouter([
     {
@@ -46,6 +47,10 @@ export const router= createBrowserRouter([
             {
                 path:'/notification',
                 element:<Notification/>
+            },
+            {
+                path:'*',
+                element:<NotFound/>
             },
         ]
     },
