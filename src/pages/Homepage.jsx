@@ -4,7 +4,7 @@ import Trending from "../components/Homepage/Trending/Trending";
 const Homepage = () => {
     return (
       <div className="h-full overflow-y-auto custom-scrollbar">
-        <Trending />
+        {/* <Trending /> */}
         <Recommended />
       </div>
     );
