@@ -17,6 +17,7 @@ const BookDetails = () => {
 
   let bookInfo = data?.data || [];
   const { borrowed } = bookInfo;
+  console.log(bookInfo)
 
   return (
     <main className=" w-[90%] h-[80dvh] mx-auto flex flex-col justify-center lg:justify-start lg:flex-row items-center gap-14 py-4 lg:py-0">

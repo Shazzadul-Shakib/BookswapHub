@@ -3,7 +3,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaBookOpen, FaFacebookSquare, FaGoogle, FaRegImage } from "react-icons/fa";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { HiSquares2X2 } from "react-icons/hi2";
-import { ImCancelCircle } from "react-icons/im";
+import { ImCancelCircle, ImNotification } from "react-icons/im";
 import { IoIosNotifications, IoMdLogOut, IoMdSettings } from "react-icons/io";
 import {
   IoBookmark,
@@ -31,4 +31,5 @@ export const allIconsData = {
   borrowedbook: <FaBookOpen />,
   notification: <IoIosNotifications />,
   dots: <PiDotsThreeCircleLight />,
+  notAvailable: <ImNotification />,
 };
