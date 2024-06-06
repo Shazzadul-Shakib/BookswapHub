@@ -3,10 +3,13 @@ import { allIconsData } from "../../data/all-icons-data";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/authProviders";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
+import { useUpdateUserProfileInfoMutation } from "../../redux/api/users-api";
+import { info } from "autoprefixer";
 
 const UpdateProfileForm = ({ close }) => {
   const { cancel, image } = allIconsData;
   const { user, updateUserProfile } = useContext(AuthContext);
+  const [updateUserProfileInfo] = useUpdateUserProfileInfoMutation();
   const { getImageUrl } = useGetImageUrl();
   const {
     register,
@@ -20,9 +23,15 @@ const UpdateProfileForm = ({ close }) => {
     try {
       const uploadedImageUrl = await getImageUrl(selectedImage);
       data.userImage = uploadedImageUrl;
+      const result = await updateUserProfileInfo({
+        userEmail: user.email,
+        info: { userName: data.userName, userImage: data.userImage },
+      });
       await updateUserProfile(data.userName, data.userImage);
-      reset();
-      close();
+      if (result) {
+        reset();
+        close();
+      }
     } catch (error) {
       console.log(error);
     }
