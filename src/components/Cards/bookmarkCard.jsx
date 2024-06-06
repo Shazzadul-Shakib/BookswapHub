@@ -9,16 +9,16 @@ import { AuthContext } from "../../provider/authProviders";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
 
-const RecommendedCard = ({ book }) => {
+const BookmarkCard = ({ book }) => {
   const { user } = useContext(AuthContext);
-  const { data, isLoading, isError } = useGetUserBorrowedBooksQuery(user.email);
+  const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const [updateBookmark] = useUpdateBookmarkMutation();
   const [bookMarked, setBookMarked] = useState(null); // Initial state is null
   const { bookmarkOutline, profile, notAvailable } = allIconsData;
 
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks?.some(
-    (bookmark) => bookmark.bookId._id === book._id
+    (bookmark) => bookmark.bookId._id === book.bookId._id
   );
 
   useEffect(() => {
@@ -26,42 +26,42 @@ const RecommendedCard = ({ book }) => {
       try {
         await updateBookmark({
           ownerEmail: user.email,
-          data: { bookId: book._id, bookmarked: bookMarked },
+          data: { bookId: book.bookId._id, bookmarked: bookMarked },
         });
       } catch (error) {
         console.error("Failed to update bookmark:", error);
       }
     };
 
-    if (bookMarked !== null && user && book._id) {
+    if (bookMarked !== null && user && book.bookId._id) {
       updateUserBookmark();
     }
   }, [bookMarked]);
 
   const handleBookmark = (event) => {
     event.stopPropagation();
-    setBookMarked((prev) => (prev === null ? true : !prev)); // Toggle between true and false, reset to null on reload
+    setBookMarked((prev) => false); // Toggle between true and false, reset to null on reload
   };
 
   return (
     <main className="relative flex flex-col my-4">
       <Link
-        to={`/book/${book._id}`}
+        to={`/book/${book.bookId._id}`}
         className="h-[130px] w-[260px] rounded-xl my-1 flex justify-center relative overflow-hidden cursor-pointer"
       >
         <img
           className="max-h-full max-w-full"
-          src={book?.bookImage}
+          src={book?.bookId.bookImage}
           alt="Book Image"
         />
 
         <div className="absolute flex items-end p-3 h-full w-full bg-gradient-to-t from-[#0f0e0ed3] via-black-opacity-50 to-transparent">
           <h2 className="w-full text-secondary text-center font-bold text-xs py-1">
-            {book?.bookName}
+            {book?.bookId.bookName}
           </h2>
         </div>
       </Link>
-      {book.borrowed && (
+      {book.bookId.borrowed && (
         <div
           className="absolute top-3 left-4 text-accent"
           title="This book is already borrowed!"
@@ -80,7 +80,7 @@ const RecommendedCard = ({ book }) => {
 
       <div className="text-secondary flex gap-2 items-center mt-2">
         <div>
-          {book?.user?.userImage !== "" ? (
+          {book?.bookId.user?.userImage !== "" ? (
             <div className="h-[25px] w-[25px] mt-1 rounded-full overflow-hidden">
               <img src={book?.user?.userImage} alt="User photo" />
             </div>
@@ -88,11 +88,13 @@ const RecommendedCard = ({ book }) => {
             <div className="text-[25px]">{profile}</div>
           )}
         </div>
-        <h2 className="text-sm font-semibold py-1">{book?.user?.userName}</h2>
+        <h2 className="text-sm font-semibold py-1">
+          {book?.bookId.user?.userName}
+        </h2>
       </div>
       {isLoading && <ModalBody modal={<Loader />} />}
     </main>
   );
 };
 
-export default RecommendedCard;
+export default BookmarkCard;

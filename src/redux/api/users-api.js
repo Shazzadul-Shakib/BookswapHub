@@ -51,6 +51,14 @@ export const usersApi = createApi({
       }),
       providesTags: ["user"],
     }),
+    updateBookmark: builder.mutation({
+      query: ({ ownerEmail, data }) => ({
+        url: `user/bookmark/${ownerEmail}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -60,5 +68,6 @@ export const {
   useGetUserBorrowedBooksQuery,
   useUpdateUserBorrowedBookStatusMutation,
   useUpdateUserBorrowedConfirmationMutation,
-  useDeleteRejectedRequestMutation
+  useDeleteRejectedRequestMutation,
+  useUpdateBookmarkMutation
 } = usersApi;

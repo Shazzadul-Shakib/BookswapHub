@@ -36,7 +36,7 @@ const Sidebar = () => {
             <Link to="/addbook" className=" text-xl text-icon">
               {add}
             </Link>
-            <li className=" text-xl text-icon">{bookmark}</li>
+            <Link to="/bookmark" className=" text-xl text-icon">{bookmark}</Link>
             <Link to="/borrowedbook" className=" text-lg text-icon">
               {borrowedbook}
             </Link>
