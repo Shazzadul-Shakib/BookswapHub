@@ -2,10 +2,10 @@ import { useAddBookMutation } from "../../redux/api/books-api";
 import { useForm } from "react-hook-form";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
 import { allIconsData } from "../../data/all-icons-data";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/authProviders";
 
-const AddbookForm = ({ close }) => {
+const AddBookForm = ({ close }) => {
   const { user } = useContext(AuthContext);
   const [addBook] = useAddBookMutation();
   const { image, cancel } = allIconsData;
@@ -16,10 +16,11 @@ const AddbookForm = ({ close }) => {
     reset,
     formState: { errors },
   } = useForm();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const onSubmit = async (data) => {
     try {
-      const uploadedImageUrl = await getImageUrl(data.bookImage[0]);
+      const uploadedImageUrl = await getImageUrl(selectedImage);
       data.bookImage = uploadedImageUrl;
       data.userEmail = user.email;
       await addBook(data);
@@ -27,6 +28,19 @@ const AddbookForm = ({ close }) => {
       close();
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setSelectedImage(null);
     }
   };
 
@@ -41,21 +55,28 @@ const AddbookForm = ({ close }) => {
       <main className="my-5 mx-2">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            {/* Label and icon display */}
+            <div className="flex justify-center items-center my-4">
+              {selectedImage && (
+                <img
+                  src={selectedImage}
+                  alt="Selected Preview"
+                  className="mt-2 w-auto h-[100px] rounded"
+                />
+              )}
+            </div>
             <label
               htmlFor="Image"
               className="flex justify-center items-center w-full text-center py-2 bg-white rounded cursor-pointer"
             >
               <div className="text-4xl text-accent">{image}</div>
             </label>
-
-            {/* File input */}
             <input
               type="file"
               name="Image"
               id="Image"
               className="hidden"
-              {...register("bookImage", { required: false })}
+              {...register("bookImage", { required: true })}
+              onChange={handleImageChange}
             />
             {errors.bookImage && (
               <p className="text-accent text-xs">Image is required</p>
@@ -63,7 +84,6 @@ const AddbookForm = ({ close }) => {
           </div>
 
           <div className="mb-4">
-            {/* Book name input */}
             <input
               type="text"
               placeholder="Book's name"
@@ -76,23 +96,22 @@ const AddbookForm = ({ close }) => {
           </div>
 
           <div className="mb-4">
-            {/* Book author name input */}
             <input
               type="text"
               placeholder="Author's name"
               className="w-full px-3 py-2 rounded border border-secondary"
               {...register("author", { required: true })}
             />
-            {errors.authorName && (
-              <p className="text-accent text-xs">Author'a name is required</p>
+            {errors.author && (
+              <p className="text-accent text-xs">Author's name is required</p>
             )}
           </div>
-          <div className=" flex gap-4">
+
+          <div className="flex gap-4">
             <div className="mb-4 w-full">
-              {/* Book's Language' input */}
               <input
                 type="text"
-                placeholder="Book's Language name"
+                placeholder="Book's Language"
                 className="w-full px-3 py-2 rounded border border-secondary"
                 {...register("language", { required: true })}
               />
@@ -103,7 +122,6 @@ const AddbookForm = ({ close }) => {
               )}
             </div>
             <div className="mb-4 w-full">
-              {/* Bookpage number input */}
               <input
                 type="number"
                 placeholder="Book's page number"
@@ -119,7 +137,6 @@ const AddbookForm = ({ close }) => {
           </div>
 
           <div className="mb-3">
-            {/* Book description textarea */}
             <textarea
               cols="30"
               rows="10"
@@ -132,7 +149,6 @@ const AddbookForm = ({ close }) => {
             )}
           </div>
 
-          {/* Submit button */}
           <button
             type="submit"
             className="w-full px-3 py-2 bg-accent rounded text-secondary font-bold"
@@ -145,4 +161,4 @@ const AddbookForm = ({ close }) => {
   );
 };
 
-export default AddbookForm;
+export default AddBookForm;

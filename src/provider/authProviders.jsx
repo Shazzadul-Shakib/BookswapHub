@@ -43,6 +43,13 @@ const AuthProvider = ({ children }) => {
       displayName: userName,
     });
   };
+  // Update user name
+  const updateUserProfile = (userName,userImage) => {
+    return updateProfile(auth.currentUser, {
+      displayName: userName,
+      photoURL:userImage,
+    });
+  };
 
   // Send reset password email
   const resetPassword = (email) => {
@@ -82,6 +89,7 @@ const AuthProvider = ({ children }) => {
     loginUserWithEmailPassword,
     verifyUserEmail,
     updateUserName,
+    updateUserProfile,
     resetPassword,
     googlelogin,
     logout,
