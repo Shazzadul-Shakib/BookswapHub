@@ -15,16 +15,17 @@ const BookmarkCard = ({ book }) => {
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const [updateBookmark] = useUpdateBookmarkMutation();
   const [bookMarked, setBookMarked] = useState(null); // Initial state is null
-  const { bookmarkOutline, notAvailable } = allIconsData;
-if(isLoading){
-  return  <ModalBody modal={<Loader />} />
-}
+  const { bookmarkOutline,bookmark, notAvailable } = allIconsData;
+
+  if (isLoading) {
+    return <ModalBody modal={<Loader />} />;
+  }
 
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks?.some(
     (bookmark) => bookmark.bookId._id === book.bookId._id
   );
-// console.log(book?.bookId.user?.userImage);
+
   useEffect(() => {
     const updateUserBookmark = async () => {
       try {
@@ -48,57 +49,59 @@ if(isLoading){
   };
 
   return (
-    <main className="relative flex flex-col my-4">
-      <Link
-        to={`/book/${book.bookId._id}`}
-        className="h-[130px] w-[260px] rounded-xl my-1 flex justify-center relative overflow-hidden cursor-pointer"
-      >
-        <img
-          className="max-h-full max-w-full"
-          src={book?.bookId.bookImage}
-          alt="Book Image"
-        />
+    <div className="relative flex flex-col items-center my-4">
+      <div className="relative flex flex-col h-[200px] w-[300px] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent">
+        <Link
+          to={`/book/${book.bookId._id}`}
+          className="relative flex justify-center items-end h-full w-full cursor-pointer overflow-hidden "
+        >
+          <img
+            className="absolute inset-0 h-full w-full object-cover opacity-80"
+            src={book?.bookId.bookImage}
+            alt="Book Image"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-75"></div>
+        </Link>
+        {book?.bookId?.borrowed && (
+          <div
+            className="absolute top-3 left-4 text-accent z-10"
+            title="This book is already borrowed!"
+          >
+            {notAvailable}
+          </div>
+        )}
+        <div
+          className={`absolute top-3 right-4 text-lg cursor-pointer z-10 bg-tertiary p-2 rounded-full ${
+            saved ? "text-accent" : "text-secondary"
+          }`}
+          onClick={handleBookmark}
+        >
+          {saved ? bookmark : bookmarkOutline}
+        </div>
 
-        <div className="absolute flex items-end p-3 h-full w-full bg-gradient-to-t from-[#0f0e0ed3] via-black-opacity-50 to-transparent">
-          <h2 className="w-full text-secondary text-center font-bold text-xs py-1">
+        <div className="relative z-10 text-white flex flex-col gap-2 items-center mt-2 p-2">
+          <h2 className=" text-secondary text-center font-semibold text-sm p-1">
             {book?.bookId.bookName}
           </h2>
         </div>
-      </Link>
-      {book?.bookId?.borrowed && (
-        <div
-          className="absolute top-3 left-4 text-accent"
-          title="This book is already borrowed!"
-        >
-          {notAvailable}
-        </div>
-      )}
-      <div
-        className={`absolute top-3 right-4 text-sm cursor-pointer ${
-          saved ? "text-accent" : "text-secondary"
-        }`}
-        onClick={handleBookmark}
-      >
-        {bookmarkOutline}
       </div>
-
-      <div className="text-secondary flex gap-2 items-center mt-2">
-        <div>
+      <div className="w-full mt-2 flex items-center gap-2">
+        <div className=" flex items-center ">
           {book?.bookId.user?.userImage !== "" ? (
-            <div className="h-[25px] w-[25px] mt-1 rounded-full overflow-hidden">
+            <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
               <img src={book?.bookId.user?.userImage} alt="User photo" />
             </div>
           ) : (
-            <div className="h-[25px] w-[25px] mt-1 rounded-full overflow-hidden">
+            <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
               <img src={profile} alt="User photo" />
             </div>
           )}
         </div>
-        <h2 className="text-sm font-semibold py-1">
+        <h2 className="text-sm text-secondary font-semibold">
           {book?.bookId.user?.userName}
         </h2>
       </div>
-    </main>
+    </div>
   );
 };
 

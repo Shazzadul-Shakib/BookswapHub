@@ -1,6 +1,6 @@
 import { BiSolidBookAdd } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { FaBookOpen, FaFacebookSquare, FaGoogle, FaRegImage } from "react-icons/fa";
+import { FaBookOpen, FaBookmark, FaFacebookSquare, FaGoogle, FaRegImage } from "react-icons/fa";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { HiSquares2X2 } from "react-icons/hi2";
 import { ImCancelCircle, ImNotification } from "react-icons/im";
