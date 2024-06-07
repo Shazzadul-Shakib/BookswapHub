@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../provider/authProviders";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { allIconsData } from "../../../data/all-icons-data";
@@ -14,36 +14,51 @@ const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
   const [open, setOpen, ref] = useOutsideClick(false);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
-  const { home, add, bookmark, borrowedbook, notification } =
-    allIconsData;
+  const { home, add, bookmark, borrowedbook, notification } = allIconsData;
+  const location = useLocation();
 
   const toggle = () => {
     setOpen(!open);
   };
 
+  const getLinkClass = (path) =>
+    location.pathname === path ? "text-secondary" : "text-icon";
+
   return (
     <>
-      <div className=" flex flex-col justify-between py-8 bg-tertiary h-[95dvh] w-[70px] rounded-xl relative">
+      <div className="flex flex-col justify-between py-8 bg-tertiary h-[95dvh] w-[70px] rounded-xl relative">
         <section>
           {/* Logo  */}
           <div>
             <img className="h-10 w-16" src={logo} alt="logo" />
           </div>
           {/* Icons */}
-          <ul className=" my-10 flex flex-col items-center gap-6">
-            <Link to="/" className=" text-xl text-secondary">
+          <ul className="my-10 flex flex-col items-center gap-6">
+            <Link to="/" className={`text-xl ${getLinkClass("/")}`}>
               {home}
             </Link>
-            <Link to="/addbook" className=" text-xl text-icon">
+            <Link
+              to="/addbook"
+              className={`text-xl ${getLinkClass("/addbook")}`}
+            >
               {add}
             </Link>
-            <Link to="/bookmark" className=" text-xl text-icon">
+            <Link
+              to="/bookmark"
+              className={`text-xl ${getLinkClass("/bookmark")}`}
+            >
               {bookmark}
             </Link>
-            <Link to="/borrowedbook" className=" text-lg text-icon">
+            <Link
+              to="/borrowedbook"
+              className={`text-lg ${getLinkClass("/borrowedbook")}`}
+            >
               {borrowedbook}
             </Link>
-            <Link to="/notification" className=" relative  text-2xl text-icon">
+            <Link
+              to="/notification"
+              className={`relative text-2xl ${getLinkClass("/notification")}`}
+            >
               {notification}
               <p
                 className={`absolute top-0 -mt-1 flex items-center justify-center text-[10px] text-secondary h-[13px] w-[13px] bg-accent rounded-full ${
@@ -76,7 +91,7 @@ const Sidebar = () => {
             )}
           </div>
           {open && (
-            <div className=" absolute ml-[100%] left-3 bottom-0 z-10">
+            <div className="absolute ml-[100%] left-3 bottom-0 z-10">
               <ProfileCard handleLogout={logout} />
             </div>
           )}

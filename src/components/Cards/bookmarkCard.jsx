@@ -64,7 +64,7 @@ const BookmarkCard = ({ book }) => {
         </Link>
         {book?.bookId?.borrowed && (
           <div
-            className="absolute top-3 left-4 text-accent z-10"
+            className="absolute top-3 left-4 text-accent"
             title="This book is already borrowed!"
           >
             {notAvailable}
@@ -85,7 +85,7 @@ const BookmarkCard = ({ book }) => {
           </h2>
         </div>
       </div>
-      <div className="w-full mt-2 flex items-center gap-2">
+      <div className="w-full mt-3 flex items-center gap-3">
         <div className=" flex items-center ">
           {book?.bookId.user?.userImage !== "" ? (
             <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">

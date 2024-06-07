@@ -81,7 +81,7 @@ const RecommendedCard = ({ book }) => {
           </h2>
         </div>
       </div>
-      <div className="w-full mt-2 flex items-center gap-2">
+      <div className="w-full mt-3 flex items-center gap-3">
         <div className=" flex items-center ">
           {book?.user?.userImage !== "" ? (
             <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
