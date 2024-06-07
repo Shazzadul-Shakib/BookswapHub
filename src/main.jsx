@@ -7,7 +7,6 @@ import AuthProvider from "./provider/authProviders.jsx";
 import { ApiProvider } from "./redux/api-provider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <ApiProvider>
       <AuthProvider>
         <div className=" bg-primary h-[100dvh]">
@@ -15,5 +14,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </div>
       </AuthProvider>
     </ApiProvider>
-  </React.StrictMode>
 );

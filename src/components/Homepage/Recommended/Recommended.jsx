@@ -6,11 +6,11 @@ import ModalBody from "../../Shared/ModalBody/ModalBody";
 
 const Recommended = () => {
   const { data, isLoading, isError } = useGetBookQuery();
-  const books = data?.data || [];
 
   if (isLoading) {
     return <ModalBody modal={<Loader />} />;
   }
+  const books = data?.data || [];
 
   return (
     <div className="my-5 px-2">

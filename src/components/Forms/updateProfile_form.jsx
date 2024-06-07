@@ -4,12 +4,13 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/authProviders";
 import useGetImageUrl from "../../hooks/useGetImageUrl";
 import { useUpdateUserProfileInfoMutation } from "../../redux/api/users-api";
-import { info } from "autoprefixer";
+import ModalBody from "../Shared/ModalBody/ModalBody";
+import Loader from "../Shared/Loader/Loader";
 
 const UpdateProfileForm = ({ close }) => {
   const { cancel, image } = allIconsData;
   const { user, updateUserProfile } = useContext(AuthContext);
-  const [updateUserProfileInfo] = useUpdateUserProfileInfoMutation();
+  const [updateUserProfileInfo,{isLoading}] = useUpdateUserProfileInfoMutation();
   const { getImageUrl } = useGetImageUrl();
   const {
     register,
@@ -18,20 +19,23 @@ const UpdateProfileForm = ({ close }) => {
     formState: { errors },
   } = useForm();
   const [selectedImage, setSelectedImage] = useState(null);
+  if(isLoading){
+    return <ModalBody modal={<Loader/>} />
+  }
 
   const onSubmit = async (data) => {
     try {
       const uploadedImageUrl = await getImageUrl(selectedImage);
       data.userImage = uploadedImageUrl;
-      const result = await updateUserProfileInfo({
+      await updateUserProfileInfo({
         userEmail: user.email,
         info: { userName: data.userName, userImage: data.userImage },
       });
       await updateUserProfile(data.userName, data.userImage);
-      if (result) {
-        reset();
-        close();
-      }
+      reset();
+      close();
+      // Reload the whole page here
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

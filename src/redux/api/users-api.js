@@ -5,7 +5,7 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_baseUrl}/api/v1`,
   }),
-  tagTypes: ["user"],
+  tagTypes: ["user", "book"],
   endpoints: (builder) => ({
     addUser: builder.mutation({
       query: (User) => ({
@@ -13,7 +13,7 @@ export const usersApi = createApi({
         method: "POST",
         body: User,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
     updateUserBorrowedBooks: builder.mutation({
       query: ({ email, data }) => ({
@@ -21,7 +21,7 @@ export const usersApi = createApi({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
     updateUserBorrowedBookStatus: builder.mutation({
       query: ({ userId, bookId, confirmation }) => ({
@@ -29,21 +29,21 @@ export const usersApi = createApi({
         method: "PATCH",
         body: { confirmation },
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
     updateUserBorrowedConfirmation: builder.mutation({
       query: ({ borrowerUserId, borrowedBookId }) => ({
         url: `user/confirm/${borrowerUserId}/${borrowedBookId}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
     deleteRejectedRequest: builder.mutation({
       query: ({ borrowerUserId, borrowedrequestId }) => ({
         url: `user/delete/${borrowerUserId}/${borrowedrequestId}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
     getUserBorrowedBooks: builder.query({
       query: (email) => ({
@@ -57,7 +57,7 @@ export const usersApi = createApi({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
     updateUserProfileInfo: builder.mutation({
       query: ({ userEmail, info }) => ({
@@ -65,7 +65,7 @@ export const usersApi = createApi({
         method: "PATCH",
         body: info,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "book"],
     }),
   }),
 });

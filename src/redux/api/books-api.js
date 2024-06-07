@@ -5,7 +5,7 @@ export const booksApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_baseUrl}/api/v1`,
   }),
-  tagTypes: ["book"],
+  tagTypes: ["book","user"],
   endpoints: (builder) => ({
     addBook: builder.mutation({
       query: (data) => ({
@@ -13,19 +13,19 @@ export const booksApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["book"],
+      invalidatesTags: ["book","user"],
     }),
     getBook: builder.query({
       query: () => ({
         url: "book",
       }),
-      providesTags: ["book"],
+      providesTags: ["book","user"],
     }),
     getSingleBook: builder.query({
       query: (id) => ({
         url: `book/${id}`,
       }),
-      providesTags: ["book"],
+      providesTags: ["book","user"],
     }),
   }),
 });
