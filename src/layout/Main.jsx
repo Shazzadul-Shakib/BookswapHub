@@ -31,7 +31,7 @@ const Main = () => {
         <div className=" grid grid-cols-[1fr_auto]">
           <Searchbar />
           {/* Profile card section */}
-          <div ref={profileCardRef}>
+          <div className="block md:hidden" ref={profileCardRef}>
             <div
               onClick={toggleProfile}
               className="w-full flex cursor-pointer items-center justify-center"

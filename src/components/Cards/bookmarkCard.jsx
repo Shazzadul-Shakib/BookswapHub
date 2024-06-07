@@ -71,7 +71,7 @@ const BookmarkCard = ({ book }) => {
           </div>
         )}
         <div
-          className={`absolute top-3 right-4 text-lg cursor-pointer z-10 bg-tertiary p-2 rounded-full ${
+          className={`absolute top-3 right-4 text-lg cursor-pointer bg-tertiary p-2 rounded-full ${
             saved ? "text-accent" : "text-secondary"
           }`}
           onClick={handleBookmark}
@@ -79,7 +79,7 @@ const BookmarkCard = ({ book }) => {
           {saved ? bookmark : bookmarkOutline}
         </div>
 
-        <div className="relative z-10 text-white flex flex-col gap-2 items-center mt-2 p-2">
+        <div className=" text-white flex flex-col gap-2 items-center mt-2 p-2">
           <h2 className=" text-secondary text-center font-semibold text-sm p-1">
             {book?.bookId.bookName}
           </h2>
