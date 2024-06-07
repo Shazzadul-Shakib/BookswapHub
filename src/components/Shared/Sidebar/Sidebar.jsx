@@ -8,12 +8,13 @@ import ProfileCard from "../ProfileCard/ProfileCard";
 import { useGetUserBorrowedBooksQuery } from "../../../redux/api/users-api";
 import ModalBody from "../ModalBody/ModalBody";
 import Loader from "../Loader/Loader";
+import profile from "../../../assets/pIcon.png";
 
 const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
   const [open, setOpen, ref] = useOutsideClick(false);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
-  const { home, add, bookmark, profile, borrowedbook, notification } =
+  const { home, add, bookmark, borrowedbook, notification } =
     allIconsData;
 
   const toggle = () => {
@@ -36,7 +37,9 @@ const Sidebar = () => {
             <Link to="/addbook" className=" text-xl text-icon">
               {add}
             </Link>
-            <Link to="/bookmark" className=" text-xl text-icon">{bookmark}</Link>
+            <Link to="/bookmark" className=" text-xl text-icon">
+              {bookmark}
+            </Link>
             <Link to="/borrowedbook" className=" text-lg text-icon">
               {borrowedbook}
             </Link>
@@ -56,9 +59,21 @@ const Sidebar = () => {
         <div ref={ref}>
           <div
             onClick={toggle}
-            className="flex cursor-pointer justify-center text-accent text-3xl"
+            className="w-full flex cursor-pointer items-center justify-center"
           >
-            {profile}
+            {user.photoURL ? (
+              <img
+                className="h-[40px] w-[40px] rounded-full"
+                src={user.photoURL}
+                alt="user Image"
+              />
+            ) : (
+              <img
+                className="h-[40px] w-[40px] rounded-full"
+                src={profile}
+                alt="user Image"
+              />
+            )}
           </div>
           {open && (
             <div className=" absolute ml-[100%] left-3 bottom-0 z-10">

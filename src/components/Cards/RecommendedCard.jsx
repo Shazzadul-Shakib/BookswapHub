@@ -11,7 +11,7 @@ import Loader from "../Shared/Loader/Loader";
 
 const RecommendedCard = ({ book }) => {
   const { user } = useContext(AuthContext);
-  const { data, isLoading, isError } = useGetUserBorrowedBooksQuery(user.email);
+  const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const [updateBookmark] = useUpdateBookmarkMutation();
   const [bookMarked, setBookMarked] = useState(null); // Initial state is null
   const { bookmarkOutline, profile, notAvailable } = allIconsData;
@@ -20,6 +20,7 @@ const RecommendedCard = ({ book }) => {
   const saved = userBookMarks?.some(
     (bookmark) => bookmark.bookId._id === book._id
   );
+  console.log(book)
 
   useEffect(() => {
     const updateUserBookmark = async () => {
@@ -61,7 +62,7 @@ const RecommendedCard = ({ book }) => {
           </h2>
         </div>
       </Link>
-      {book.borrowed && (
+      {book?.borrowed && (
         <div
           className="absolute top-3 left-4 text-accent"
           title="This book is already borrowed!"

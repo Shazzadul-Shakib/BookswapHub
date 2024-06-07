@@ -2,17 +2,15 @@ import { Outlet } from "react-router-dom";
 import Searchbar from "../components/Shared/Searchbar/Searchbar";
 import Sidebar from "../components/Shared/Sidebar/Sidebar";
 import BottomNavbar from "../components/Shared/BottomNavbar/BottomNavbar";
-import { allIconsData } from "../data/all-icons-data";
 import useOutsideClick from "../hooks/useOutsideClick";
 import ProfileCard from "../components/Shared/ProfileCard/ProfileCard";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
-
+import profile from "../assets/pIcon.png";
 const Main = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout,user } = useContext(AuthContext);
   const [showProfileCard, setShowProfileCard, profileCardRef] =
     useOutsideClick(false);
-  const { profile } = allIconsData;
 
   const toggleProfile = () => {
     setShowProfileCard(!showProfileCard);
@@ -36,9 +34,21 @@ const Main = () => {
           <div ref={profileCardRef}>
             <div
               onClick={toggleProfile}
-              className=" text-secondary text-4xl md:text-4xl lg:hidden cursor-pointer"
+              className="w-full flex cursor-pointer items-center justify-center"
             >
-              {profile}
+              {user.photoURL ? (
+                <img
+                  className="h-[40px] w-[40px] rounded-full"
+                  src={user.photoURL}
+                  alt="user Image"
+                />
+              ) : (
+                <img
+                  className="h-[40px] w-[40px] rounded-full"
+                  src={profile}
+                  alt="user Image"
+                />
+              )}
             </div>
             {showProfileCard && (
               <div className=" absolute right-3 mt-3 z-10">

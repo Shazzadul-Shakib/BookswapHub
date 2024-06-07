@@ -6,12 +6,15 @@ import useGetImageUrl from "../../hooks/useGetImageUrl";
 import { useUpdateUserProfileInfoMutation } from "../../redux/api/users-api";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
+import { useGetBookQuery } from "../../redux/api/books-api";
 
 const UpdateProfileForm = ({ close }) => {
   const { cancel, image } = allIconsData;
   const { user, updateUserProfile } = useContext(AuthContext);
-  const [updateUserProfileInfo,{isLoading}] = useUpdateUserProfileInfoMutation();
+  const [updateUserProfileInfo, { isLoading }] =
+    useUpdateUserProfileInfoMutation();
   const { getImageUrl } = useGetImageUrl();
+  const { refetch } = useGetBookQuery();
   const {
     register,
     handleSubmit,
@@ -19,8 +22,8 @@ const UpdateProfileForm = ({ close }) => {
     formState: { errors },
   } = useForm();
   const [selectedImage, setSelectedImage] = useState(null);
-  if(isLoading){
-    return <ModalBody modal={<Loader/>} />
+  if (isLoading) {
+    return <ModalBody modal={<Loader />} />;
   }
 
   const onSubmit = async (data) => {
@@ -34,8 +37,7 @@ const UpdateProfileForm = ({ close }) => {
       await updateUserProfile(data.userName, data.userImage);
       reset();
       close();
-      // Reload the whole page here
-      window.location.reload();
+      refetch();
     } catch (error) {
       console.log(error);
     }

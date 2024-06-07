@@ -8,19 +8,23 @@ import {
 import { AuthContext } from "../../provider/authProviders";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
+import profile from "../../assets/pIcon.png";
 
 const BookmarkCard = ({ book }) => {
   const { user } = useContext(AuthContext);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const [updateBookmark] = useUpdateBookmarkMutation();
   const [bookMarked, setBookMarked] = useState(null); // Initial state is null
-  const { bookmarkOutline, profile, notAvailable } = allIconsData;
+  const { bookmarkOutline, notAvailable } = allIconsData;
+if(isLoading){
+  return  <ModalBody modal={<Loader />} />
+}
 
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks?.some(
     (bookmark) => bookmark.bookId._id === book.bookId._id
   );
-
+// console.log(book?.bookId.user?.userImage);
   useEffect(() => {
     const updateUserBookmark = async () => {
       try {
@@ -61,7 +65,7 @@ const BookmarkCard = ({ book }) => {
           </h2>
         </div>
       </Link>
-      {book.bookId.borrowed && (
+      {book?.bookId?.borrowed && (
         <div
           className="absolute top-3 left-4 text-accent"
           title="This book is already borrowed!"
@@ -82,17 +86,18 @@ const BookmarkCard = ({ book }) => {
         <div>
           {book?.bookId.user?.userImage !== "" ? (
             <div className="h-[25px] w-[25px] mt-1 rounded-full overflow-hidden">
-              <img src={book?.user?.userImage} alt="User photo" />
+              <img src={book?.bookId.user?.userImage} alt="User photo" />
             </div>
           ) : (
-            <div className="text-[25px]">{profile}</div>
+            <div className="h-[25px] w-[25px] mt-1 rounded-full overflow-hidden">
+              <img src={profile} alt="User photo" />
+            </div>
           )}
         </div>
         <h2 className="text-sm font-semibold py-1">
           {book?.bookId.user?.userName}
         </h2>
       </div>
-      {isLoading && <ModalBody modal={<Loader />} />}
     </main>
   );
 };

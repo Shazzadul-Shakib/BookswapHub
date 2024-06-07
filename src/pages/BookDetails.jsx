@@ -7,12 +7,12 @@ import Borrowbook_form from "../components/Forms/Borrowbook_form";
 import useToggle from "../hooks/useToggle";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
+import profile from "../assets/pIcon.png";
 
 const BookDetails = () => {
   const { book_id } = useParams();
   const {user}=useContext(AuthContext);
   const { data, isLoading } = useGetSingleBookQuery(book_id);
-  const { profile } = allIconsData;
   const [isOpen, _, setIsOpen] = useToggle();
 
   let bookInfo = data?.data || [];
@@ -38,7 +38,19 @@ const BookDetails = () => {
         </div>
         {/* User profile  */}
         <div className=" flex items-center gap-3">
-          <div className=" text-4xl">{profile} </div>
+          {bookInfo?.user?.userImage ? (
+            <img
+              className="h-[40px] w-[40px] rounded-full"
+              src={bookInfo?.user?.userImage}
+              alt="user Image"
+            />
+          ) : (
+            <img
+              className="h-[40px] w-[40px] rounded-full"
+              src={profile}
+              alt="user Image"
+            />
+          )}
           <h2 className=" text-lg">{bookInfo?.user?.userName}</h2>
         </div>
         {/* Book's description */}
