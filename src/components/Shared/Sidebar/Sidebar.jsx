@@ -9,6 +9,7 @@ import { useGetUserBorrowedBooksQuery } from "../../../redux/api/users-api";
 import ModalBody from "../ModalBody/ModalBody";
 import Loader from "../Loader/Loader";
 import profile from "../../../assets/pIcon.png";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
@@ -20,6 +21,12 @@ const Sidebar = () => {
   const toggle = () => {
     setOpen(!open);
   };
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully", {
+      className: "custom-toast",
+    }); // Show success toast when logging out
+  };
 
   const getLinkClass = (path) =>
     location.pathname === path ? "text-secondary" : "text-icon";
@@ -29,9 +36,9 @@ const Sidebar = () => {
       <div className="flex flex-col justify-between py-8 bg-tertiary h-[95dvh] w-[70px] rounded-xl relative">
         <section>
           {/* Logo  */}
-          <div>
+          <Link to="/">
             <img className="h-10 w-16" src={logo} alt="logo" />
-          </div>
+          </Link>
           {/* Icons */}
           <ul className="my-10 flex flex-col items-center gap-6">
             <Link to="/" className={`text-xl ${getLinkClass("/")}`}>
@@ -71,14 +78,14 @@ const Sidebar = () => {
           </ul>
         </section>
         {/* Profile section */}
-        <div ref={ref}>
+        <div ref={ref} className=" ">
           <div
             onClick={toggle}
-            className="w-full flex cursor-pointer items-center justify-center"
+            className="w-full flex cursor-pointer items-center justify-center "
           >
             {user.photoURL ? (
               <img
-                className="h-[40px] w-[40px] rounded-full"
+                className="h-[40px] w-[40px  border-2 border-secondary rounded-full"
                 src={user.photoURL}
                 alt="user Image"
               />
@@ -92,7 +99,7 @@ const Sidebar = () => {
           </div>
           {open && (
             <div className="absolute ml-[100%] left-3 bottom-0 z-10">
-              <ProfileCard handleLogout={logout} />
+              <ProfileCard handleLogout={handleLogout} />
             </div>
           )}
         </div>

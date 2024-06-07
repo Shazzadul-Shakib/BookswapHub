@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
 import { useAddUserMutation } from "../redux/api/users-api";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { loginUserWithEmailPassword } = useContext(AuthContext);
@@ -23,6 +24,7 @@ const Login = () => {
     try {
       if (result.user.emailVerified) {
         reset();
+        toast.success("Logged in successfully");
         navigate("/");
 
         // send user to server form here to store in DB
@@ -32,10 +34,10 @@ const Login = () => {
         const User = { userName, userEmail, userImage };
         await addUser(User);
       } else {
-        alert("Verify your email first");
+        toast.warning("Verify your email first");
       }
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   return (

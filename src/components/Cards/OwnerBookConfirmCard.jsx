@@ -1,10 +1,19 @@
+import { toast } from "react-toastify";
 import { allIconsData } from "../../data/all-icons-data";
 import { useUpdateUserBorrowedBookStatusMutation } from "../../redux/api/users-api";
+import CustomToast from "./CustomToast";
 
 const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
   const { cancel } = allIconsData;
   const [updateUserBorrowedBookStatus] =
     useUpdateUserBorrowedBookStatusMutation();
+
+  function showCustomToast(code) {
+    toast(<CustomToast code={code} closeToast={toast.dismiss} />, {
+      autoClose: false,
+      closeButton: false,
+    });
+  }
 
   const handleConfirmRequest = async () => {
     const confirmation = true;
@@ -15,7 +24,7 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
     }).unwrap();
 
     if (result?.data?.confirmationCode) {
-      alert(`Confirmation code: ${result?.data?.confirmationCode}`);
+      showCustomToast(result?.data?.confirmationCode);
     }
     close();
   };

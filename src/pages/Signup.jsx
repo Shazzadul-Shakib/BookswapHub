@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const { createUser, updateUserName, verifyUserEmail } =
@@ -23,10 +24,11 @@ const Signup = () => {
         reset();
         updateUserName(data.userName);
         verifyUserEmail();
+        toast.info("Check and verify your email");
         navigate("/login");
       }
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   return (

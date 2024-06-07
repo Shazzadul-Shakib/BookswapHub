@@ -8,6 +8,7 @@ import {
 import { AuthContext } from "../../provider/authProviders";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
+import { toast } from "react-toastify";
 
 const RecommendedCard = ({ book }) => {
   const { user } = useContext(AuthContext);
@@ -29,8 +30,11 @@ const RecommendedCard = ({ book }) => {
           ownerEmail: user.email,
           data: { bookId: book._id, bookmarked: bookMarked },
         });
+        bookMarked
+          ? toast.info("Book added to bookmark")
+          : toast.info("Book removed from bookmark");
       } catch (error) {
-        console.error("Failed to update bookmark:", error);
+        toast.error(error.message);
       }
     };
 

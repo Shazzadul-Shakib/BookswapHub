@@ -14,7 +14,7 @@ const ProfileCard = ({ handleLogout }) => {
   return (
     <div className=" text-secondary bg-tertiary py-8 px-4 w-[300px]  sm:w-[400px] rounded-xl">
       <div className="  flex items-center gap-4 mb-10 p-3 rounded bg-icon bg-opacity-15">
-        <img className="h-[50px] w-[50px] rounded-full" src={user.photoURL?user.photoURL:pIcon} alt="" />
+        <img className="h-[50px] w-[50px] rounded-full border-2 border-secondary" src={user.photoURL?user.photoURL:pIcon} alt="Profile Image" />
         <h1 className=" text-xl font-bold">{user.displayName}</h1>
       </div>
       <div className=" my-4 flex flex-col gap-3">

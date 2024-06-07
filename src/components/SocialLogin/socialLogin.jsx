@@ -4,6 +4,7 @@ import Divider from "../Shared/Divider/Divider";
 import { AuthContext } from "../../provider/authProviders";
 import { useNavigate } from "react-router-dom";
 import { useAddUserMutation } from "../../redux/api/users-api";
+import { toast } from "react-toastify";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const SocialLogin = () => {
       const User = { userName, userEmail, userImage };
       await addUser(User);
       navigate("/");
+      toast.success("Logged in successfully");
     });
   };
   return (

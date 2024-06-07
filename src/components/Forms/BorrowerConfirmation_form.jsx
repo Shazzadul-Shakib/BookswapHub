@@ -2,6 +2,7 @@ import React from "react";
 import { allIconsData } from "../../data/all-icons-data";
 import { useForm } from "react-hook-form";
 import { useUpdateUserBorrowedConfirmationMutation } from "../../redux/api/users-api";
+import { toast } from "react-toastify";
 
 const BorrowerConfirmationForm = ({ bookInfo, close }) => {
   const { cancel } = allIconsData;
@@ -19,10 +20,12 @@ const BorrowerConfirmationForm = ({ bookInfo, close }) => {
 
   const onSubmit = async (data) => {
     if (parseInt(data.code) === bookInfo?.confirmationCode) {
-      console.log("Matched");
       await updateUserBorrowedConfirmation({ borrowerUserId, borrowedBookId });
+      toast.success("Book picked up successfully");
       reset();
       close();
+    }else{
+      toast.warning("Enter correct code!")
     }
   };
 

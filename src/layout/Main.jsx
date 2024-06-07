@@ -7,6 +7,8 @@ import ProfileCard from "../components/Shared/ProfileCard/ProfileCard";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import profile from "../assets/pIcon.png";
+import { toast } from "react-toastify";
+
 const Main = () => {
   const { logout,user } = useContext(AuthContext);
   const [showProfileCard, setShowProfileCard, profileCardRef] =
@@ -15,6 +17,11 @@ const Main = () => {
   const toggleProfile = () => {
     setShowProfileCard(!showProfileCard);
   };
+
+  const handleLogout=()=>{
+    logout();
+    toast.success("Logged out successfully");
+  }
 
   return (
     <div className="h-full flex justify-center md:gap-6 overflow-hidden relative">
@@ -52,7 +59,7 @@ const Main = () => {
             </div>
             {showProfileCard && (
               <div className=" absolute right-3 mt-3 z-10">
-                <ProfileCard handleLogout={logout} />
+                <ProfileCard handleLogout={handleLogout} />
               </div>
             )}
           </div>

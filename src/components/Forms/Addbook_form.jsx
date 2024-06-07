@@ -4,6 +4,7 @@ import useGetImageUrl from "../../hooks/useGetImageUrl";
 import { allIconsData } from "../../data/all-icons-data";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/authProviders";
+import { toast } from "react-toastify";
 
 const AddBookForm = ({ close }) => {
   const { user } = useContext(AuthContext);
@@ -24,10 +25,11 @@ const AddBookForm = ({ close }) => {
       data.bookImage = uploadedImageUrl;
       data.userEmail = user.email;
       await addBook(data);
+      toast.success("Book added successfully");
       reset();
       close();
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     }
   };
 

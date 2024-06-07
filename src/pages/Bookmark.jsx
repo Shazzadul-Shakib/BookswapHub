@@ -16,11 +16,11 @@ const Bookmark = () => {
   }
 
   return (
-    <main>
+    <main className="h-[87dvh] overflow-y-auto custom-scrollbar ">
       {userBookMarks.length === 0 && !isLoading && !isError && (
         <NoNotification element={"Bookmark"} />
       )}
-      <div className="grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="h-full grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {userBookMarks
           .slice()
           .reverse()

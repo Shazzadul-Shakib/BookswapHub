@@ -1,10 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import { RouterProvider } from "react-router-dom";
+import "./index.css";
 import { router } from "./routes/Routes.jsx";
 import AuthProvider from "./provider/authProviders.jsx";
 import { ApiProvider } from "./redux/api-provider.jsx";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <ApiProvider>
@@ -13,5 +16,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <RouterProvider router={router} />
         </div>
       </AuthProvider>
+      <ToastContainer theme="dark" />
     </ApiProvider>
 );

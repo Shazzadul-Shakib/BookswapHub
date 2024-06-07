@@ -3,6 +3,7 @@ import { allIconsData } from "../../data/all-icons-data";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/authProviders";
 import { useUpdateUserBorrowedBooksMutation } from "../../redux/api/users-api";
+import { toast } from "react-toastify";
 
 const Borrowbook_form = ({ bookInfo, close }) => {
   const { user } = useContext(AuthContext);
@@ -21,10 +22,11 @@ const Borrowbook_form = ({ bookInfo, close }) => {
       data.bookOwnerUserId = bookInfo.user._id;
       data.borrowed = false;
       await updateUserBorrowedBooks({ email: user.email, data });
+      toast.info("Borrowed request sent to owner");
       reset();
       close();
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     }
   };
   // Watch the terms checkbox
