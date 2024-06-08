@@ -22,14 +22,19 @@ const UpdateProfileForm = ({ close }) => {
     formState: { errors },
   } = useForm();
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Loader spinner if loading
   if (isLoading) {
     return <ModalBody modal={<Loader />} />;
   }
 
+  // Handle submission of update profile and upload image to cloudinary and send them to server
   const onSubmit = async (data) => {
     try {
-      const uploadedImageUrl = await getImageUrl(selectedImage);
-      data.userImage = uploadedImageUrl;
+      if (selectedImage != null) {
+        const uploadedImageUrl = await getImageUrl(selectedImage);
+        data.userImage = uploadedImageUrl;
+      }
       await updateUserProfileInfo({
         userEmail: user.email,
         info: { userName: data.userName, userImage: data.userImage },
@@ -43,6 +48,7 @@ const UpdateProfileForm = ({ close }) => {
     }
   };
 
+  // Handle Image change to preview of selected image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -57,7 +63,7 @@ const UpdateProfileForm = ({ close }) => {
   };
 
   return (
-    <div className="relative bg-primary md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
+    <main className="relative bg-primary md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
       <header
         onClick={close}
         className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer"
@@ -87,12 +93,9 @@ const UpdateProfileForm = ({ close }) => {
               name="Image"
               id="Image"
               className="hidden"
-              {...register("userImage", { required: true })}
+              {...register("userImage", { required: false })}
               onChange={handleImageChange}
             />
-            {errors.userImage && (
-              <p className="text-accent text-xs">Image is required</p>
-            )}
           </div>
 
           <div className="mb-4">
@@ -124,7 +127,7 @@ const UpdateProfileForm = ({ close }) => {
           </button>
         </form>
       </main>
-    </div>
+    </main>
   );
 };
 

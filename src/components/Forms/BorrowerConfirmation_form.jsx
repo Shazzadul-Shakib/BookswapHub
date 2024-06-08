@@ -18,6 +18,7 @@ const BorrowerConfirmationForm = ({ bookInfo, close }) => {
     formState: { errors },
   } = useForm();
 
+// Handle the confirmation code submition
   const onSubmit = async (data) => {
     if (parseInt(data.code) === bookInfo?.confirmationCode) {
       await updateUserBorrowedConfirmation({ borrowerUserId, borrowedBookId });

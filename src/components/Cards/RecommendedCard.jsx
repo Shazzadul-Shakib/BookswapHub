@@ -1,6 +1,6 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { allIconsData } from "../../data/all-icons-data";
-import { useContext, useEffect, useState } from "react";
 import {
   useGetUserBorrowedBooksQuery,
   useUpdateBookmarkMutation,
@@ -12,17 +12,18 @@ import { toast } from "react-toastify";
 
 const RecommendedCard = ({ book }) => {
   const { user } = useContext(AuthContext);
-  const { data, isLoading, refetch } = useGetUserBorrowedBooksQuery(user.email);
+  const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const [updateBookmark] = useUpdateBookmarkMutation();
-  const [bookMarked, setBookMarked] = useState(null); // Initial state is null
-  const { bookmarkOutline, bookmark, profile, notAvailable } =
-    allIconsData;
+  const [bookMarked, setBookMarked] = useState(null);
+  const { bookmarkOutline, bookmark, profile, notAvailable } = allIconsData;
 
+  // BookMarked book from userData and filter them if they are bookmarked
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks?.some(
     (bookmark) => bookmark.bookId._id === book._id
   );
 
+  // Update the status of bookmark
   useEffect(() => {
     const updateUserBookmark = async () => {
       try {
@@ -38,18 +39,22 @@ const RecommendedCard = ({ book }) => {
       }
     };
 
+    // invoke the fuction if bookmarked is not null and have provided values
+
     if (bookMarked !== null && user && book._id) {
       updateUserBookmark();
     }
   }, [bookMarked]);
 
+
+  // Handle bookmark click and stop propagation from mixing up the click events
   const handleBookmark = (event) => {
     event.stopPropagation();
     setBookMarked((prev) => (prev === null ? true : !prev)); // Toggle between true and false, reset to null on reload
   };
 
   return (
-    <div className="relative flex flex-col items-center my-4">
+    <main className="relative flex flex-col items-center my-4">
       <div className="relative flex flex-col h-[200px] w-[300px] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent ">
         <Link
           to={`/book/${book._id}`}
@@ -64,7 +69,7 @@ const RecommendedCard = ({ book }) => {
         </Link>
         {book?.borrowed && (
           <div
-            className="absolute top-3 left-4 text-accent z-10"
+            className="absolute top-3 left-4 text-accent"
             title="This book is already borrowed!"
           >
             {notAvailable}
@@ -100,7 +105,7 @@ const RecommendedCard = ({ book }) => {
         </h2>
       </div>
       {isLoading && <ModalBody modal={<Loader />} />}
-    </div>
+    </main>
   );
 };
 

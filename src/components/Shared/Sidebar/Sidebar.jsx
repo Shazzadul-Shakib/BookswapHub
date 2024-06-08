@@ -21,18 +21,18 @@ const Sidebar = () => {
   const toggle = () => {
     setOpen(!open);
   };
+
+  // Handle logout
   const handleLogout = () => {
     logout();
-    toast.success("Logged out successfully", {
-      className: "custom-toast",
-    }); // Show success toast when logging out
+    toast.success("Logged out successfully")
   };
 
   const getLinkClass = (path) =>
     location.pathname === path ? "text-secondary" : "text-icon";
 
   return (
-    <>
+    <main>
       <div className="flex flex-col justify-between py-8 bg-tertiary h-[95dvh] w-[70px] rounded-xl relative">
         <section>
           {/* Logo  */}
@@ -105,7 +105,7 @@ const Sidebar = () => {
         </div>
       </div>
       {isLoading && <ModalBody modal={<Loader />} />}
-    </>
+    </main>
   );
 };
 

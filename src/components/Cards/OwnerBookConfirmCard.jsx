@@ -8,6 +8,7 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
   const [updateUserBorrowedBookStatus] =
     useUpdateUserBorrowedBookStatusMutation();
 
+    // Show custom toast for confirmation code 
   function showCustomToast(code) {
     toast(<CustomToast code={code} closeToast={toast.dismiss} />, {
       autoClose: false,
@@ -15,13 +16,14 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
     });
   }
 
+  // Handle confirmation request and send info to server
   const handleConfirmRequest = async () => {
     const confirmation = true;
     const result = await updateUserBorrowedBookStatus({
       userId: notificationInfo.borrowerUserId._id,
       bookId: notificationInfo.bookId._id,
       confirmation,
-    }).unwrap();
+    }).unwrap(); // use unwrap to get the promise data immediately
 
     if (result?.data?.confirmationCode) {
       showCustomToast(result?.data?.confirmationCode);
@@ -29,6 +31,7 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
     close();
   };
 
+  // Hansle rejection request and send info to server
   const handleRejectRequest = async () => {
     const confirmation = false;
     await updateUserBorrowedBookStatus({

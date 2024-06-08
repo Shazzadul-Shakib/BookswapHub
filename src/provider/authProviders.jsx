@@ -43,12 +43,16 @@ const AuthProvider = ({ children }) => {
       displayName: userName,
     });
   };
-  // Update user name
-  const updateUserProfile = (userName,userImage) => {
-    return updateProfile(auth.currentUser, {
-      displayName: userName,
-      photoURL:userImage,
-    });
+  const updateUserProfile = (userName, userImage) => {
+    // Construct the update object dynamically
+    const updateData = { displayName: userName };
+
+    if (userImage && Object.keys(userImage).length !== 0) {
+      updateData.photoURL = userImage;
+    }
+
+    // Update the user profile
+    return updateProfile(auth.currentUser, updateData);
   };
 
   // Send reset password email

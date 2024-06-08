@@ -13,15 +13,17 @@ const YourCollection = () => {
   const { data, isLoading } = useGetBookQuery();
   const { user } = useContext(AuthContext);
   const [isOpen, toggle] = useToggle();
+  const { add_btn } = allIconsData;
 
   const books = data?.data || [];
-  const { add_btn } = allIconsData;
+
+  // Filter self collection books
   const selfCollection = books.filter(
     (book) => book?.user?.userEmail == user?.email
   );
 
   return (
-    <div>
+    <main>
       {/* Headers section */}
       <header className="flex justify-between items-center mt-6 mb-6">
         <div>
@@ -37,15 +39,19 @@ const YourCollection = () => {
             <span className="hidden text-md sm:block">Add book</span>
             <span className="text-lg font-bold">{add_btn}</span>
           </button>
+
+          {/* Open modal of add book form */}
           {isOpen && <ModalBody modal={<AddbookForm close={toggle} />} />}
         </div>
       </header>
       <main className="h-[calc(100dvh-195px)] lg:h-[calc(100dvh-140px)] overflow-y-auto custom-scrollbar">
+        {/* Loader spinner and Initial page */}
         {isLoading ? (
           <ModalBody modal={<Loader />} />
         ) : selfCollection.length === 0 ? (
           <NoNotification element={"Books Uploaded"} />
         ) : (
+          // Map self collection from last to first order
           <div className="w-full grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {selfCollection
               .slice()
@@ -56,7 +62,7 @@ const YourCollection = () => {
           </div>
         )}
       </main>
-    </div>
+    </main>
   );
 };
 

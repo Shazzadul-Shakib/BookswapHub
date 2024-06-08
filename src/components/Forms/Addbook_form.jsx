@@ -19,6 +19,7 @@ const AddBookForm = ({ close }) => {
   } = useForm();
   const [selectedImage, setSelectedImage] = useState(null);
 
+  // Handle submit of data and send data to server via cloudinary for hosting image and set the url in userImage
   const onSubmit = async (data) => {
     try {
       const uploadedImageUrl = await getImageUrl(selectedImage);
@@ -33,6 +34,7 @@ const AddBookForm = ({ close }) => {
     }
   };
 
+  // Handle change image and set them ready to show as preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {

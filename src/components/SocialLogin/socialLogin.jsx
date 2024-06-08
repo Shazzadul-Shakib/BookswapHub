@@ -12,6 +12,7 @@ const SocialLogin = () => {
   const { googlelogin } = useContext(AuthContext);
   const [addUser] = useAddUserMutation();
 
+  // Handle social login
   const handleGoogleSignIn = async () => {
     await googlelogin().then(async (res) => {
       const { displayName, email, photoURL } = res.user;
@@ -25,7 +26,7 @@ const SocialLogin = () => {
     });
   };
   return (
-    <div>
+    <main>
       <Divider />
       {/* Social Icons */}
       <div className=" flex justify-center items-center gap-5">
@@ -36,7 +37,7 @@ const SocialLogin = () => {
           {google}
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

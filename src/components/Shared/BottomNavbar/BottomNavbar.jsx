@@ -12,11 +12,12 @@ const BottomNavbar = () => {
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const location = useLocation();
 
+  // Get active links path and set classname for them
   const getLinkClass = (path) =>
     location.pathname === path ? "text-secondary" : "text-icon";
 
   return (
-    <div>
+    <main>
       <div className="flex justify-around items-center p-3 text-3xl bg-tertiary w-[100vw]">
         <Link to="/" className={getLinkClass("/")}>
           {home}
@@ -44,8 +45,10 @@ const BottomNavbar = () => {
           </p>
         </Link>
       </div>
+
+      {/* Loader spinner if loading */}
       {isLoading && <ModalBody modal={<Loader />} />}
-    </div>
+    </main>
   );
 };
 

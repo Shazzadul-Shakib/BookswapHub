@@ -18,13 +18,14 @@ const Main = () => {
     setShowProfileCard(!showProfileCard);
   };
 
+  // Handle logout
   const handleLogout=()=>{
     logout();
     toast.success("Logged out successfully");
   }
 
   return (
-    <div className="h-full flex justify-center md:gap-6 overflow-hidden relative">
+    <main className="h-full flex justify-center md:gap-6 overflow-hidden relative">
       {/* Sidebar for large devices */}
       <div className="hidden h-full lg:flex justify-center items-center ">
         <Sidebar />
@@ -64,9 +65,12 @@ const Main = () => {
             )}
           </div>
         </div>
+        
+        {/* Main outlet  */}
         <Outlet />
+
       </div>
-    </div>
+    </main>
   );
 };
 

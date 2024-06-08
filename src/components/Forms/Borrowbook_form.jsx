@@ -16,6 +16,8 @@ const Borrowbook_form = ({ bookInfo, close }) => {
     watch,
   } = useForm();
   const [updateUserBorrowedBooks] = useUpdateUserBorrowedBooksMutation();
+
+  // Handle submit the data of borrowed book and send data to server
   const onSubmit = async (data) => {
     try {
       data.bookId = bookInfo._id;
@@ -29,11 +31,12 @@ const Borrowbook_form = ({ bookInfo, close }) => {
       toast.error(error.message);
     }
   };
+
   // Watch the terms checkbox
   const isTermsChecked = watch("terms", false);
 
   return (
-    <div className="relative bg-primary md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
+    <main className="relative bg-primary md:w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
       <header
         onClick={close}
         className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer"
@@ -189,7 +192,7 @@ const Borrowbook_form = ({ bookInfo, close }) => {
           </button>
         </form>
       </main>
-    </div>
+    </main>
   );
 };
 

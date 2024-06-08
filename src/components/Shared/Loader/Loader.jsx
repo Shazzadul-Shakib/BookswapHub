@@ -1,6 +1,6 @@
 const Loader = () => {
   return (
-    <div className="inline-block relative">
+    <main className="inline-block relative">
       <div
         className="animate-spin rounded-full border-t-4 border-gray-200 border-opacity-25"
         style={{
@@ -10,7 +10,7 @@ const Loader = () => {
           borderColor: "white transparent white transparent",
         }}
       ></div>
-    </div>
+    </main>
   );
 };
 

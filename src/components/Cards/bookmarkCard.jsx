@@ -1,6 +1,6 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { allIconsData } from "../../data/all-icons-data";
-import { useContext, useEffect, useState } from "react";
 import {
   useGetUserBorrowedBooksQuery,
   useUpdateBookmarkMutation,
@@ -15,18 +15,20 @@ const BookmarkCard = ({ book }) => {
   const { user } = useContext(AuthContext);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
   const [updateBookmark] = useUpdateBookmarkMutation();
-  const [bookMarked, setBookMarked] = useState(null); // Initial state is null
-  const { bookmarkOutline,bookmark, notAvailable } = allIconsData;
+  const [bookMarked, setBookMarked] = useState(null);
+  const { bookmarkOutline, bookmark, notAvailable } = allIconsData;
 
+  // Loader spinner if Loading
   if (isLoading) {
     return <ModalBody modal={<Loader />} />;
   }
-
+  // BookMarked book from userData and filter them if they are bookmarked
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks?.some(
     (bookmark) => bookmark.bookId._id === book.bookId._id
   );
 
+  // Update the status of bookmark
   useEffect(() => {
     const updateUserBookmark = async () => {
       try {
@@ -41,19 +43,21 @@ const BookmarkCard = ({ book }) => {
         toast.error(error.message);
       }
     };
-
+    
+    // If bookmark is true or false and provided info is legal then call the function to operate
     if (bookMarked !== null && user && book.bookId._id) {
       updateUserBookmark();
     }
   }, [bookMarked]);
 
+  // Handle bookmark click and stop propagation by not mixing up the events
   const handleBookmark = (event) => {
     event.stopPropagation();
     setBookMarked((prev) => false); // Toggle between true and false, reset to null on reload
   };
 
   return (
-    <div className="relative flex flex-col items-center my-4">
+    <main className="relative flex flex-col items-center my-4">
       <div className="relative flex flex-col h-[200px] w-[300px] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent">
         <Link
           to={`/book/${book.bookId._id}`}
@@ -105,7 +109,7 @@ const BookmarkCard = ({ book }) => {
           {book?.bookId.user?.userName}
         </h2>
       </div>
-    </div>
+    </main>
   );
 };
 
