@@ -1,17 +1,16 @@
 import { useParams } from "react-router-dom";
-import { allIconsData } from "../data/all-icons-data";
 import { useGetSingleBookQuery } from "../redux/api/books-api";
+import { useContext } from "react";
 import Loader from "../components/Shared/Loader/Loader";
 import ModalBody from "../components/Shared/ModalBody/ModalBody";
 import Borrowbook_form from "../components/Forms/Borrowbook_form";
 import useToggle from "../hooks/useToggle";
-import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import profile from "../assets/pIcon.png";
 
 const BookDetails = () => {
   const { book_id } = useParams();
-  const {user}=useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { data, isLoading } = useGetSingleBookQuery(book_id);
   const [isOpen, _, setIsOpen] = useToggle();
 
@@ -19,78 +18,77 @@ const BookDetails = () => {
   const { borrowed } = bookInfo;
 
   return (
-    <main className=" w-[90%] h-[80dvh] mx-auto flex flex-col justify-center lg:justify-start lg:flex-row items-center gap-14 py-4 lg:py-0">
-      {/* Image section */}
-      <section className=" h-[300px] lg:h-[calc(100dvh-147px)] w-full lg:w-[25dvw] flex justify-center md:items-center rounded overflow-hidden">
-        <img
-          className=" h-full lg:h-fit lg:w-full rounded"
-          src={bookInfo?.bookImage}
-          alt="Book's Image"
-        />
-      </section>
+    <main className="container my-10 md:my-2 mx-auto p-4 lg:p-8">
+      <div className="bg-tertiary shadow-2xl rounded-lg overflow-hidden flex flex-col lg:flex-row">
+        {/* Image section */}
+        <div className="lg:w-1/3 shadow-2xl  p-4 flex justify-center items-center">
+          <img
+            className="object-contain h-64 w-full lg:h-full lg:w-auto rounded"
+            src={bookInfo?.bookImage}
+            alt="Book"
+          />
+        </div>
 
-      {/* Details section */}
-      <section className=" w-full lg:w-fit text-secondary flex flex-col flex-1  gap-y-6 text-balance">
-        {/* Book Name */}
-        <div>
-          <h1 className=" text-xl font-semibold ">{bookInfo?.bookName}</h1>
-        </div>
-        {/* User profile  */}
-        <div className=" flex items-center gap-3">
-          {bookInfo?.user?.userImage ? (
-            <img
-              className="h-[40px] w-[40px] rounded-full"
-              src={bookInfo?.user?.userImage}
-              alt="user Image"
-            />
-          ) : (
-            <img
-              className="h-[40px] w-[40px] rounded-full"
-              src={profile}
-              alt="user Image"
-            />
-          )}
-          <h2 className=" text-lg">{bookInfo?.user?.userName}</h2>
-        </div>
-        {/* Book's description */}
-        <div>
-          <p className=" text-sm">{bookInfo?.bookDescription}</p>
-        </div>
-        {/* Other additional info */}
-        <div className="space-y-2">
-          <div className="flex justify-between w-full">
-            <h3 className="w-1/4 text-sm font-semibold">Author</h3>
-            <h3 className="w-3/4 text-sm">{bookInfo?.author}</h3>
-          </div>
-          <div className="flex justify-between w-full">
-            <h3 className="w-1/4 text-sm font-semibold">Language</h3>
-            <h3 className="w-3/4 text-sm">{bookInfo?.language}</h3>
-          </div>
-          <div className="flex justify-between w-full">
-            <h3 className="w-1/4 text-sm font-semibold">Page</h3>
-            <h3 className="w-3/4 text-sm">{bookInfo?.page}</h3>
-          </div>
-        </div>
-        {bookInfo?.user?.userEmail != user.email && (
-          <section>
-            {/* Borrow book button */}
-            {borrowed ? (
-              <h1 className=" p-2 border border-accent rounded text-center font-semibold ">
-                This book is unavailable right now!
-              </h1>
-            ) : (
+        {/* Details section */}
+        <div className="lg:w-2/3  md:px-[80px] p-6 flex flex-col justify-between space-y-6 text-secondary">
+          <div className="space-y-4">
+            {/* Book Name */}
+            <h1 className="text-3xl font-bold ">{bookInfo?.bookName}</h1>
+
+            {/* User profile */}
+            <div className="flex items-center gap-4">
+              <img
+                className="h-14 w-14 rounded-full shadow"
+                src={bookInfo?.user?.userImage || profile}
+                alt="User"
+              />
               <div>
+                <h2 className="text-xl font-medium">
+                  {bookInfo?.user?.userName}
+                </h2>
+              </div>
+            </div>
+
+            {/* Book's description */}
+            <p className="text-md ">{bookInfo?.bookDescription}</p>
+
+            {/* Additional info */}
+            <div className="space-y-3 w-2/3">
+              <div className="flex justify-between">
+                <span className="font-semibold">Author:</span>
+                <span>{bookInfo?.author}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Language:</span>
+                <span>{bookInfo?.language}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Page:</span>
+                <span>{bookInfo?.page}</span>
+              </div>
+            </div>
+          </div>
+
+          {bookInfo?.user?.userEmail !== user.email && (
+            <div className="pt-8 md:pt-4 w-full flex  justify-end">
+              {/* Borrow book button */}
+              {borrowed ? (
+                <p className="py-2 px-4 border border-accent rounded text-center font-semibold text-accent">
+                  This book is unavailable right now!
+                </p>
+              ) : (
                 <button
                   onClick={() => setIsOpen(true)}
-                  className=" px-6 py-2 bg-accent rounded-lg text-sm text-secondary font-semibold"
+                  className="px-6 py-2 bg-accent text-secondary rounded-lg text-sm font-semibold hover:bg-secondary hover:text-accent"
                 >
                   Borrow Book
                 </button>
-              </div>
-            )}
-          </section>
-        )}
-      </section>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
       {isLoading && <ModalBody modal={<Loader />} />}
       {isOpen && (
         <ModalBody
