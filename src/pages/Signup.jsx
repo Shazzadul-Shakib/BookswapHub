@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const Signup = () => {
   const { createUser, updateUserName, verifyUserEmail } =
@@ -32,7 +33,13 @@ const Signup = () => {
     }
   };
   return (
-    <div className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
+    <main className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
+      {/* Helmet title provider */}
+      <Helmet>
+        <title>Bookswap Hub | Signup</title>
+      </Helmet>
+
+      {/* Main section starts from here */}
       <section className="md:w-1/2 flex flex-col items-center ">
         <img
           className=" h-[100px] w-[100px] my-8 md:h-[200px] md:w-[200px] lg:-mt-16"
@@ -103,11 +110,13 @@ const Signup = () => {
               Already have an account? <Link to="/login">Login here</Link>
             </p>
           </div>
-          {/* Divider */}
+
+          {/* Divider & social login */}
           <SocialLogin />
+          
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

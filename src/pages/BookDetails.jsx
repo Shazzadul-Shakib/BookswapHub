@@ -7,6 +7,7 @@ import Borrowbook_form from "../components/Forms/Borrowbook_form";
 import useToggle from "../hooks/useToggle";
 import { AuthContext } from "../provider/authProviders";
 import profile from "../assets/pIcon.png";
+import { Helmet } from "react-helmet-async";
 
 const BookDetails = () => {
   const { book_id } = useParams();
@@ -19,6 +20,15 @@ const BookDetails = () => {
 
   return (
     <main className="container my-10 md:my-2 mx-auto p-4 lg:p-8">
+      {/* Helmet title provider */}
+      <Helmet>
+        <title>
+          {bookInfo?.bookName
+            ? `${bookInfo?.bookName} | Book Details`
+            : "Loading..."}
+        </title>
+      </Helmet>
+
       <div className="bg-tertiary shadow-2xl rounded-lg overflow-hidden flex flex-col lg:flex-row">
         {/* Image section */}
         <div className="lg:w-1/3 shadow-2xl  p-4 flex justify-center items-center">
@@ -88,8 +98,11 @@ const BookDetails = () => {
           )}
         </div>
       </div>
-
+      
+      {/* Loader spinner if loading */}
       {isLoading && <ModalBody modal={<Loader />} />}
+
+      {/* Open modal for borrow book if true */}
       {isOpen && (
         <ModalBody
           modal={

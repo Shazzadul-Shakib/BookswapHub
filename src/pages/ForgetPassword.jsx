@@ -1,8 +1,9 @@
-import logo from "../assets/logo.ico";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { AuthContext } from "../provider/authProviders";
+import { toast } from "react-toastify";
+import logo from "../assets/logo.ico";
 
 const ForgetPassword = () => {
   const {
@@ -13,14 +14,22 @@ const ForgetPassword = () => {
   } = useForm();
   const { resetPassword } = useContext(AuthContext);
 
+  // Handle submit of reset password
   const onSubmit = async (data) => {
     await resetPassword(data.email).then(() => {
       reset();
-      alert("Password reset email sent to your email");
+      toast.success("Password reset email sent to your email");
     });
   };
+
   return (
-    <div className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
+    <mai className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
+      {/* Helmet title provider */}
+      <Helmet>
+        <title>Bookswap Hub | Forgot Password</title>
+      </Helmet>
+
+      {/* Main section starts from here */}
       <section className="md:w-1/2 flex flex-col items-center ">
         <img
           className=" h-[100px] w-[100px] my-8 md:h-[200px] md:w-[200px] lg:-mt-16"
@@ -68,7 +77,7 @@ const ForgetPassword = () => {
           </div>
         </div>
       </section>
-    </div>
+    </mai>
   );
 };
 

@@ -1,12 +1,16 @@
+import { Helmet } from "react-helmet-async";
 import Recommended from "../components/Homepage/Recommended/Recommended";
-import Trending from "../components/Homepage/Trending/Trending";
 
 const Homepage = () => {
     return (
-      <div className="h-full overflow-y-auto custom-scrollbar">
-        {/* <Trending /> */}
+      <main className="h-full overflow-y-auto custom-scrollbar">
+        {/* Helmet title provider */}
+        <Helmet>
+          <title>Bookswap Hub | Home</title>
+        </Helmet>
+
         <Recommended />
-      </div>
+      </main>
     );
 };
 

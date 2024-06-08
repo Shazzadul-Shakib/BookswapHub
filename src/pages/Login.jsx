@@ -6,11 +6,12 @@ import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
 import { useAddUserMutation } from "../redux/api/users-api";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { loginUserWithEmailPassword } = useContext(AuthContext);
   const [addUser] = useAddUserMutation();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,9 +19,11 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  // Handle submit of login functionality
   const onSubmit = async (data) => {
     const result = await loginUserWithEmailPassword(data.email, data.password);
 
+    // if email verified then navigate to home page otherwise toast to verify email
     try {
       if (result.user.emailVerified) {
         reset();
@@ -40,8 +43,15 @@ const Login = () => {
       toast.error(error.message);
     }
   };
+
   return (
-    <div className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
+    <main className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
+      {/* Helmet title provider */}
+      <Helmet>
+        <title>Bookswap Hub | Login</title>
+      </Helmet>
+
+      {/* Main section starts from here */}
       <section className="md:w-1/2 flex flex-col items-center ">
         <img
           className=" h-[100px] w-[100px] my-8 md:h-[200px] md:w-[200px] lg:-mt-16"
@@ -103,11 +113,12 @@ const Login = () => {
               New here? <Link to="/signup">create account</Link>
             </p>
           </div>
-          {/* Divider */}
+
+          {/* Divider & social login  */}
           <SocialLogin />
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

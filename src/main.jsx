@@ -7,15 +7,17 @@ import AuthProvider from "./provider/authProviders.jsx";
 import { ApiProvider } from "./redux/api-provider.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <ApiProvider>
-      <AuthProvider>
+  <ApiProvider>
+    <AuthProvider>
+      <HelmetProvider>
         <div className=" bg-primary h-[100dvh]">
           <RouterProvider router={router} />
         </div>
-      </AuthProvider>
-      <ToastContainer theme="dark" />
-    </ApiProvider>
+      </HelmetProvider>
+    </AuthProvider>
+    <ToastContainer theme="dark" />
+  </ApiProvider>
 );

@@ -6,6 +6,7 @@ import Loader from "../components/Shared/Loader/Loader";
 import NotificationCard from "../components/Cards/NotificationCard";
 import OwnerBookConfirmCard from "../components/Cards/OwnerBookConfirmCard";
 import NoNotification from "../components/InitialPages/NoNotification";
+import { Helmet } from "react-helmet-async";
 
 const Notification = () => {
   const { user } = useContext(AuthContext);
@@ -13,19 +14,26 @@ const Notification = () => {
     user?.email
   );
   const [selectedNotification, setSelectedNotification] = useState(null);
-
   const userNotification = data?.data?.[0]?.userNotification || [];
 
+  // Loading spinner if loading
   if (isLoading) {
     return <ModalBody modal={<Loader />} />;
   }
 
   return (
     <main className="w-full md:w-[90%] lg:w-[70%] h-[85dvh] mx-auto my-6 overflow-y-auto custom-scrollbar">
+      {/* Helmet title provider */}
+      <Helmet>
+        <title>Bookswap Hub | Notifications</title>
+      </Helmet>
+
+      {/* Initial page if no notifications */}
       {userNotification.length === 0 && !isLoading && !isError && (
         <NoNotification element={"Notification"} />
       )}
 
+      {/* Map all the notification from last to first order */}
       {userNotification
         .slice()
         .reverse()
@@ -37,6 +45,7 @@ const Notification = () => {
           />
         ))}
 
+      {/* If notification is clicked then open the details of notification and confirmation in a modal */}
       {selectedNotification && (
         <ModalBody
           modal={
@@ -46,12 +55,6 @@ const Notification = () => {
             />
           }
         />
-      )}
-
-      {isError && (
-        <p className="text-center text-red-500">
-          Failed to load notifications.
-        </p>
       )}
     </main>
   );
