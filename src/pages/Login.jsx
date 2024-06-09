@@ -4,9 +4,14 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
-import { useAddUserMutation, useLoginUserMutation } from "../redux/api/users-api";
+import {
+  useAddUserMutation,
+  useLoginUserMutation,
+} from "../redux/api/users-api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import ModalBody from "../components/Shared/ModalBody/ModalBody";
+import Loader from "../components/Shared/Loader/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -47,6 +52,9 @@ const Login = () => {
     }
   };
 
+  if (isLoading) {
+    return <ModalBody modal={<Loader />} />;
+  }
   return (
     <main className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
       {/* Helmet title provider */}

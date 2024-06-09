@@ -11,7 +11,6 @@ const Bookmark = () => {
   const { user } = useContext(AuthContext);
   const { data, isLoading, isError } = useGetUserBorrowedBooksQuery(user.email);
   const userBookMarks = data?.data[0]?.userBookmark || [];
-  console.log(userBookMarks)
 
   // Loader spinner if loading
   if (isLoading) {

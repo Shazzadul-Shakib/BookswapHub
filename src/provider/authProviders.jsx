@@ -75,7 +75,6 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser && currentUser.emailVerified) {
         setUser(currentUser);
-        console.log(currentUser.getIdToken());
       } else {
         setUser(null);
         logout();

@@ -22,7 +22,6 @@ const RecommendedCard = ({ book }) => {
   const saved = userBookMarks.some(
     (bookmark) => bookmark.bookId._id === book._id
   );
-  console.log(saved);
 
   // Update the status of bookmark
   useEffect(() => {
