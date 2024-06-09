@@ -43,7 +43,7 @@ const OwnerBookConfirmCard = ({ notificationInfo, close }) => {
   };
 
   return (
-    <main className="relative bg-primary w-[360px] md:w-[600px] lg:w-[800px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
+    <main className="relative bg-tertiary w-[360px] md:w-[600px] lg:w-[800px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
       <header
         onClick={close}
         className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer"

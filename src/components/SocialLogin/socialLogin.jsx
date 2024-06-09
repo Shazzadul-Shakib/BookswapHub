@@ -3,7 +3,7 @@ import { allIconsData } from "../../data/all-icons-data";
 import Divider from "../Shared/Divider/Divider";
 import { AuthContext } from "../../provider/authProviders";
 import { useNavigate } from "react-router-dom";
-import { useAddUserMutation } from "../../redux/api/users-api";
+import { useAddUserMutation, useLoginUserMutation } from "../../redux/api/users-api";
 import { toast } from "react-toastify";
 
 const SocialLogin = () => {
@@ -11,6 +11,7 @@ const SocialLogin = () => {
   const { google } = allIconsData;
   const { googlelogin } = useContext(AuthContext);
   const [addUser] = useAddUserMutation();
+  const [loginUser, { isLoading, error }] = useLoginUserMutation();
 
   // Handle social login
   const handleGoogleSignIn = async () => {
@@ -21,6 +22,8 @@ const SocialLogin = () => {
       const userImage = photoURL;
       const User = { userName, userEmail, userImage };
       await addUser(User);
+      const userCredentials = { userEmail: res.user.email };
+      await loginUser(userCredentials);
       navigate("/");
       toast.success("Logged in successfully");
     });

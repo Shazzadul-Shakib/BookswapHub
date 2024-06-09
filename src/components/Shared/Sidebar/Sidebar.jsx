@@ -5,7 +5,7 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { allIconsData } from "../../../data/all-icons-data";
 import logo from "../../../assets/logo.ico";
 import ProfileCard from "../ProfileCard/ProfileCard";
-import { useGetUserBorrowedBooksQuery } from "../../../redux/api/users-api";
+import { useGetUserBorrowedBooksQuery, useLogoutUserMutation } from "../../../redux/api/users-api";
 import ModalBody from "../ModalBody/ModalBody";
 import Loader from "../Loader/Loader";
 import profile from "../../../assets/pIcon.png";
@@ -15,6 +15,7 @@ const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
   const [open, setOpen, ref] = useOutsideClick(false);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
+  const [logoutUser]=useLogoutUserMutation();
   const { home, add, bookmark, borrowedbook, notification } = allIconsData;
   const location = useLocation();
 
@@ -23,8 +24,10 @@ const Sidebar = () => {
   };
 
   // Handle logout
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async() => {
+    const userCredentials={userEmail:user.email};
+    await logout();
+    await logoutUser(userCredentials);
     toast.success("Logged out successfully")
   };
 

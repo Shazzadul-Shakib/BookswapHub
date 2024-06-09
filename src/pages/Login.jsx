@@ -4,13 +4,14 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
-import { useAddUserMutation } from "../redux/api/users-api";
+import { useAddUserMutation, useLoginUserMutation } from "../redux/api/users-api";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const navigate = useNavigate();
   const { loginUserWithEmailPassword } = useContext(AuthContext);
+  const [loginUser, { isLoading, error }] = useLoginUserMutation();
   const [addUser] = useAddUserMutation();
   const {
     register,
@@ -26,6 +27,8 @@ const Login = () => {
     // if email verified then navigate to home page otherwise toast to verify email
     try {
       if (result.user.emailVerified) {
+        const userCredentials = { userEmail: result.user.email };
+        await loginUser(userCredentials);
         reset();
         toast.success("Logged in successfully");
         navigate("/");

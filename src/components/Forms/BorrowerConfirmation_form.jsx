@@ -31,7 +31,7 @@ const BorrowerConfirmationForm = ({ bookInfo, close }) => {
   };
 
   return (
-    <main className="relative bg-primary md:w-[400px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
+    <main className="relative bg-tertiary md:w-[400px] max-h-[90vh] overflow-y-auto custom-scrollbar p-10 rounded-lg">
       <header
         onClick={close}
         className="absolute top-2 right-3 my-2 text-2xl text-accent cursor-pointer"

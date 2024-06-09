@@ -4,6 +4,7 @@ export const usersApi = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_baseUrl}/api/v1`,
+    credentials: "include",
   }),
   tagTypes: ["user", "book"],
   endpoints: (builder) => ({
@@ -14,6 +15,20 @@ export const usersApi = createApi({
         body: User,
       }),
       invalidatesTags: ["user", "book"],
+    }),
+    loginUser: builder.mutation({
+      query: (userCredentials) => ({
+        url: "user/jwt",
+        method: "POST",
+        body: userCredentials,
+      }),
+    }),
+    logoutUser: builder.mutation({
+      query: (userCredentials) => ({
+        url: "user/logout",
+        method: "POST",
+        body: userCredentials,
+      }),
     }),
     updateUserBorrowedBooks: builder.mutation({
       query: ({ email, data }) => ({
@@ -72,6 +87,8 @@ export const usersApi = createApi({
 
 export const {
   useAddUserMutation,
+  useLoginUserMutation,
+  useLogoutUserMutation,
   useUpdateUserBorrowedBooksMutation,
   useGetUserBorrowedBooksQuery,
   useUpdateUserBorrowedBookStatusMutation,

@@ -8,9 +8,11 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/authProviders";
 import profile from "../assets/pIcon.png";
 import { toast } from "react-toastify";
+import { useLogoutUserMutation } from "../redux/api/users-api";
 
 const Main = () => {
-  const { logout,user } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
+  const [logoutUser] = useLogoutUserMutation();
   const [showProfileCard, setShowProfileCard, profileCardRef] =
     useOutsideClick(false);
 
@@ -19,10 +21,12 @@ const Main = () => {
   };
 
   // Handle logout
-  const handleLogout=()=>{
+  const handleLogout = async () => {
+    const userCredentials = { userEmail: user.email };
     logout();
+    await logoutUser(userCredentials);
     toast.success("Logged out successfully");
-  }
+  };
 
   return (
     <main className="h-full flex justify-center md:gap-6 overflow-hidden relative">
@@ -39,7 +43,7 @@ const Main = () => {
         <div className=" grid grid-cols-[1fr_auto]">
           <Searchbar />
           {/* Profile card section */}
-          <div className="block md:hidden" ref={profileCardRef}>
+          <div className="block lg:hidden" ref={profileCardRef}>
             <div
               onClick={toggleProfile}
               className="w-full flex cursor-pointer items-center justify-center"
@@ -65,10 +69,9 @@ const Main = () => {
             )}
           </div>
         </div>
-        
+
         {/* Main outlet  */}
         <Outlet />
-
       </div>
     </main>
   );
