@@ -17,11 +17,12 @@ const RecommendedCard = ({ book }) => {
   const [bookMarked, setBookMarked] = useState(null);
   const { bookmarkOutline, bookmark, profile, notAvailable } = allIconsData;
 
-  // BookMarked book from userData and filter them if they are bookmarked
+  // Check if the book is saved
   const userBookMarks = data?.data[0]?.userBookmark || [];
-  const saved = userBookMarks?.some(
+  const saved = userBookMarks.some(
     (bookmark) => bookmark.bookId._id === book._id
   );
+  console.log(saved);
 
   // Update the status of bookmark
   useEffect(() => {
@@ -39,19 +40,20 @@ const RecommendedCard = ({ book }) => {
       }
     };
 
-    // invoke the fuction if bookmarked is not null and have provided values
-
-    if (bookMarked !== null && user && book._id) {
+    if (bookMarked !== null) {
       updateUserBookmark();
     }
-  }, [bookMarked]);
-
+  }, [bookMarked, user.email, book._id, updateBookmark]);
 
   // Handle bookmark click and stop propagation from mixing up the click events
   const handleBookmark = (event) => {
     event.stopPropagation();
-    setBookMarked((prev) => (prev === null ? true : !prev)); // Toggle between true and false, reset to null on reload
+    setBookMarked(!saved);
   };
+
+  if (isLoading) {
+    return <ModalBody modal={<Loader />} />;
+  }
 
   return (
     <main className="relative flex flex-col items-center my-4">
@@ -84,15 +86,15 @@ const RecommendedCard = ({ book }) => {
           {saved ? bookmark : bookmarkOutline}
         </div>
 
-        <div className=" text-white flex flex-col gap-2 items-center mt-2 p-2">
-          <h2 className=" text-secondary text-center font-semibold text-sm p-1">
+        <div className="text-white flex flex-col gap-2 items-center mt-2 p-2">
+          <h2 className="text-secondary text-center font-semibold text-sm p-1">
             {book?.bookName}
           </h2>
         </div>
       </div>
       <div className="w-full mt-3 flex items-center gap-3">
-        <div className=" flex items-center ">
-          {book?.user?.userImage !== "" ? (
+        <div className="flex items-center">
+          {book?.user?.userImage ? (
             <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
               <img src={book?.user?.userImage} alt="User photo" />
             </div>
@@ -104,7 +106,6 @@ const RecommendedCard = ({ book }) => {
           {book?.user?.userName}
         </h2>
       </div>
-      {isLoading && <ModalBody modal={<Loader />} />}
     </main>
   );
 };

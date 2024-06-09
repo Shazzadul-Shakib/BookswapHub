@@ -4,8 +4,9 @@ export const booksApi = createApi({
   reducerPath: "booksApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_baseUrl}/api/v1`,
+    credentials: "include",
   }),
-  tagTypes: ["book","user"],
+  tagTypes: ["book", "user"],
   endpoints: (builder) => ({
     addBook: builder.mutation({
       query: (data) => ({
@@ -13,19 +14,19 @@ export const booksApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["book","user"],
+      invalidatesTags: ["book", "user"],
     }),
     getBook: builder.query({
       query: () => ({
         url: "book",
       }),
-      providesTags: ["book","user"],
+      providesTags: ["book", "user"],
     }),
     getSingleBook: builder.query({
       query: (id) => ({
         url: `book/${id}`,
       }),
-      providesTags: ["book","user"],
+      providesTags: ["book", "user"],
     }),
   }),
 });

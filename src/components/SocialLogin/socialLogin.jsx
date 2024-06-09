@@ -3,7 +3,10 @@ import { allIconsData } from "../../data/all-icons-data";
 import Divider from "../Shared/Divider/Divider";
 import { AuthContext } from "../../provider/authProviders";
 import { useNavigate } from "react-router-dom";
-import { useAddUserMutation, useLoginUserMutation } from "../../redux/api/users-api";
+import {
+  useAddUserMutation,
+  useLoginUserMutation,
+} from "../../redux/api/users-api";
 import { toast } from "react-toastify";
 
 const SocialLogin = () => {

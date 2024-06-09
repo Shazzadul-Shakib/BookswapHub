@@ -18,6 +18,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </div>
       </HelmetProvider>
     </AuthProvider>
-    <ToastContainer theme="dark" />
+    <ToastContainer
+      position="top-right"
+      autoClose={2000}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      draggable
+      pauseOnHover={false}
+      theme="dark"
+      transition:Bounce
+    />
   </ApiProvider>
 );
