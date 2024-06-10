@@ -13,6 +13,7 @@ This is a web application where people can share their collection of books with 
 - Express js
 - Mongoose
 - MongoDB
+- JWT
 
 ## Key Features
 - User can add book
