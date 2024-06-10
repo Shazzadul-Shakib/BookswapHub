@@ -5,10 +5,11 @@ import { allIconsData } from "../../data/all-icons-data";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/authProviders";
 import { toast } from "react-toastify";
+import Spinner from "../Shared/Loader/btnSpinner";
 
 const AddBookForm = ({ close }) => {
   const { user } = useContext(AuthContext);
-  const [addBook] = useAddBookMutation();
+  const [addBook, { isLoading }] = useAddBookMutation();
   const { image, cancel } = allIconsData;
   const { getImageUrl } = useGetImageUrl();
   const {
@@ -18,9 +19,11 @@ const AddBookForm = ({ close }) => {
     formState: { errors },
   } = useForm();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state
 
   // Handle submit of data and send data to server via cloudinary for hosting image and set the url in userImage
   const onSubmit = async (data) => {
+    setIsSubmitting(true); // Set submitting state to true
     try {
       const uploadedImageUrl = await getImageUrl(selectedImage);
       data.bookImage = uploadedImageUrl;
@@ -31,6 +34,8 @@ const AddBookForm = ({ close }) => {
       close();
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
     }
   };
 
@@ -155,9 +160,13 @@ const AddBookForm = ({ close }) => {
 
           <button
             type="submit"
-            className="w-full px-3 py-2 bg-accent rounded text-secondary font-bold"
+            className={`w-full flex justify-center items-center gap-2 px-3 py-2 rounded text-secondary font-bold ${
+              isLoading || isSubmitting ? "bg-gray-400" : "bg-accent"
+            }`}
+            disabled={isLoading || isSubmitting} 
           >
-            Add Book
+            {(isLoading || isSubmitting) && <Spinner />}
+            {isLoading || isSubmitting ? "Adding Book" : "Add Book"}
           </button>
         </form>
       </main>
