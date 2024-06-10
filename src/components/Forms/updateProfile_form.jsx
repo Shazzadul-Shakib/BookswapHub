@@ -7,6 +7,7 @@ import { useUpdateUserProfileInfoMutation } from "../../redux/api/users-api";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
 import { useGetBookQuery } from "../../redux/api/books-api";
+import Spinner from "../Shared/Loader/btnSpinner";
 
 const UpdateProfileForm = ({ close }) => {
   const { cancel, image } = allIconsData;
@@ -22,14 +23,11 @@ const UpdateProfileForm = ({ close }) => {
     formState: { errors },
   } = useForm();
   const [selectedImage, setSelectedImage] = useState(null);
-
-  // Loader spinner if loading
-  if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
-  }
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Handle submission of update profile and upload image to cloudinary and send them to server
   const onSubmit = async (data) => {
+    setIsSubmitting(true);
     try {
       if (selectedImage != null) {
         const uploadedImageUrl = await getImageUrl(selectedImage);
@@ -121,9 +119,13 @@ const UpdateProfileForm = ({ close }) => {
 
           <button
             type="submit"
-            className="w-full px-3 py-2 bg-accent rounded text-secondary font-bold"
+            className={`w-full flex justify-center items-center gap-2 px-3 py-2 rounded text-secondary font-bold ${
+              isLoading || isSubmitting ? "bg-gray-400" : "bg-accent"
+            }`}
+            disabled={isLoading || isSubmitting}
           >
-            Upload Profile
+            {(isLoading || isSubmitting) && <Spinner />}
+            {isLoading || isSubmitting ? "Updating" : "Update Profile"}
           </button>
         </form>
       </main>
