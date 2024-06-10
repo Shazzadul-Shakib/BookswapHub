@@ -21,19 +21,26 @@ const SocialLogin = () => {
 
   // Handle social login
   const handleGoogleSignIn = async () => {
-    await googlelogin().then(async (res) => {
-      const { displayName, email, photoURL } = res.user;
-      const userName = displayName;
-      const userEmail = email;
-      const userImage = photoURL;
-      const User = { userName, userEmail, userImage };
-      await addUser(User);
-      const userCredentials = { userEmail: res.user.email };
-      await loginUser(userCredentials);
-      navigate("/");
-      toast.success("Logged in successfully");
-    });
-    
+    setShowLoader(true); // Set showLoader to true when submitting
+
+    try {
+      await googlelogin().then(async (res) => {
+        const { displayName, email, photoURL } = res.user;
+        const userName = displayName;
+        const userEmail = email;
+        const userImage = photoURL;
+        const User = { userName, userEmail, userImage };
+        await addUser(User);
+        const userCredentials = { userEmail: res.user.email };
+        await loginUser(userCredentials);
+        navigate("/");
+        toast.success("Logged in successfully");
+      });
+    } catch (error) {
+      toast.error(error.message);
+    }finally{
+      setShowLoader(false); // Set showLoader back to false after login attempt
+    }
   };
 
   if (isLoading || showLoader) {
