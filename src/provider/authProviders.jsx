@@ -7,8 +7,6 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
   updateProfile,
   GoogleAuthProvider,
   signOut,
@@ -63,16 +61,9 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  // Detect mobile devices
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
   // Login with Google
   const googlelogin = () => {
-    if (isMobile) {
-      return signInWithRedirect(auth, googleProvider);
-    } else {
-      return signInWithPopup(auth, googleProvider);
-    }
+    return signInWithPopup(auth, googleProvider);
   };
 
   // Logout user
@@ -86,17 +77,6 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
     });
-
-    // Handle the redirect result
-     getRedirectResult(auth)
-       .then((result) => {
-         if (result && result.user) {
-           setUser(result.user);
-         }
-       })
-       .catch((error) => {
-         console.error("Error during Google sign-in redirect:", error);
-       });
 
     return () => {
       unSubscribe();

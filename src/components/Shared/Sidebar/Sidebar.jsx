@@ -25,8 +25,8 @@ const Sidebar = () => {
 
   // Handle logout
   const handleLogout = async() => {
-    const userCredentials={userEmail:user.email};
     await logout();
+    const userCredentials={userEmail:user?.email};
     await logoutUser(userCredentials);
     toast.success("Logged out successfully")
   };
