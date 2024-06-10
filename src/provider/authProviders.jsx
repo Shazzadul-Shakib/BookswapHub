@@ -7,6 +7,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithPopup,
+  signInWithRedirect,
   updateProfile,
   GoogleAuthProvider,
   signOut,
@@ -22,12 +23,12 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //  account creation with email and password
+  // Account creation with email and password
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // Login with email password
+  // Login with email and password
   const loginUserWithEmailPassword = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -43,6 +44,7 @@ const AuthProvider = ({ children }) => {
       displayName: userName,
     });
   };
+
   const updateUserProfile = (userName, userImage) => {
     // Construct the update object dynamically
     const updateData = { displayName: userName };
@@ -60,9 +62,16 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  // login with google
+  // Detect mobile devices
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  // Login with Google
   const googlelogin = () => {
-    return signInWithPopup(auth, googleProvider);
+    if (isMobile) {
+      return signInWithRedirect(auth, googleProvider);
+    } else {
+      return signInWithPopup(auth, googleProvider);
+    }
   };
 
   // Logout user
@@ -103,4 +112,5 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
+
 export default AuthProvider;
