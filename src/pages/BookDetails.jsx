@@ -19,7 +19,7 @@ const BookDetails = () => {
   const { borrowed } = bookInfo;
 
   return (
-    <main className="container my-10 md:my-2 mx-auto p-4 lg:p-8">
+    <main className="container h-[85dvh] my-2 mx-auto p-4 lg:p-8 overflow-y-scroll">
       {/* Helmet title provider */}
       <Helmet>
         <title>
@@ -63,7 +63,7 @@ const BookDetails = () => {
             <p className="text-md ">{bookInfo?.bookDescription}</p>
 
             {/* Additional info */}
-            <div className="space-y-3 w-2/3">
+            <div className="space-y-3 w-full md:w-2/3">
               <div className="flex justify-between">
                 <span className="font-semibold">Author:</span>
                 <span>{bookInfo?.author}</span>

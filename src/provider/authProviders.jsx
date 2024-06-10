@@ -88,15 +88,15 @@ const AuthProvider = ({ children }) => {
     });
 
     // Handle the redirect result
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result.user) {
-          setUser(result.user);
-        }
-      })
-      .catch((error) => {
-        console.error("Error during Google sign-in redirect:", error);
-      });
+     getRedirectResult(auth)
+       .then((result) => {
+         if (result && result.user) {
+           setUser(result.user);
+         }
+       })
+       .catch((error) => {
+         console.error("Error during Google sign-in redirect:", error);
+       });
 
     return () => {
       unSubscribe();
