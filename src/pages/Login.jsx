@@ -1,7 +1,7 @@
 import logo from "../assets/logo.ico";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, useState } from "react"; // Add useState import
 import { AuthContext } from "../provider/authProviders";
 import SocialLogin from "../components/SocialLogin/socialLogin";
 import {
@@ -25,20 +25,23 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  // Add state to control page loading
+  const [showLoader, setShowLoader] = useState(false);
+
   // Handle submit of login functionality
   const onSubmit = async (data) => {
-    const result = await loginUserWithEmailPassword(data.email, data.password);
-
-    // if email verified then navigate to home page otherwise toast to verify email
+    setShowLoader(true); // Set showLoader to true when submitting
     try {
+      const result = await loginUserWithEmailPassword(
+        data.email,
+        data.password
+      );
       if (result.user.emailVerified) {
         const userCredentials = { userEmail: result.user.email };
         await loginUser(userCredentials);
         reset();
         toast.success("Logged in successfully");
         navigate("/");
-
-        // send user to server form here to store in DB
         const userName = result.user.displayName;
         const userEmail = result.user.email;
         const userImage = result.user.photoURL || "";
@@ -49,12 +52,15 @@ const Login = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setShowLoader(false); // Set showLoader back to false after login attempt
     }
   };
 
-  if (isLoading) {
+  if (isLoading || showLoader) {
     return <ModalBody modal={<Loader />} />;
   }
+
   return (
     <main className="md:w-[90%] overflow-auto py-10 px-4 h-full mx-auto flex flex-col lg:flex-row gap-10 justify-center items-center">
       {/* Helmet title provider */}
