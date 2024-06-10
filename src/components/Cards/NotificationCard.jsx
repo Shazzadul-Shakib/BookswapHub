@@ -13,7 +13,7 @@ const NotificationCard = ({ notification, onClick }) => {
       <section className="flex items-center gap-4">
         <div className="flex items-center h-[50px] w-[50px]">
           <img
-            className="rounded-full"
+            className="rounded-full h-[50px] w-[50px] object-cover"
             src={userImage ? userImage : profile}
             alt="User Photo"
           />
