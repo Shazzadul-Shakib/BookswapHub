@@ -8,6 +8,7 @@ import {
   sendPasswordResetEmail,
   signInWithPopup,
   signInWithRedirect,
+  getRedirectResult,
   updateProfile,
   GoogleAuthProvider,
   signOut,
@@ -82,14 +83,21 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser && currentUser.emailVerified) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-        logout();
-      }
+      setUser(currentUser);
       setLoading(false);
     });
+
+    // Handle the redirect result
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result.user) {
+          setUser(result.user);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during Google sign-in redirect:", error);
+      });
+
     return () => {
       unSubscribe();
     };

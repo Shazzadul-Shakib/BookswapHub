@@ -13,7 +13,7 @@ import { getAuth, getRedirectResult } from "firebase/auth";
 const SocialLogin = () => {
   const navigate = useNavigate();
   const { google } = allIconsData;
-  const { googlelogin } = useContext(AuthContext);
+  const { googlelogin, user } = useContext(AuthContext);
   const [addUser] = useAddUserMutation();
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
 
@@ -21,7 +21,7 @@ const SocialLogin = () => {
     const auth = getAuth();
     getRedirectResult(auth)
       .then(async (result) => {
-        if (result) {
+        if (result.user) {
           const { displayName, email, photoURL } = result.user;
           const userName = displayName;
           const userEmail = email;
@@ -44,13 +44,19 @@ const SocialLogin = () => {
     await googlelogin();
   };
 
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   return (
     <main>
       <Divider />
       {/* Social Icons */}
       <div className="flex justify-center items-center gap-5">
         <div
-          onClick={() => handleGoogleSignIn()}
+          onClick={handleGoogleSignIn}
           className="text-2xl cursor-pointer text-secondary"
         >
           {google}
