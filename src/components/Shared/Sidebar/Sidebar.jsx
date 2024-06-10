@@ -88,7 +88,7 @@ const Sidebar = () => {
           >
             {user.photoURL ? (
               <img
-                className="h-[40px] w-[40px  border-2 border-secondary rounded-full"
+                className="h-[40px] w-[40px]  border-2 border-secondary rounded-full object-cover"
                 src={user.photoURL}
                 alt="user Image"
               />
