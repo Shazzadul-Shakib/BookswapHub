@@ -8,19 +8,24 @@ import Loader from "../../Shared/Loader/Loader";
 import ModalBody from "../../Shared/ModalBody/ModalBody";
 import { AuthContext } from "../../../provider/authProviders";
 import NoNotification from "../../InitialPages/NoNotification";
+import { Link } from "react-router-dom";
 
 const YourCollection = () => {
   const { data, isLoading } = useGetBookQuery();
   const { user } = useContext(AuthContext);
   const [isOpen, toggle] = useToggle();
-  const { add_btn } = allIconsData;
+  const { add_btn,dots } = allIconsData;
 
   const books = data?.data || [];
 
   // Filter self collection books
-  const selfCollection = books.filter(
+  const selfCollection = books?.filter(
     (book) => book?.user?.userEmail == user?.email
   );
+
+  if(isLoading){
+    return <ModalBody modal={<Loader/>} />
+  }
 
   return (
     <main>
@@ -31,7 +36,7 @@ const YourCollection = () => {
             Your books collection
           </h1>
         </div>
-        <div>
+        <div className="flex items-center gap-4">
           <button
             onClick={toggle}
             className="flex gap-2 items-center px-6 py-2 bg-accent rounded-lg text-secondary font-semibold"
@@ -42,6 +47,15 @@ const YourCollection = () => {
 
           {/* Open modal of add book form */}
           {isOpen && <ModalBody modal={<AddbookForm close={toggle} />} />}
+          <Link
+            to={{
+              pathname: "/manageyourcollection",
+              state: { selfCollection,isLoading },
+            }}
+            className="text-xl cursor-pointer text-icon"
+          >
+            {dots}
+          </Link>
         </div>
       </header>
       <main className="h-[calc(100dvh-195px)] lg:h-[calc(100dvh-140px)] overflow-y-auto custom-scrollbar">

@@ -11,6 +11,7 @@ import BorrowedBook from "../pages/BorrowedBook";
 import Notification from "../pages/Notification";
 import NotFound from "../pages/NotFound";
 import Bookmark from "../pages/Bookmark";
+import ManageYourCollection from "../pages/ManageYourCollection";
 
 export const router= createBrowserRouter([
     {
@@ -52,6 +53,10 @@ export const router= createBrowserRouter([
             {
                 path:'/bookmark',
                 element:<Bookmark/>
+            },
+            {
+                path:'/manageyourcollection',
+                element:<ManageYourCollection/>
             },
             {
                 path:'*',
