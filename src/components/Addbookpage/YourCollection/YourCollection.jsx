@@ -49,10 +49,7 @@ const YourCollection = () => {
           {/* Open modal of add book form */}
           {isOpen && <ModalBody modal={<AddbookForm close={toggle} />} />}
           <Link
-            to={{
-              pathname: "/manageBooks",
-              state: { selfCollection, isLoading },
-            }}
+            to={"/manageBooks"}
             className="text-xl cursor-pointer text-icon"
           >
             {dots}
@@ -64,7 +61,7 @@ const YourCollection = () => {
         {isLoading ? (
           <LoaderModalBody modal={<Loader />} />
         ) : selfCollection.length === 0 ? (
-          <NoNotification element={"Books Uploaded"} />
+          <NoNotification element={" No Book Uploaded yet!"} />
         ) : (
           // Map self collection from last to first order
           <div className="w-full grid items-center justify-items-center gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

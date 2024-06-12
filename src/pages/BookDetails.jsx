@@ -8,6 +8,7 @@ import useToggle from "../hooks/useToggle";
 import { AuthContext } from "../provider/authProviders";
 import profile from "../assets/pIcon.png";
 import { Helmet } from "react-helmet-async";
+import LoaderModalBody from "../components/Shared/ModalBody/LoaderModalBody";
 
 const BookDetails = () => {
   const { book_id } = useParams();
@@ -17,6 +18,10 @@ const BookDetails = () => {
 
   let bookInfo = data?.data || [];
   const { borrowed } = bookInfo;
+
+  if (isLoading) {
+    return <LoaderModalBody modal={<Loader />} />;
+  }
 
   return (
     <main className="container h-[85dvh] my-2 mx-auto p-4 lg:p-8 overflow-y-scroll">
@@ -98,9 +103,6 @@ const BookDetails = () => {
           )}
         </div>
       </div>
-
-      {/* Loader spinner if loading */}
-      {isLoading && <LoaderModalBody modal={<Loader />} />}
 
       {/* Open modal for borrow book if true */}
       {isOpen && (

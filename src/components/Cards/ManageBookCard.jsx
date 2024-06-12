@@ -22,12 +22,12 @@ const ManageBookCard = ({ book }) => {
         </h3>
         <p className="text-sm text-secondary">{book.author}</p>
       </div>
-      <button
+      {/* <button
         onClick={() => console.log(book._id)}
         className="ml-4 px-2 py-1 md:px-4 md:py-2 bg-icon text-lg text-tertiary rounded-lg"
       >
         {editIcon}
-      </button>
+      </button> */}
       <button
         onClick={() => setIsOpen(true)}
         className="ml-2 px-2 py-1 md:px-4 md:py-2 bg-accent text-lg text-secondary rounded-lg"

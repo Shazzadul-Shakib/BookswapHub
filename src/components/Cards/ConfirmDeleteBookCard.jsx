@@ -1,9 +1,19 @@
-import { useDeleteSingleBookMutation, useGetBookQuery } from "../../redux/api/books-api";
+import { useContext } from "react";
+import {
+  useDeleteSingleBookMutation,
+  useGetBookQuery,
+} from "../../redux/api/books-api";
 import Loader from "../Shared/Loader/Loader";
 import LoaderModalBody from "../Shared/ModalBody/LoaderModalBody";
+import { AuthContext } from "../../provider/authProviders";
+import { toast } from "react-toastify";
+import { useGetUserBorrowedBooksQuery } from "../../redux/api/users-api";
 
 const ConfirmDeleteBookCard = ({ book, close }) => {
   const [deleteSingleBook, { isLoading }] = useDeleteSingleBookMutation();
+  const { user } = useContext(AuthContext);
+  const { refetch: userRefetch } = useGetUserBorrowedBooksQuery(user?.email);
+
   const { refetch } = useGetBookQuery();
 
   const handleDeleteSingleBook = async () => {
@@ -11,6 +21,8 @@ const ConfirmDeleteBookCard = ({ book, close }) => {
     if (result) {
       close();
       refetch();
+      userRefetch();
+      toast.success("Book deleted successfully!");
     }
   };
 
