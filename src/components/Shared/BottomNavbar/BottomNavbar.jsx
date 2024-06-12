@@ -5,6 +5,7 @@ import { useGetUserBorrowedBooksQuery } from "../../../redux/api/users-api";
 import { AuthContext } from "../../../provider/authProviders";
 import ModalBody from "../ModalBody/ModalBody";
 import Loader from "../Loader/Loader";
+import LoaderModalBody from "../ModalBody/LoaderModalBody";
 
 const BottomNavbar = () => {
   const { home, add, bookmark, borrowedbook, notification } = allIconsData;
@@ -47,7 +48,7 @@ const BottomNavbar = () => {
       </div>
 
       {/* Loader spinner if loading */}
-      {isLoading && <ModalBody modal={<Loader />} />}
+      {isLoading && <LoaderModalBody modal={<Loader />} />}
     </main>
   );
 };

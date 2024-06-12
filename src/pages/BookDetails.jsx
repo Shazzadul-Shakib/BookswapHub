@@ -98,9 +98,9 @@ const BookDetails = () => {
           )}
         </div>
       </div>
-      
+
       {/* Loader spinner if loading */}
-      {isLoading && <ModalBody modal={<Loader />} />}
+      {isLoading && <LoaderModalBody modal={<Loader />} />}
 
       {/* Open modal for borrow book if true */}
       {isOpen && (

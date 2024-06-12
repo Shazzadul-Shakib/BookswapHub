@@ -6,6 +6,7 @@ import Loader from "../components/Shared/Loader/Loader";
 import BookmarkCard from "../components/Cards/bookmarkCard";
 import NoNotification from "../components/InitialPages/NoNotification";
 import { Helmet } from "react-helmet-async";
+import LoaderModalBody from "../components/Shared/ModalBody/LoaderModalBody";
 
 const Bookmark = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Bookmark = () => {
 
   // Loader spinner if loading
   if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   return (

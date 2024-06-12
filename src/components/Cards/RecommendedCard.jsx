@@ -9,6 +9,7 @@ import { AuthContext } from "../../provider/authProviders";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
 import { toast } from "react-toastify";
+import LoaderModalBody from "../Shared/ModalBody/LoaderModalBody";
 
 const RecommendedCard = ({ book }) => {
   const { user } = useContext(AuthContext);
@@ -51,7 +52,7 @@ const RecommendedCard = ({ book }) => {
   };
 
   if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   return (

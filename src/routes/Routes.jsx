@@ -13,55 +13,59 @@ import NotFound from "../pages/NotFound";
 import Bookmark from "../pages/Bookmark";
 import ManageYourCollection from "../pages/ManageYourCollection";
 
-export const router= createBrowserRouter([
-    {
-        path:'/signup',
-        element: <Signup/>, //Main route
-    },
-    {
-        path:'/login',
-        element: <Login/>, //Main route
-    },
-    {
-        path:'/forgetpassword',
-        element: <ForgetPassword/>, //Main route
-    },
-    {
-        path:'/',
-        element: <PrivateRoute><Main/></PrivateRoute>, //Main route
-        children:[
-            {
-                path:'/',
-                element:<Homepage/>
-            },
-            {
-                path:'/addbook',
-                element:<AddBook/>
-            },
-            {
-                path:'/book/:book_id',
-                element:<BookDetails/>
-            },
-            {
-                path:'/borrowedbook',
-                element:<BorrowedBook/>
-            },
-            {
-                path:'/notification',
-                element:<Notification/>
-            },
-            {
-                path:'/bookmark',
-                element:<Bookmark/>
-            },
-            {
-                path:'/manageyourcollection',
-                element:<ManageYourCollection/>
-            },
-            {
-                path:'*',
-                element:<NotFound/>
-            },
-        ]
-    },
-])
+export const router = createBrowserRouter([
+  {
+    path: "/signup",
+    element: <Signup />, //Main route
+  },
+  {
+    path: "/login",
+    element: <Login />, //Main route
+  },
+  {
+    path: "/forgetpassword",
+    element: <ForgetPassword />, //Main route
+  },
+  {
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <Main />
+      </PrivateRoute>
+    ), //Main route
+    children: [
+      {
+        path: "/",
+        element: <Homepage />,
+      },
+      {
+        path: "/addbook",
+        element: <AddBook />,
+      },
+      {
+        path: "/book/:book_id",
+        element: <BookDetails />,
+      },
+      {
+        path: "/borrowedbook",
+        element: <BorrowedBook />,
+      },
+      {
+        path: "/notification",
+        element: <Notification />,
+      },
+      {
+        path: "/bookmark",
+        element: <Bookmark />,
+      },
+      {
+        path: "/manageBooks",
+        element: <ManageYourCollection />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+]);

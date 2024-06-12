@@ -7,6 +7,7 @@ import NotificationCard from "../components/Cards/NotificationCard";
 import OwnerBookConfirmCard from "../components/Cards/OwnerBookConfirmCard";
 import NoNotification from "../components/InitialPages/NoNotification";
 import { Helmet } from "react-helmet-async";
+import LoaderModalBody from "../components/Shared/ModalBody/LoaderModalBody";
 
 const Notification = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const Notification = () => {
 
   // Loading spinner if loading
   if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   return (
@@ -30,7 +31,7 @@ const Notification = () => {
 
       {/* Initial page if no notifications */}
       {userNotification.length === 0 && !isLoading && !isError && (
-        <NoNotification element={"Notification"} />
+        <NoNotification element={"No notification yet!"} />
       )}
 
       {/* Map all the notification from last to first order */}

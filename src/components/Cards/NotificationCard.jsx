@@ -1,8 +1,8 @@
 import profile from "../../assets/pIcon.png";
 
 const NotificationCard = ({ notification, onClick }) => {
-  const { userName, userImage } = notification.borrowerUserId;
-  const { bookName } = notification.bookId;
+  const { userName, userImage } = notification?.borrowerUserId;
+  const { bookName } = notification?.bookId;
   const { confirm } = notification;
 
   return (

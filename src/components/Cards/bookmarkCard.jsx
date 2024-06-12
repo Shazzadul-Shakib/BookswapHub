@@ -10,6 +10,7 @@ import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
 import profile from "../../assets/pIcon.png";
 import { toast } from "react-toastify";
+import LoaderModalBody from "../Shared/ModalBody/LoaderModalBody";
 
 const BookmarkCard = ({ book }) => {
   const { user } = useContext(AuthContext);
@@ -20,7 +21,7 @@ const BookmarkCard = ({ book }) => {
 
   // Loader spinner if Loading
   if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
   // BookMarked book from userData and filter them if they are bookmarked
   const userBookMarks = data?.data[0]?.userBookmark || [];
@@ -43,7 +44,7 @@ const BookmarkCard = ({ book }) => {
         toast.error(error.message);
       }
     };
-    
+
     // If bookmark is true or false and provided info is legal then call the function to operate
     if (bookMarked !== null && user && book.bookId._id) {
       updateUserBookmark();

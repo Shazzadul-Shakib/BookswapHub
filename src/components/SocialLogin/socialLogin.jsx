@@ -10,6 +10,7 @@ import {
 import { toast } from "react-toastify";
 import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
+import LoaderModalBody from "../Shared/ModalBody/LoaderModalBody";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
@@ -38,13 +39,13 @@ const SocialLogin = () => {
       });
     } catch (error) {
       toast.error(error.message);
-    }finally{
+    } finally {
       setShowLoader(false); // Set showLoader back to false after login attempt
     }
   };
 
   if (isLoading || showLoader) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   return (

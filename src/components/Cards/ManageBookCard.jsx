@@ -1,7 +1,11 @@
 import { allIconsData } from "../../data/all-icons-data";
+import useToggle from "../../hooks/useToggle";
+import ModalBody from "../Shared/ModalBody/ModalBody";
+import ConfirmDeleteBookCard from "./ConfirmDeleteBookCard";
 
 const ManageBookCard = ({ book }) => {
   const { deleteIcon, editIcon } = allIconsData;
+  const [isOpen,_,setIsOpen]=useToggle();
 
   return (
     <main className="w-full flex items-center bg-tertiary shadow-md rounded-lg p-2 mb-4">
@@ -25,11 +29,16 @@ const ManageBookCard = ({ book }) => {
         {editIcon}
       </button>
       <button
-        onClick={() => console.log(book._id)}
+        onClick={() => setIsOpen(true)}
         className="ml-2 px-2 py-1 md:px-4 md:py-2 bg-accent text-lg text-secondary rounded-lg"
       >
         {deleteIcon}
       </button>
+      {isOpen && (
+        <ModalBody
+          modal={<ConfirmDeleteBookCard book={book} close={() => setIsOpen(false)} />}
+        />
+      )}
     </main>
   );
 };

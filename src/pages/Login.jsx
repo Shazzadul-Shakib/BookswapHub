@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import ModalBody from "../components/Shared/ModalBody/ModalBody";
 import Loader from "../components/Shared/Loader/Loader";
+import LoaderModalBody from "../components/Shared/ModalBody/LoaderModalBody";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const Login = () => {
   };
 
   if (isLoading || showLoader) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   return (

@@ -6,6 +6,7 @@ import Loader from "../components/Shared/Loader/Loader";
 import ModalBody from "../components/Shared/ModalBody/ModalBody";
 import NoNotification from "../components/InitialPages/NoNotification";
 import { Helmet } from "react-helmet-async";
+import LoaderModalBody from "../components/Shared/ModalBody/LoaderModalBody";
 
 const BorrowedBook = () => {
   const { user } = useContext(AuthContext);
@@ -25,7 +26,7 @@ const BorrowedBook = () => {
 
   // Loader spinner if loading
   if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   return (
@@ -37,7 +38,7 @@ const BorrowedBook = () => {
 
       {/* Initial page if no borrowed books  */}
       {newBorrowedBookInfo.length === 0 && !isLoading && !isError && (
-        <NoNotification element={"Borrowed Book Request"} />
+        <NoNotification element={"No Borrowed Book Requests!"} />
       )}
 
       {/* Map borrowed books from last order to first */}

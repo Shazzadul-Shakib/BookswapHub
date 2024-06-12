@@ -5,17 +5,21 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { allIconsData } from "../../../data/all-icons-data";
 import logo from "../../../assets/logo.ico";
 import ProfileCard from "../ProfileCard/ProfileCard";
-import { useGetUserBorrowedBooksQuery, useLogoutUserMutation } from "../../../redux/api/users-api";
+import {
+  useGetUserBorrowedBooksQuery,
+  useLogoutUserMutation,
+} from "../../../redux/api/users-api";
 import ModalBody from "../ModalBody/ModalBody";
 import Loader from "../Loader/Loader";
 import profile from "../../../assets/pIcon.png";
 import { toast } from "react-toastify";
+import LoaderModalBody from "../ModalBody/LoaderModalBody";
 
 const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
   const [open, setOpen, ref] = useOutsideClick(false);
   const { data, isLoading } = useGetUserBorrowedBooksQuery(user.email);
-  const [logoutUser]=useLogoutUserMutation();
+  const [logoutUser] = useLogoutUserMutation();
   const { home, add, bookmark, borrowedbook, notification } = allIconsData;
   const location = useLocation();
 
@@ -24,11 +28,11 @@ const Sidebar = () => {
   };
 
   // Handle logout
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     await logout();
-    const userCredentials={userEmail:user?.email};
+    const userCredentials = { userEmail: user?.email };
     await logoutUser(userCredentials);
-    toast.success("Logged out successfully")
+    toast.success("Logged out successfully");
   };
 
   const getLinkClass = (path) =>
@@ -107,7 +111,7 @@ const Sidebar = () => {
           )}
         </div>
       </div>
-      {isLoading && <ModalBody modal={<Loader />} />}
+      {isLoading && <LoaderModalBody modal={<Loader />} />}
     </main>
   );
 };

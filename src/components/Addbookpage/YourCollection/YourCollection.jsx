@@ -9,12 +9,13 @@ import ModalBody from "../../Shared/ModalBody/ModalBody";
 import { AuthContext } from "../../../provider/authProviders";
 import NoNotification from "../../InitialPages/NoNotification";
 import { Link } from "react-router-dom";
+import LoaderModalBody from "../../Shared/ModalBody/LoaderModalBody";
 
 const YourCollection = () => {
   const { data, isLoading } = useGetBookQuery();
   const { user } = useContext(AuthContext);
   const [isOpen, toggle] = useToggle();
-  const { add_btn,dots } = allIconsData;
+  const { add_btn, dots } = allIconsData;
 
   const books = data?.data || [];
 
@@ -23,8 +24,8 @@ const YourCollection = () => {
     (book) => book?.user?.userEmail == user?.email
   );
 
-  if(isLoading){
-    return <ModalBody modal={<Loader/>} />
+  if (isLoading) {
+    return <ModalBody modal={<Loader />} />;
   }
 
   return (
@@ -49,8 +50,8 @@ const YourCollection = () => {
           {isOpen && <ModalBody modal={<AddbookForm close={toggle} />} />}
           <Link
             to={{
-              pathname: "/manageyourcollection",
-              state: { selfCollection,isLoading },
+              pathname: "/manageBooks",
+              state: { selfCollection, isLoading },
             }}
             className="text-xl cursor-pointer text-icon"
           >
@@ -61,7 +62,7 @@ const YourCollection = () => {
       <main className="h-[calc(100dvh-195px)] lg:h-[calc(100dvh-140px)] overflow-y-auto custom-scrollbar">
         {/* Loader spinner and Initial page */}
         {isLoading ? (
-          <ModalBody modal={<Loader />} />
+          <LoaderModalBody modal={<Loader />} />
         ) : selfCollection.length === 0 ? (
           <NoNotification element={"Books Uploaded"} />
         ) : (

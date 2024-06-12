@@ -2,14 +2,14 @@ import { useGetBookQuery } from "../../../redux/api/books-api";
 import RecommendedCard from "../../Cards/RecommendedCard";
 import NoNotification from "../../InitialPages/NoNotification";
 import Loader from "../../Shared/Loader/Loader";
-import ModalBody from "../../Shared/ModalBody/ModalBody";
+import LoaderModalBody from "../../Shared/ModalBody/LoaderModalBody";
 
 const Recommended = () => {
   const { data, isLoading, isError } = useGetBookQuery();
 
   // Loader spinner if loading
   if (isLoading) {
-    return <ModalBody modal={<Loader />} />;
+    return <LoaderModalBody modal={<Loader />} />;
   }
 
   const books = data?.data || [];
