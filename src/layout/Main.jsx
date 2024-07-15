@@ -28,6 +28,7 @@ const Main = () => {
       const userCredentials = { userEmail: user.email };
       await logoutUser(userCredentials); // Perform logout on server
       logout(); // Perform client-side logout
+      window.location.reload();
       toast.success("Logged out successfully");
     } catch (err) {
       toast.error("Logout failed");
