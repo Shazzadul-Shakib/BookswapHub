@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 // Create axios instance
 const axiosSecure = axios.create({
