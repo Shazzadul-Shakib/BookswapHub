@@ -4,15 +4,17 @@ import Sidebar from "../components/Shared/Sidebar/Sidebar";
 import BottomNavbar from "../components/Shared/BottomNavbar/BottomNavbar";
 import useOutsideClick from "../hooks/useOutsideClick";
 import ProfileCard from "../components/Shared/ProfileCard/ProfileCard";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../provider/authProviders";
 import profile from "../assets/pIcon.png";
 import { toast } from "react-toastify";
 import { useLogoutUserMutation } from "../redux/api/users-api";
+import { useGetBookQuery } from "../redux/api/books-api";
 
 const Main = () => {
   const { logout, user } = useContext(AuthContext);
   const [logoutUser] = useLogoutUserMutation();
+  const { error } = useGetBookQuery();
   const [showProfileCard, setShowProfileCard, profileCardRef] =
     useOutsideClick(false);
 
@@ -27,6 +29,12 @@ const Main = () => {
     await logoutUser(userCredentials);
     toast.success("Logged out successfully");
   };
+
+  useEffect(() => {
+    if (error?.status === 401 || error?.status === 403) {
+      handleLogout();
+    }
+  }, [error]);
 
   return (
     <main className="h-full flex justify-center md:gap-6 overflow-hidden relative">

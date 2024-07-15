@@ -17,7 +17,7 @@ const SocialLogin = () => {
   const { google } = allIconsData;
   const { googlelogin } = useContext(AuthContext);
   const [addUser] = useAddUserMutation();
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser, { isLoading ,error}] = useLoginUserMutation();
   const [showLoader, setShowLoader] = useState(false);
 
   // Handle social login

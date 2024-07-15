@@ -1,11 +1,47 @@
+import axios from "axios";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// Create axios instance
+const axiosSecure = axios.create({
+  baseURL: `${import.meta.env.VITE_baseUrl}/api/v1`,
+  withCredentials: true,
+});
+
+// Define custom baseQuery function
+const baseQuery = async ({ url, method, body }) => {
+  try {
+    const response = await axiosSecure({
+      url,
+      method,
+      data: body,
+    });
+    return { data: response.data };
+  } catch (error) {
+    const { response } = error;
+    if (response) {
+      return {
+        error: {
+          status: response.status,
+          data: response.data,
+          message: response.statusText || "An error occurred",
+        },
+      };
+    } else {
+      return {
+        error: {
+          status: null,
+          data: null,
+          message: error.message || "An unexpected error occurred",
+        },
+      };
+    }
+  }
+};
+
+// Define API slice
 export const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_baseUrl}/api/v1`,
-    credentials: "include",
-  }),
+  baseQuery: baseQuery,
   tagTypes: ["user", "book"],
   endpoints: (builder) => ({
     addUser: builder.mutation({
