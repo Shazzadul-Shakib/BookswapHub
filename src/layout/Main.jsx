@@ -19,15 +19,19 @@ const Main = () => {
     useOutsideClick(false);
 
   const toggleProfile = () => {
-    setShowProfileCard(!showProfileCard);
+    setShowProfileCard((prev) => !prev); // Toggle based on previous state
   };
 
   // Handle logout
   const handleLogout = async () => {
-    const userCredentials = { userEmail: user.email };
-    logout();
-    await logoutUser(userCredentials);
-    toast.success("Logged out successfully");
+    try {
+      const userCredentials = { userEmail: user.email };
+      await logoutUser(userCredentials); // Perform logout on server
+      logout(); // Perform client-side logout
+      toast.success("Logged out successfully");
+    } catch (err) {
+      toast.error("Logout failed");
+    }
   };
 
   useEffect(() => {
@@ -39,46 +43,41 @@ const Main = () => {
   return (
     <main className="h-full flex justify-center md:gap-6 overflow-hidden relative">
       {/* Sidebar for large devices */}
-      <div className="hidden h-full lg:flex justify-center items-center ">
+      <div className="hidden h-full lg:flex justify-center items-center">
         <Sidebar />
       </div>
+
       {/* Bottom navbar for small devices */}
       <div className="absolute bottom-0 z-10 lg:hidden">
         <BottomNavbar />
       </div>
+
       {/* Main content section */}
-      <div className=" p-4 w-[90vw] md:w-[calc(100vw-180px)]">
-        <div className=" grid grid-cols-[1fr_auto]">
+      <div className="p-4 w-[90vw] md:w-[calc(100vw-180px)]">
+        <div className="grid grid-cols-[1fr_auto]">
           <Searchbar />
+
           {/* Profile card section */}
           <div className="block lg:hidden" ref={profileCardRef}>
             <div
               onClick={toggleProfile}
               className="w-full flex cursor-pointer items-center justify-center"
             >
-              {user.photoURL ? (
-                <img
-                  className="h-[40px] w-[40px] rounded-full"
-                  src={user.photoURL}
-                  alt="user Image"
-                />
-              ) : (
-                <img
-                  className="h-[40px] w-[40px] rounded-full"
-                  src={profile}
-                  alt="user Image"
-                />
-              )}
+              <img
+                className="h-[40px] w-[40px] rounded-full"
+                src={user.photoURL || profile}
+                alt="user Image"
+              />
             </div>
             {showProfileCard && (
-              <div className=" absolute right-3 mt-3 z-10">
+              <div className="absolute right-3 mt-3 z-10">
                 <ProfileCard handleLogout={handleLogout} />
               </div>
             )}
           </div>
         </div>
 
-        {/* Main outlet  */}
+        {/* Main outlet */}
         <Outlet />
       </div>
     </main>
