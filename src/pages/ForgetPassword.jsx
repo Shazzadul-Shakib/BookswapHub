@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../provider/authProviders";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.ico";
+import { Helmet } from "react-helmet-async";
 
 const ForgetPassword = () => {
   const {

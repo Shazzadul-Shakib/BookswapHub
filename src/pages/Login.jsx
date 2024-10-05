@@ -13,6 +13,11 @@ import { Helmet } from "react-helmet-async";
 import Loader from "../components/Shared/Loader/Loader";
 import LoaderModalBody from "../components/Shared/ModalBody/LoaderModalBody";
 
+const demoUserData = {
+  email: "shakib1186@gmail.com",
+  password: "123456",
+};
+
 const Login = () => {
   const navigate = useNavigate();
   const { loginUserWithEmailPassword } = useContext(AuthContext);
@@ -133,6 +138,14 @@ const Login = () => {
 
           {/* Divider & social login  */}
           <SocialLogin />
+          <div className="flex justify-center items-center mt-4">
+            <p
+              className=" text-accent  underline cursor-pointer font-bold"
+              onClick={() => onSubmit(demoUserData)}
+            >
+              Demo Account
+            </p>
+          </div>
         </div>
       </section>
     </main>
