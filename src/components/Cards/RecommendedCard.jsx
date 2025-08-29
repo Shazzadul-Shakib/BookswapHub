@@ -6,7 +6,6 @@ import {
   useUpdateBookmarkMutation,
 } from "../../redux/api/users-api";
 import { AuthContext } from "../../provider/authProviders";
-import ModalBody from "../Shared/ModalBody/ModalBody";
 import Loader from "../Shared/Loader/Loader";
 import { toast } from "react-toastify";
 import LoaderModalBody from "../Shared/ModalBody/LoaderModalBody";
@@ -21,7 +20,7 @@ const RecommendedCard = ({ book }) => {
   // Check if the book is saved
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks.some(
-    (bookmark) => bookmark.bookId._id === book._id
+    (bookmark) => bookmark.bookId?._id === book?._id
   );
 
   // Update the status of bookmark
@@ -30,7 +29,7 @@ const RecommendedCard = ({ book }) => {
       try {
         await updateBookmark({
           ownerEmail: user.email,
-          data: { bookId: book._id, bookmarked: bookMarked },
+          data: { bookId: book?._id, bookmarked: bookMarked },
         });
         bookMarked
           ? toast.info("Book added to bookmark")
@@ -43,7 +42,7 @@ const RecommendedCard = ({ book }) => {
     if (bookMarked !== null) {
       updateUserBookmark();
     }
-  }, [bookMarked, user.email, book._id, updateBookmark]);
+  }, [bookMarked, user?.email, book?._id, updateBookmark]);
 
   // Handle bookmark click and stop propagation from mixing up the click events
   const handleBookmark = (event) => {

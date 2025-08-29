@@ -14,7 +14,6 @@ const Notification = () => {
   const { data, isLoading, isError } = useGetUserBorrowedBooksQuery(
     user?.email
   );
-  console.log(data)
   const [selectedNotification, setSelectedNotification] = useState(null);
   const userNotification = data?.data?.[0]?.userNotification || [];
 

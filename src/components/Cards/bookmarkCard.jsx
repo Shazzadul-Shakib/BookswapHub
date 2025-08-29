@@ -26,7 +26,7 @@ const BookmarkCard = ({ book }) => {
   // BookMarked book from userData and filter them if they are bookmarked
   const userBookMarks = data?.data[0]?.userBookmark || [];
   const saved = userBookMarks?.some(
-    (bookmark) => bookmark.bookId._id === book.bookId._id
+    (bookmark) => bookmark.bookId?._id === book.bookId?._id
   );
 
   // Update the status of bookmark
@@ -34,8 +34,8 @@ const BookmarkCard = ({ book }) => {
     const updateUserBookmark = async () => {
       try {
         await updateBookmark({
-          ownerEmail: user.email,
-          data: { bookId: book.bookId._id, bookmarked: bookMarked },
+          ownerEmail: user?.email,
+          data: { bookId: book.bookId?._id, bookmarked: bookMarked },
         });
         bookMarked
           ? toast.info("Book added to bookmark")
@@ -46,7 +46,7 @@ const BookmarkCard = ({ book }) => {
     };
 
     // If bookmark is true or false and provided info is legal then call the function to operate
-    if (bookMarked !== null && user && book.bookId._id) {
+    if (bookMarked !== null && user && book.bookId?._id) {
       updateUserBookmark();
     }
   }, [bookMarked]);
@@ -61,12 +61,12 @@ const BookmarkCard = ({ book }) => {
     <main className="relative flex flex-col items-center my-4">
       <div className="relative flex flex-col h-[200px] w-[300px] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent">
         <Link
-          to={`/book/${book.bookId._id}`}
+          to={`/book/${book.bookId?._id}`}
           className="relative flex justify-center items-end h-full w-full cursor-pointer overflow-hidden "
         >
           <img
             className="absolute inset-0 h-full w-full object-cover opacity-80"
-            src={book?.bookId.bookImage}
+            src={book?.bookId?.bookImage}
             alt="Book Image"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-75"></div>
@@ -90,15 +90,15 @@ const BookmarkCard = ({ book }) => {
 
         <div className=" text-white flex flex-col gap-2 items-center mt-2 p-2">
           <h2 className=" text-secondary text-center font-semibold text-sm p-1">
-            {book?.bookId.bookName}
+            {book?.bookId?.bookName}
           </h2>
         </div>
       </div>
       <div className="w-full mt-3 flex items-center gap-3">
         <div className=" flex items-center ">
-          {book?.bookId.user?.userImage !== "" ? (
+          {book?.bookId?.user?.userImage !== "" ? (
             <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
-              <img src={book?.bookId.user?.userImage} alt="User photo" />
+              <img src={book?.bookId?.user?.userImage} alt="User photo" />
             </div>
           ) : (
             <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
@@ -107,7 +107,7 @@ const BookmarkCard = ({ book }) => {
           )}
         </div>
         <h2 className="text-sm text-secondary font-semibold">
-          {book?.bookId.user?.userName}
+          {book?.bookId?.user?.userName}
         </h2>
       </div>
     </main>
