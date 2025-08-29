@@ -56,8 +56,6 @@ const Main = () => {
       {/* Main content section */}
       <div className="p-4 w-[90vw] md:w-[calc(100vw-180px)]">
         <div className="grid grid-cols-[1fr_auto]">
-          <Searchbar />
-
           {/* Profile card section */}
           <div className="block lg:hidden" ref={profileCardRef}>
             <div
