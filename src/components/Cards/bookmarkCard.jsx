@@ -58,8 +58,8 @@ const BookmarkCard = ({ book }) => {
   };
 
   return (
-    <main className="relative flex flex-col items-center my-4">
-      <div className="relative flex flex-col h-[200px] w-[300px] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent">
+    <main className="relative flex flex-col items-center my-4 w-full max-w-sm mx-auto">
+      <div className="relative flex flex-col w-full aspect-[3/2] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent">
         <Link
           to={`/book/${book.bookId?._id}`}
           className="relative flex justify-center items-end h-full w-full cursor-pointer overflow-hidden "

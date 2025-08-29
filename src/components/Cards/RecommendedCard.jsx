@@ -55,8 +55,8 @@ const RecommendedCard = ({ book }) => {
   }
 
   return (
-    <main className="relative flex flex-col items-center my-4">
-      <div className="relative flex flex-col h-[200px] w-[300px] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent ">
+    <main className="relative flex flex-col items-center my-4 w-full max-w-sm mx-auto">
+      <div className="relative flex flex-col w-full aspect-[3/2] rounded-xl overflow-hidden shadow-lg bg-gradient-to-t from-tertiary via-tertiary to-transparent">
         <Link
           to={`/book/${book._id}`}
           className="relative flex justify-center items-end h-full w-full cursor-pointer"
@@ -86,22 +86,26 @@ const RecommendedCard = ({ book }) => {
         </div>
 
         <div className="text-white flex flex-col gap-2 items-center mt-2 p-2">
-          <h2 className="text-secondary text-center font-semibold text-sm p-1">
+          <h2 className="text-secondary text-center font-semibold text-sm md:text-base p-1 line-clamp-2">
             {book?.bookName}
           </h2>
         </div>
       </div>
-      <div className="w-full mt-3 flex items-center gap-3">
+      <div className="w-full mt-3 flex items-center gap-3 px-2">
         <div className="flex items-center">
           {book?.user?.userImage ? (
-            <div className="h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-secondary">
-              <img src={book?.user?.userImage} alt="User photo" />
+            <div className="h-[30px] w-[30px] md:h-[40px] md:w-[40px] rounded-full overflow-hidden border-2 border-secondary">
+              <img 
+                src={book?.user?.userImage} 
+                alt="User photo"
+                className="w-full h-full object-cover" 
+              />
             </div>
           ) : (
-            <div className="text-[40px]">{profile}</div>
+            <div className="text-[30px] md:text-[40px]">{profile}</div>
           )}
         </div>
-        <h2 className="text-sm text-secondary font-semibold">
+        <h2 className="text-sm md:text-base text-secondary font-semibold truncate">
           {book?.user?.userName}
         </h2>
       </div>
